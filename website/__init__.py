@@ -3,9 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from os import path
 
+import os
+from dotenv import load_dotenv
+
 db = SQLAlchemy()
 DB_NAME = 'database.db'
 
+# Load environment variables from hidden .env file
+load_dotenv()
 
 def create_app():
     # Setup Flask

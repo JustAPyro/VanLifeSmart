@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Funmobile Status</h1>
+<h3>Outdoor Estimates:</h3>
+<p>Humidity: {{weather_data.humidity}}</p>
+<p>Temperature: {{weather_data.temperature}}c</p>
+<iframe
+  width="600"
+  height="450"
+  style="border:0"
+  loading="lazy"
+  allowfullscreen
+  referrerpolicy="no-referrer-when-downgrade"
+  src="https://www.google.com/maps/embed/v1/view?key={{gmkey}}
+    &center=41.6206391,-85.826671
+    &zoom=15
+    &maptype=satellite">
+</iframe>
+{% endblock %}
