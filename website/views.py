@@ -18,4 +18,6 @@ def status():
                                 '?location=41.6206391,-85.826671'
                                 f'&apikey={os.environ["TOMORROWAPI"]}')
     weather_data = response.json()['data']['values']
-    return render_template('status.html', user=current_user, gmkey=os.environ['GOOGLEAPI'], weather_data=weather_data)
+    weather_time = response.json()['data']['time']
+    return render_template('status.html', user=current_user, gmkey=os.environ['GOOGLEAPI'], coordinates='41.6206391,-85.826671',
+                           weather_data=weather_data, weather_time=weather_time)

@@ -1,10 +1,25 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Funmobile Status</h1>
-<h3>Outdoor Estimates:</h3>
-<p>Humidity: {{weather_data.humidity}}</p>
-<p>Temperature: {{weather_data.temperature}}c</p>
+<h1>Van Status</h1>
+<div class="card" style="width: 30rem;">
+  <div class="card-body">
+    <h5 class="card-title">Location Information for {{coordinates}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Pulled from Tomorrow.io at {{weather_time}}</h6>
+    <p class="card-text">Temperature: {{weather_data.temperature}}c.</p>
+    <p class="card-text">Feels Like: {{weather_data.temperatureApparent}}c.</p>
+    <p class="card-text">Humidity: {{weather_data.humidity}}%</p>
+    <p class="card-text">Visibility: {{weather_data.visibility}}</p>
+    <p class="card-text">Precipitation Chance: {{precipitationProbability}}%</p>
+    <p class="card-text">
+      Wind -
+        <br>&emsp;Speed: {{weather_data.windSpeed}}m/s
+        <br>&emsp;Gusting: {{weather_data.windGust}}m/s
+        <br>&emsp;Direction: {{weather_data.windDirection}} degrees
+    </p>
+  </div>
+</div>
+<br/>
 <iframe
   width="600"
   height="450"
@@ -13,7 +28,7 @@
   allowfullscreen
   referrerpolicy="no-referrer-when-downgrade"
   src="https://www.google.com/maps/embed/v1/view?key={{gmkey}}
-    &center=41.6206391,-85.826671
+    &center={{coordinates}}
     &zoom=15
     &maptype=satellite">
 </iframe>
