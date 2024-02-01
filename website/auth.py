@@ -47,10 +47,11 @@ def sign_up():
 
         # Try to find a user with the existing email
         email = normalize_email(email)
-        user = User.query.filter_by(email=email)
+        user = User.query.filter_by(email=email).first()
 
         if user:
             flash('Email already in use. Please log in.', category='error')
+            print(user.name)
         elif len(email) < 4:
             flash('Email must be greater than 4 characters.', category='error')
         elif len(name) < 2:
@@ -69,6 +70,6 @@ def sign_up():
 
             flash('Account created!', category='success')
             login_user(user, remember=True)
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.status'))
 
-    return render_template('sign_up.html')
+    return render_template('sign_up.html', user=current_user)
