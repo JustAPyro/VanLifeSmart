@@ -1,12 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
 from os import path
 
 import os
 from dotenv import load_dotenv
 
 db = SQLAlchemy()
+migrate = Migrate()
 DB_NAME = 'database.db'
 
 # Load environment variables from hidden .env file
@@ -21,6 +23,9 @@ def create_app():
     # Setup database
     db.init_app(app)
 
+    # Set up database versioning/migration
+    migrate.init_app(app, db)
+
     # Import / Register all views
     from .views import views
     from .auth import auth
@@ -28,7 +33,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     # Create the database
-    from .models import User
+    from .models import User, Checkpoint
     create_database(app)
 
     # Set up the login manager for flask
@@ -48,4 +53,5 @@ def create_database(app):
     if not path.exists('website/' + DB_NAME):
         with app.app_context():
             db.create_all()
+
         print('Created Database!')

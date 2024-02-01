@@ -10,3 +10,8 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(150))
     created_on = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)
     last_activity = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now(), nullable=False)
+
+
+class Checkpoint(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    time = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)

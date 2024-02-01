@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
-
+from .lutil import normalize_email
 auth = Blueprint('auth', __name__)
 
 
@@ -13,6 +13,7 @@ def log_in():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        email = normalize_email(email)
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
@@ -34,6 +35,7 @@ def log_out():
     return redirect(url_for('auth.log_in'))
 
 
+
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
@@ -44,6 +46,7 @@ def sign_up():
         token = request.form.get('token')
 
         # Try to find a user with the existing email
+        email = normalize_email(email)
         user = User.query.filter_by(email=email)
 
         if user:
