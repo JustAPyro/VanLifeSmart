@@ -1,0 +1,142 @@
+{% extends "base.html" %} {% block title %}Maintenance{% endblock %}
+
+{% block content %}
+<div>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#mechanicForm" aria-expanded="false" aria-controls="collapseExample">
+New Mechanic
+</button>
+<form method="POST" class="collapse" name="mechanicForm" id="mechanicForm">
+    <h3 align="center">Mechanic</h3>
+    <div class="row">
+        <div class="col">
+          <label for="mechanicName">Name</label>
+        <input type="text" class="form-control" id="mechanicName" name="mechanicName" placeholder="Enter Email">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+          <label for="phone">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone">
+        </div>
+        <div class="col">
+          <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+          <label for="street">Street Address</label>
+        <input type="text" class="form-control" id="street" name="street" placeholder="Enter Street Address">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+        </div>
+        <div class="col">
+            <label for="state">State</label>
+            <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+        </div>
+        <div class="col">
+            <label for="zip">Zip</label>
+            <input type="text" class="form-control" id="zip" name="zip" placeholder="Enter City">
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" value="newMechanic" name="submit">New Mechanic</button>
+</form>
+</div>
+
+<br>
+<div>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#maintenanceForm" aria-expanded="false" aria-controls="collapseExample">
+New Maintenance Record
+</button>
+<form method="POST" class="collapse" name="maintenanceForm" id="maintenanceForm">
+    <h3 align="center">Maintenance</h3>
+    <div class="row">
+        <div class="col">
+            <label for="mechanicSelected">Mechanic</label>
+            <select class="custom-select mr-sm-2" id="mechanicSelected" name="mechanicSelected">
+                <option selected>Mechanic</option>
+                {% for mechanic in current_user.mechanics %}
+                <option value="{{mechanic.id}}">{{mechanic.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="invoiceCost">Total Invoice Cost:</label>
+            <input type="text" class="form-control" id="invoiceCost" name="invoiceCost" placeholder="Enter Total Invoice Cost">
+        </div>
+        <div class="col">
+            <label for="mileage">Mileage</label>
+            <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter Milage">
+        </div>
+        <div class="col">
+            <label for="date">Date (MM/DD/YYYY- PLEASE)</label>
+            <input type="text" class="form-control" id="date" name="date" placeholder="MM/DD/YYYY">
+        </div>
+        <div class="col">
+            <label for="invoiceNumber">Invoice # (Optional)</label>
+            <input type="text" class="form-control" id="invoiceNumber" name="invoiceNumber" placeholder="Invoice #">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="descriptionOfWork" >Description of work</label>
+            <textarea class="form-control" id="descriptionOfWork" name="descriptionOfWork"></textarea>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" value="newRecord" name="submit">Save Maintenance Record</button>
+</form>
+</div>
+
+<div>
+    <h1>Maintenance Records</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Description</th>
+      <th scope="col">Date & Mileage</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for record in current_user.maintenance %}
+    <tr>
+        <th scope="row"></th>
+        <td><p style="white-space: pre-line">{{record.description_of_work}}</p></td>
+        <td><p style="white-space: pre-line">
+            {{record.date_invoiced.strftime("%m/%d/%Y")}}
+            {{ "{:,}".format(record.mileage) }} mi.
+        </p></td>
+        <td><p style="white-space: pre-line">{{record.cost_invoiced}}</p></td>
+        <td><p style="white-space: pre-line">{{record.mechanic_id}}</p></td>
+
+    </tr>
+    {% endfor %}
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+{% endblock %}
