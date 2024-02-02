@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, flash
 from flask_login import login_required, current_user
+from .models import Mechanic
+from . import db
 import requests
 import os
 
@@ -28,6 +30,35 @@ def status():
 @views.route('/maintenance', methods=['GET', 'POST'])
 @login_required
 def maintenance():
+    if request.method == 'POST':
+        mechanicName = request.form.get('mechanicName')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
+        street = request.form.get('street')
+
+        if not mechanicName:
+            flash('Please supply mechanic name.')
+        if not email or phone:
+            flash('Please supply either email or phone.')
+        if len(request.form.get('state')) < 3:
+            flash('Please enter state as 2 characters.')
+
+        m = Mechanic(
+            name=request.form.get('mechanicName'),
+            owner=current_user.id,
+            email=request.form.get('email'),
+            phone=request.form.get('phone'),
+            street=request.form.get('street'),
+            city=request.form.get('city'),
+            state=request.form.get('state'),
+            zip=request.form.get('zip')
+        )
+
+        db.session.add(m)
+        db.session.commit()
+        flash('Mechanic registered!')
+
+
 
     return render_template('maintenance.html', user=current_user)
 

@@ -11,6 +11,8 @@ class User(db.Model, UserMixin):
     created_on = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)
     last_activity = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now(), nullable=False)
 
+    mechanics = db.relationship('Mechanic')
+
 
 class Checkpoint(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,8 +31,8 @@ class Roles(db.Model):
 class Mechanic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(150))
-    email = db.Column(db.String(150))
-    phone = (db.String(10))
+    email = db.Column(db.String(150), nullable=True)
+    phone = db.Column(db.String(10), nullable=True)
 
     # Address fields
     street = db.Column(db.String(150))
@@ -39,6 +41,7 @@ class Mechanic(db.Model):
     zip = db.Column(db.String(10))
 
     maintenance = db.relationship('Maintenance')
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class Maintenance(db.Model):

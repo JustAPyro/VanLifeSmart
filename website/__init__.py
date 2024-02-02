@@ -7,6 +7,7 @@ from os import path
 import os
 from dotenv import load_dotenv
 
+
 db = SQLAlchemy()
 migrate = Migrate()
 DB_NAME = 'database.db'
@@ -53,4 +54,3 @@ def create_database(app):
     if not path.exists('website/' + DB_NAME):
         with app.app_context():
             db.create_all()
-        print('Created Database!')
