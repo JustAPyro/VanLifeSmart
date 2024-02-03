@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     last_activity = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now(), nullable=False)
 
     mechanics = db.relationship('Mechanic')
+    maintenance = db.relationship('Maintenance')
 
 
 class Checkpoint(db.Model):
@@ -40,14 +41,27 @@ class Mechanic(db.Model):
     state = db.Column(db.String(10))
     zip = db.Column(db.String(10))
 
+    # deleted = db.Column(db.Boolean, default=True)
+
     maintenance = db.relationship('Maintenance')
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class Maintenance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    milage = db.Column(db.Integer, nullable=False)
-    date_invoiced = db.Column(db.DateTime, nullable=False)
+    # The mechanic/garage that performed the repairs associated with this
+    mechanic_id = db.Column(db.Integer, db.ForeignKey('mechanic.id'))
+
+    # Total cost of repairs
     cost_invoiced = db.Column(db.Numeric, nullable=False)
 
-    mechanic_id = db.Column(db.Integer, db.ForeignKey('mechanic.id'))
+    mileage = db.Column(db.Integer, nullable=False)
+    date_invoiced = db.Column(db.DateTime, nullable=False)
+    invoice_number = db.Column(db.String(150), nullable=True)
+    description_of_work = db.Column(db.String(20000), nullable=True)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # deleted = db.Column(db.Boolean, default=True)
+    # technicians = db.Column(db.String(150))
+
+
+
