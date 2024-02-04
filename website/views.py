@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Mechanic, Maintenance
 from . import db
@@ -60,6 +60,7 @@ def maintenance():
             db.session.add(m)
             db.session.commit()
             flash('Mechanic registered!')
+            return redirect(url_for('views.maintenance'))
 
         elif request.form['submit'] == 'newRecord':
             # Verify
@@ -80,6 +81,9 @@ def maintenance():
 
             db.session.add(nm)
             db.session.commit()
+            return redirect(url_for('views.maintenance'))
+
+
     print(current_user.mechanics)
     return render_template('maintenance.html',
                            user=current_user,
