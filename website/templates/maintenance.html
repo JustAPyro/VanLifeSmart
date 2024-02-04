@@ -138,13 +138,13 @@
 
                 <!-- Utility buttons cell (Open Archive, Edit, and Delete) -->
                 <td class="btn-group-vertical">
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="bi bi-archive"></i>
                     </button>
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="bi bi-pen"></i>
                     </button>
-                    <button type="button" class="btn btn-secondary" value='delete-{{record.id}}' data-toggle="modal" data-target="#deleteModal">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{record.id}}">
                         <i class="bi bi-trash"></i>
                     </button>
                 </td>
@@ -154,34 +154,35 @@
 </table>
 
 <!-- Confirm Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDelete" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="confirmDelete" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="confirmDelete">Confirm Delete</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
         </button>
       </div>
       <div class="modal-body">
           <!-- TODO: Make the delete description... more descriptive -->
-        You are attempting to delete a record, are you sure?
+          You are attempting to delete the following record, are you sure?
+          <span id="record_id"></span>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary">Confirm Delete</button>
       </div>
     </div>
   </div>
 </div>
-
 <script>
-    console.log("test");
-    var deleteModal = document.getElementById('deleteModal');
-    console.log(deleteModal);
+    // This script handles the confirm delete method
+    var deleteModal = document.getElementById('deleteModal')
     deleteModal.addEventListener('show.bs.modal', function (event) {
-        console.log("Hello");
-    })
+        // Button that triggered the modal
+        var record_id = event.relatedTarget.getAttribute('data-bs-id');
+        console.log(record_id);
+        document.getElementById("record_id").textContent="Maintenance Record: "+record_id;
+})
 </script>
 
 {% endblock %}
