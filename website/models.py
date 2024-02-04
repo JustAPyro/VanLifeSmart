@@ -41,7 +41,7 @@ class Mechanic(db.Model):
     state = db.Column(db.String(10))
     zip = db.Column(db.String(10))
 
-    # deleted = db.Column(db.Boolean, default=True)
+    deleted = db.Column(db.Boolean, default=False)
 
     maintenance = db.relationship('Maintenance')
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -60,8 +60,8 @@ class Maintenance(db.Model):
     invoice_number = db.Column(db.String(150), nullable=True)
     description_of_work = db.Column(db.String(20000), nullable=True)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
-    # deleted = db.Column(db.Boolean, default=True)
-    # technicians = db.Column(db.String(150))
+    deleted = db.Column(db.Boolean, default=False)
+    technicians = db.Column(db.String(150))
 
 
 
