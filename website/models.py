@@ -21,6 +21,28 @@ class Checkpoint(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
 
+    # TomorrowIO
+    tio_cloud_base = db.Column(db.Float, nullable=True)
+    tio_cloud_ceiling = db.Column(db.Float, nullable=True)
+    tio_cloud_cover = db.Column(db.Integer, nullable=True)
+    tio_dew_point = db.Column(db.Float, nullable=True)
+    tio_freezing_rain_intensity = db.Column(db.Integer, nullable=True)
+    tio_humidity = db.Column(db.Integer, nullable=True)
+    tio_precipitation_probability = db.Column(db.Integer, nullable=True)
+    tio_pressure_surface_level = db.Column(db.Float, nullable=True)
+    tio_rain_intensity = db.Column(db.Integer, nullable=True)
+    tio_sleet_intensity = db.Column(db.Integer, nullable=True)
+    tio_snow_intensity = db.Column(db.Integer, nullable=True)
+    tio_temperature = db.Column(db.Float, nullable=True)
+    tio_temperature_apparent = db.Column(db.Float, nullable=True)
+    tio_uv_health_concern = db.Column(db.Integer, nullable=True)
+    tio_uv_index = db.Column(db.Integer, nullable=True)
+    tio_visibility = db.Column(db.Float, nullable=True)
+    tio_weather_code = db.Column(db.Integer, nullable=True)
+    tio_wind_direction = db.Column(db.Float, nullable=True)
+    tio_wind_gust = db.Column(db.Float, nullable=True)
+    tio_wind_speed = db.Column(db.Float, nullable=True)
+
 
 class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Mechanic, Maintenance
+from .models import Mechanic, Maintenance, Checkpoint
 from . import db
 import requests
 import os
@@ -68,7 +68,6 @@ def maintenance():
             cost_invoiced = int(float(request.form.get('invoiceCost')) * 100)
             date_invoiced = datetime.strptime(request.form.get('date'), '%m/%d/%Y')
             description_of_work = request.form.get('descriptionOfWork')
-            print(description_of_work)
             nm = Maintenance(
                 mechanic_id=mechanic_id,
                 owner=current_user.id,
@@ -83,7 +82,6 @@ def maintenance():
             db.session.commit()
             return redirect(url_for('views.maintenance'))
 
-
     print(current_user.mechanics)
     return render_template('maintenance.html',
                            user=current_user,
@@ -96,7 +94,63 @@ def post_maintenance():
     return render_template('post_maintenance.html', user=current_user)
 
 
-@views.route('/push')
+@views.route('/update/', methods=['GET', 'POST'])
 @login_required
-def push():
-    return render_template('push.html', user=current_user)
+def update():
+
+    # different kinds of art
+    if request.method == 'POST':
+
+        # Collect all data from the POST
+        latitude = request.form.get('latitude')
+        longitude = request.form.get('longitude')
+        data = {}
+
+        # Collect all data from API's at this moment
+        # Note that the following code makes extensive use of the drn method
+        # This Dict Rename method just changes the name of the keys in the dict so I can
+        # Easily unpack them into the constructor. This design choice was so that I could easily include
+        # or not include them
+
+        call_apis = True
+        if call_apis:
+            # TomorrowIO (Weather)
+            # https: // docs.tomorrow.io / reference / realtime - weather
+            response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
+                                    '?location=41.6206391,-85.826671'
+                                    f'&apikey={os.environ["TOMORROWAPI"]}')
+            weather_tomorrow_io = response.json()['data']['values']
+            data['tio_cloud_base'] = weather_tomorrow_io['cloudBase']
+            data['tio_cloud_ceiling'] = weather_tomorrow_io['cloudCeiling']
+            data['tio_cloud_cover'] = weather_tomorrow_io['cloudCover']
+            data['tio_dew_point'] = weather_tomorrow_io['dewPoint']
+            data['tio_freezing_rain_intensity'] = weather_tomorrow_io['freezingRainIntensity']
+            data['tio_humidity'] = weather_tomorrow_io['humidity']
+            data['tio_precipitation_probability'] = weather_tomorrow_io['precipitationProbability']
+            data['tio_pressure_surface_level'] = weather_tomorrow_io['pressureSurfaceLevel']
+            data['tio_rain_intensity'] = weather_tomorrow_io['rainIntensity']
+            data['tio_sleet_intensity'] = weather_tomorrow_io['sleetIntensity']
+            data['tio_snow_intensity'] = weather_tomorrow_io['snowIntensity']
+            data['tio_temperature'] = weather_tomorrow_io['temperature']
+            data['tio_temperature_apparent'] = weather_tomorrow_io['temperatureApparent']
+            data['tio_uv_health_concern'] = weather_tomorrow_io['uvHealthConcern']
+            data['tio_uv_index'] = weather_tomorrow_io['uvIndex']
+            data['tio_visibility'] = weather_tomorrow_io['visibility']
+            data['tio_weather_code'] = weather_tomorrow_io['weatherCode']
+            data['tio_wind_direction'] = weather_tomorrow_io['windDirection']
+            data['tio_wind_gust'] = weather_tomorrow_io['windGust']
+            data['tio_wind_speed'] = weather_tomorrow_io['windSpeed']
+            print(data)
+            print('Break----')
+            print(weather_tomorrow_io)
+
+        c = Checkpoint(
+            latitude=latitude,
+            longitude=longitude,
+            **data
+        )
+        db.session.add(c)
+        db.session.commit()
+        return redirect(url_for('views.update'))
+
+    return render_template('update.html', user=current_user)
