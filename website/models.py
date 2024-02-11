@@ -15,33 +15,78 @@ class User(db.Model, UserMixin):
     maintenance = db.relationship('Maintenance')
 
 
+sample = {
+    'latitude': '?',
+    'longitude': '?',
+    'tomorrowIO': 'fillOnServer',
+    'dhts': {
+        'cabin': {
+            'temperature': 32.4,
+            'humidity': 43
+        },
+        'outdoor': {
+            'temperature': 43.2,
+            'humidity': 54
+        }
+    }
+
+}
+
+
 class Checkpoint(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
     time = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
 
+    tio = db.relationship('TomorrowIO', uselist=False)
+    #gps = db.relationship('GPSData', uselist=False)
+    dht = db.relationship('DHTSensor')
+
+
+class DHTSensor(db.Model):
+    # ID & associated checkpoint
+    id = db.Column(db.Integer, primary_key=True)
+    sensor = db.Column(db.String(50), nullable=False)
+    checkpoint = db.Column(db.Integer, db.ForeignKey('checkpoint.id'))
+
+    # Data
+    temperature = db.Column(db.Float, nullable=False)
+    humidity = db.Column(db.Float, nullable=False)
+
+
+# class GPSData(db.Model):
+#    id = db.Column(db.Integer, primary_key=True)
+#    checkpoint = db.Column(db.Integer, db.ForeignKey('checkpoint.id'))
+
+
+class TomorrowIO(db.Model):
+    # ID
+    id = db.Column(db.Integer, primary_key=True)
+    checkpoint = db.Column(db.Integer, db.ForeignKey('checkpoint.id'))
+
     # TomorrowIO
-    tio_cloud_base = db.Column(db.Float, nullable=True)
-    tio_cloud_ceiling = db.Column(db.Float, nullable=True)
-    tio_cloud_cover = db.Column(db.Integer, nullable=True)
-    tio_dew_point = db.Column(db.Float, nullable=True)
-    tio_freezing_rain_intensity = db.Column(db.Integer, nullable=True)
-    tio_humidity = db.Column(db.Integer, nullable=True)
-    tio_precipitation_probability = db.Column(db.Integer, nullable=True)
-    tio_pressure_surface_level = db.Column(db.Float, nullable=True)
-    tio_rain_intensity = db.Column(db.Integer, nullable=True)
-    tio_sleet_intensity = db.Column(db.Integer, nullable=True)
-    tio_snow_intensity = db.Column(db.Integer, nullable=True)
-    tio_temperature = db.Column(db.Float, nullable=True)
-    tio_temperature_apparent = db.Column(db.Float, nullable=True)
-    tio_uv_health_concern = db.Column(db.Integer, nullable=True)
-    tio_uv_index = db.Column(db.Integer, nullable=True)
-    tio_visibility = db.Column(db.Float, nullable=True)
-    tio_weather_code = db.Column(db.Integer, nullable=True)
-    tio_wind_direction = db.Column(db.Float, nullable=True)
-    tio_wind_gust = db.Column(db.Float, nullable=True)
-    tio_wind_speed = db.Column(db.Float, nullable=True)
+    cloud_base = db.Column(db.Float, nullable=True)
+    cloud_ceiling = db.Column(db.Float, nullable=True)
+    cloud_cover = db.Column(db.Integer, nullable=True)
+    dew_point = db.Column(db.Float, nullable=True)
+    freezing_rain_intensity = db.Column(db.Integer, nullable=True)
+    humidity = db.Column(db.Integer, nullable=True)
+    precipitation_probability = db.Column(db.Integer, nullable=True)
+    pressure_surface_level = db.Column(db.Float, nullable=True)
+    rain_intensity = db.Column(db.Integer, nullable=True)
+    sleet_intensity = db.Column(db.Integer, nullable=True)
+    snow_intensity = db.Column(db.Integer, nullable=True)
+    temperature = db.Column(db.Float, nullable=True)
+    temperature_apparent = db.Column(db.Float, nullable=True)
+    uv_health_concern = db.Column(db.Integer, nullable=True)
+    uv_index = db.Column(db.Integer, nullable=True)
+    visibility = db.Column(db.Float, nullable=True)
+    weather_code = db.Column(db.Integer, nullable=True)
+    wind_direction = db.Column(db.Float, nullable=True)
+    wind_gust = db.Column(db.Float, nullable=True)
+    wind_speed = db.Column(db.Float, nullable=True)
 
 
 class Roles(db.Model):
@@ -84,6 +129,3 @@ class Maintenance(db.Model):
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
     deleted = db.Column(db.Boolean, default=False)
     technicians = db.Column(db.String(150))
-
-
-
