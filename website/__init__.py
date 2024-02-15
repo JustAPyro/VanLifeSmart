@@ -6,7 +6,8 @@ from os import path
 
 import os
 from dotenv import load_dotenv
-
+import logging
+logging.basicConfig(level=logging.INFO)
 
 db = SQLAlchemy()
 migrate = Migrate()

@@ -2,6 +2,10 @@
 
 {% block content %}
 <h1>Van Status</h1>
+<div>
+  <h3>Temp / History</h3>
+  <canvas id="myChart" width="200" height="100"></canvas>
+</div>
 <div class="card" style="width: 30rem;">
   <div class="card-body">
     <h5 class="card-title">Location Information for {{coordinates}}</h5>
@@ -32,4 +36,9 @@
     &zoom=15
     &maptype=satellite">
 </iframe>
+<script src="{{url_for('static', filename='status.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+  line_chart("myChart", {{temp_chart|tojson()}});
+</script>
 {% endblock %}

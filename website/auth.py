@@ -3,8 +3,26 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
-from .lutil import normalize_email
+from lutil import normalize_email
+
 auth = Blueprint('auth', __name__)
+
+
+@auth.route('/api/auth.json', methods=['GET', 'POST'])
+def api_auth():
+    if request.method == 'POST':
+        email = normalize_email(request.json['email'])
+        password = request.json['password']
+        remember = request.json.get('remember', False)
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                login_user(user, remember=remember)
+                return {'status': 200}
+            else:
+                return {'Failure to authenticate'}
+    return 'hello!'
 
 
 @auth.route('/log-in', methods=['GET', 'POST'])
@@ -33,7 +51,6 @@ def log_in():
 def log_out():
     logout_user()
     return redirect(url_for('auth.log_in'))
-
 
 
 @auth.route('/sign-up', methods=['GET', 'POST'])

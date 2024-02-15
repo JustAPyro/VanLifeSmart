@@ -2,6 +2,8 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+# == User / AUth Models ============================================
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -10,42 +12,15 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(150))
     created_on = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)
     last_activity = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now(), nullable=False)
-
+    checkpoints = db.relationship('Checkpoint')
     mechanics = db.relationship('Mechanic')
     maintenance = db.relationship('Maintenance')
 
-
-sample = {
-    'latitude': '?',
-    'longitude': '?',
-    'tomorrowIO': 'fillOnServer',
-    'dhts': {
-        'cabin': {
-            'temperature': 32.4,
-            'humidity': 43
-        },
-        'outdoor': {
-            'temperature': 43.2,
-            'humidity': 54
-        }
-    }
-
-}
-
-
-class Checkpoint(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
-    time = db.Column(db.DateTime(timezone=True), default=func.now(), nullable=False)
-    latitude = db.Column(db.Float)
-    longitude = db.Column(db.Float)
-
-    tio = db.relationship('TomorrowIO', uselist=False)
-    #gps = db.relationship('GPSData', uselist=False)
-    dht = db.relationship('DHTSensor')
+# == Data Models ============================================
 
 
 class DHTSensor(db.Model):
+    """DHT Sensor data"""
     # ID & associated checkpoint
     id = db.Column(db.Integer, primary_key=True)
     sensor = db.Column(db.String(50), nullable=False)
@@ -56,15 +31,51 @@ class DHTSensor(db.Model):
     humidity = db.Column(db.Float, nullable=False)
 
 
-# class GPSData(db.Model):
-#    id = db.Column(db.Integer, primary_key=True)
-#    checkpoint = db.Column(db.Integer, db.ForeignKey('checkpoint.id'))
+class GPSData(db.Model):
+    """GPS Sensor Data"""
+    # DB identifiers
+    id = db.Column(db.Integer, primary_key=True)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    time = db.Column(db.Integer)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
+    satellites_used = db.Column(db.Integer)
+    hdop = db.Column(db.Float)
+    fix_quality = db.Column(db.String(10))
+    altitude = db.Column(db.Float)
+
+
+class EngineData(db.Model):
+    """OBD2 Originated Engine Data"""
+    # Database identifiers
+    id = db.Column(db.Integer, primary_key=True)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    # Data exposed by ECU and PCM:
+    vehicle_speed = None,
+    air_flow_rate = None
+    intake_manifold_pressure = None
+    oxygen_sensor = None
+    voltage = None
+    fuel_timing_advance = None
+    fuel_trim_long = None
+    fuel_trim_short = None
+    fuel_pressure = None
+    fuel_level = None,
+    engine_fuel_rate = None
+    engine_load_calculated = None,
+    engine_coolant_temperature = None,
+    engine_oil_temperature = None
+    engine_runtime = None,
+    engine_rpm = None,
 
 
 class TomorrowIO(db.Model):
+    """TomorrowIO data"""
     # ID
     id = db.Column(db.Integer, primary_key=True)
-    checkpoint = db.Column(db.Integer, db.ForeignKey('checkpoint.id'))
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     # TomorrowIO
     cloud_base = db.Column(db.Float, nullable=True)
@@ -94,6 +105,9 @@ class Roles(db.Model):
     name = db.Column(db.String(150), nullable=False)
 
     write_location = db.Column(db.Boolean, unique=False)
+
+
+# == Maintenance Data Models ============================================
 
 
 class Mechanic(db.Model):

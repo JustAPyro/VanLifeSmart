@@ -5,7 +5,8 @@ from . import db
 import requests
 import os
 from datetime import datetime
-
+import logging
+logger = logging.getLogger('funmobile_server')
 views = Blueprint('views', __name__)
 
 
@@ -18,14 +19,25 @@ def home():
 @views.route('/status')
 @login_required
 def status():
-    response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
-                            '?location=41.6206391,-85.826671'
-                            f'&apikey={os.environ["TOMORROWAPI"]}')
-    weather_data = response.json()['data']['values']
-    weather_time = response.json()['data']['time']
+    # response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
+    #                        '?location=41.6206391,-85.826671'
+    #                        f'&apikey={os.environ["TOMORROWAPI"]}')
+    # d = response.json()
+    # print(d)
+    weather_data = {}  # response.json()['data']['values']
+    weather_time = {}  # response.json()['data']['time']
+
+    print(current_user.checkpoints)
+    temp_chart = {
+        'labels': [checkpoint.time for checkpoint in current_user.checkpoints],
+        'tio': [checkpoint.tio.temperature for checkpoint in current_user.checkpoints],
+        'tio_apparent': [checkpoint.tio.temperature_apparent for checkpoint in current_user.checkpoints]
+    }
+
     return render_template('status.html', user=current_user, gmkey=os.environ['GOOGLEAPI'],
                            coordinates='41.6206391,-85.826671',
-                           weather_data=weather_data, weather_time=weather_time)
+                           weather_data=weather_data, weather_time=weather_time,
+                           temp_chart=temp_chart)
 
 
 @views.route('/maintenance', methods=['GET', 'POST'])
@@ -99,6 +111,8 @@ def post_maintenance():
 def update():
     # different kinds of art
     if request.method == 'POST':
+        logger.info(f'Post Update with payload: {request.json()}')
+        print(request.json())
         # Collect all data from the POST
         latitude = request.form.get('latitude')
         longitude = request.form.get('longitude')
