@@ -73,13 +73,19 @@ def get_gps_data():
             return data
 
 
-def get_tio_data(latitude: float = None, longitude: float = None):
+def get_tio_data(latitude: float = None, longitude: float = None, cmd_args=None):
     if has_gps():
         data = get_gps_data()
         latitude = data['latitude']
         longitude = data['longitude']
 
-    if not latitude or not longitude:
+    if len(cmd_args.location) == 2:
+        latitude = cmd_args.location[0]
+        longitude = cmd_args.location[1]
+    else:
+        return {'Error': 'args.location should provide exactly 2 values.'}
+
+    if latitude is None or longitude is None:
         return {'Error': 'Could not find latitude and longitude.'}
 
     data = {}
@@ -91,6 +97,7 @@ def get_tio_data(latitude: float = None, longitude: float = None):
     data['time'] = response.json()['data']['time']
     data['latitude'] = response.json()['location']['lat']
     data['longitude'] = response.json()['location']['lon']
+
     data['uv_index'] = td['uvIndex']
     data['humidity'] = td['humidity']
     data['wind_gust'] = td['windGust']
@@ -117,10 +124,11 @@ def get_tio_data(latitude: float = None, longitude: float = None):
 parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Select a van action")
 parser.add_argument("sensor", help="Get feedback from a van sensor.")
+parser.add_argument('--location', nargs='+', type=float)
 args = parser.parse_args()
 
 if args.action == 'sensor':
     if args.sensor == 'gps':
         print(json.dumps(get_gps_data(), indent=4))
     elif args.sensor == 'tio':
-        print(json.dumps(get_tio_data()))
+        print(json.dumps(get_tio_data(cmd_args=args), indent=4))

@@ -3,12 +3,17 @@ import json
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 
-from lutil import create_checkpoint
 from .models import Maintenance
 from . import db
 import logging
+
 logger = logging.getLogger('funmobile_server')
 api = Blueprint('api', __name__)
+
+
+@api.route('up.json')
+def is_up():
+    return {200: 'OKAY'}
 
 
 @api.route('maintenance/record/<record_id>/', methods=['GET', 'POST', 'DELETE'])
@@ -43,11 +48,6 @@ def status_update():
         longitude = float(longitude[0]) * -1  # CAUSING A BUG????
     else:
         longitude = longitude[0]
-
-    if request.method == 'POST':
-        checkpoint = create_checkpoint(current_user, latitude, longitude, load_tio=False)
-        db.session.add(checkpoint)
-        db.session.commit()
 
         return '{200: OKAY}'
     return '{200: OKAY}'
