@@ -36,7 +36,7 @@ def get_gps_data():
             data['longitude'] = longitude
 
             # Fix quality processing
-            fq = values[6]
+            fq = int(values[6])
             if fq == 0:
                 fq = 'Not Fixed'
             elif fq == 1:
@@ -47,12 +47,12 @@ def get_gps_data():
                 fq = f'Unknown Fix: {fq}'
             data['fix_quality'] = fq
             data['satellites_used'] = int(values[7])
-            data['HDOP'] = values[8]
+            data['HDOP'] = float(values[8])
             data['altitude'] = float(values[9])
             found['GPGGA'] = True
         if formatting == 'GPVTG':
-            data['true_track'] = values[1]
-            data['magnetic_track'] = values[3]
+            data['true_track'] = float(values[1]) if not '' else None
+            data['magnetic_track'] = float(values[3]) if not '' else None
             data['ground_speed'] = float(values[7])
             found['GPVTG'] = True
         if all(value == True for value in found.values()):
