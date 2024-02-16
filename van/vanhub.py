@@ -82,7 +82,7 @@ def get_tio_data(latitude: float = None, longitude: float = None, cmd_args=None)
     if cmd_args and cmd_args.location and len(cmd_args.location) == 2:
         latitude = cmd_args.location[0]
         longitude = cmd_args.location[1]
-    else:
+    elif cmd_args and cmd_args.location:
         return {'Error': 'args.location should provide exactly 2 values.'}
 
     if latitude is None or longitude is None:
