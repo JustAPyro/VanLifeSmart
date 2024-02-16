@@ -9,6 +9,9 @@ def normalize_email(email: str) -> str:
     return email.strip().lower()
 
 
+
+
+
 def create_tio(user: User,
                latitude: float = None,
                longitude: float = None,

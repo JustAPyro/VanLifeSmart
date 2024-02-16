@@ -1,12 +1,26 @@
 #!/usr/bin/env python
 import argparse
 import json
-import serial
+import os
 
-gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
+import requests
+import serial
+from dotenv import load_dotenv
+from serial import SerialException
+
+load_dotenv()
+
+
+def has_gps():
+    try:
+        gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
+        return True
+    except SerialException:
+        return False
 
 
 def get_gps_data():
+    gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
     formats = ['GPGGA', 'GPVTG']
     found = {format_type: False for format_type in formats}
     data = {}
@@ -51,12 +65,53 @@ def get_gps_data():
             data['altitude'] = float(values[9])
             found['GPGGA'] = True
         if formatting == 'GPVTG':
-            data['true_track'] = float(values[1]) if not '' else None
-            data['magnetic_track'] = float(values[3]) if not '' else None
+            data['true_track'] = None if values[1] == '' else float(values[1])
+            data['magnetic_track'] = None if values[3] == '' else float(values[3])
             data['ground_speed'] = float(values[7])
             found['GPVTG'] = True
         if all(value == True for value in found.values()):
             return data
+
+
+def get_tio_data(latitude: float = None, longitude: float = None):
+    if has_gps():
+        data = get_gps_data()
+        latitude = data['latitude']
+        longitude = data['longitude']
+
+    if not latitude or not longitude:
+        return {'Error': 'Could not find latitude and longitude.'}
+
+    data = {}
+    response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
+                            f'?location={latitude},{longitude}'
+                            f'&apikey={os.environ["TOMORROWAPI"]}')
+
+    td = response.json()['data']['values']
+    data['time'] = response.json()['data']['time']
+    data['latitude'] = response.json()['location']['lat']
+    data['longitude'] = response.json()['location']['lon']
+    data['uv_index'] = td['uvIndex']
+    data['humidity'] = td['humidity']
+    data['wind_gust'] = td['windGust']
+    data['dew_point'] = td['dewPoint']
+    data['cloud_base'] = td['cloudBase']
+    data['wind_speed'] = td['windSpeed']
+    data['visibility'] = td['visibility']
+    data['cloud_cover'] = td['cloudCover']
+    data['temperature'] = td['temperature']
+    data['weather_code'] = td['weatherCode']
+    data['cloud_ceiling'] = td['cloudCeiling']
+    data['rain_intensity'] = td['rainIntensity']
+    data['snow_intensity'] = td['snowIntensity']
+    data['wind_direction'] = td['windDirection']
+    data['sleet_intensity'] = td['sleetIntensity']
+    data['uv_health_concern'] = td['uvHealthConcern']
+    data['temperature_apparent'] = td['temperatureApparent']
+    data['pressure_surface_level'] = td['pressureSurfaceLevel']
+    data['freezing_rain_intensity'] = td['freezingRainIntensity']
+    data['precipitation_probability'] = td['precipitationProbability']
+    return data
 
 
 parser = argparse.ArgumentParser()
@@ -68,4 +123,4 @@ if args.action == 'sensor':
     if args.sensor == 'gps':
         print(json.dumps(get_gps_data(), indent=4))
     elif args.sensor == 'tio':
-        print('weather')
+        print(json.dumps(get_tio_data()))
