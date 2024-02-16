@@ -125,7 +125,7 @@ def sensor_handler(arguments):
     if args.input == 'gps':
         print(json.dumps(get_gps_data(), indent=4))
     elif args.input == 'tio':
-        print(json.dumps(get_tio_data(arguments)))
+        print(json.dumps(get_tio_data(arguments), indent=4))
     else:
         print("{'error': 'Sensor input parameters not recognized.'}")
 
@@ -134,7 +134,7 @@ parser = argparse.ArgumentParser(prog='vanhub')
 subparsers = parser.add_subparsers()
 
 parser_sensor = subparsers.add_parser('sensor', help='Get information from van hub sensors.')
-parser_sensor.add_argument("input", help="Get feedback from this van sensor.")
+parser_sensor.add_argument("input", choices=['gps', 'tio'], help="Get feedback from this van sensor.")
 #parser.add_argument('--location', nargs='+', type=float)
 #parser.add_argument('--raw', action='store_false')
 parser_sensor.set_defaults(func=sensor_handler)
