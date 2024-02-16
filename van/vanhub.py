@@ -40,10 +40,10 @@ def get_gps_data():
             data['utc_time'] = float(values[1])
 
             # Process N/S/E/W into decimal lat/long
-            latitude = float(values[2][0:2]) + float(values[2][2:])
+            latitude = float(values[2][0:2]) + (float(values[2][2:])/60)
             if values[3] == 'W':
                 latitude = latitude * -1
-            longitude = float(values[4][0:3]) + float(values[4][3:])
+            longitude = float(values[4][0:3]) + (float(values[4][3:])/60)
             if values[5] == 'S':
                 longitude = longitude * -1
             data['latitude'] = latitude
@@ -125,6 +125,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("action", help="Select a van action")
 parser.add_argument("sensor", help="Get feedback from a van sensor.")
 parser.add_argument('--location', nargs='+', type=float)
+parser.add_argument('--raw', action='store_false')
 args = parser.parse_args()
 
 if args.action == 'sensor':
