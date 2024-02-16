@@ -1,6 +1,6 @@
+#!/usr/bin/env python
 import argparse
 import json
-
 import serial
 
 gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
