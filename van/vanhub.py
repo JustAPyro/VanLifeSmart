@@ -40,10 +40,10 @@ def get_gps_data():
             data['utc_time'] = float(values[1])
 
             # Process N/S/E/W into decimal lat/long
-            latitude = float(values[2])
+            latitude = float(values[2][0:2]) + float(values[2][2:])
             if values[3] == 'W':
                 latitude = latitude * -1
-            longitude = float(values[4])
+            longitude = float(values[4][0:3]) + float(values[4][3:])
             if values[5] == 'S':
                 longitude = longitude * -1
             data['latitude'] = latitude
