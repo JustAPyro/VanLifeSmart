@@ -121,15 +121,24 @@ def get_tio_data(latitude: float = None, longitude: float = None, cmd_args=None)
     return data
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("action", help="Select a van action")
-parser.add_argument("sensor", help="Get feedback from a van sensor.")
-parser.add_argument('--location', nargs='+', type=float)
-parser.add_argument('--raw', action='store_false')
-args = parser.parse_args()
-
-if args.action == 'sensor':
-    if args.sensor == 'gps':
+def sensor_handler(arguments):
+    print('hi')
+    if args.input == 'gps':
         print(json.dumps(get_gps_data(), indent=4))
-    elif args.sensor == 'tio':
-        print(json.dumps(get_tio_data(cmd_args=args), indent=4))
+    elif args.input == 'tio':
+        print(json.dumps(get_tio_data(cmd_args=args)))
+    else:
+        print("{'error': 'Sensor input parameters not recognized.'}")
+
+
+parser = argparse.ArgumentParser(prog='vanhub')
+subparsers = parser.add_subparsers()
+
+parser_sensor = subparsers.add_parser('sensor', help='Get information from van hub sensors.')
+parser_sensor.add_argument("input", help="Get feedback from this van sensor.")
+#parser.add_argument('--location', nargs='+', type=float)
+#parser.add_argument('--raw', action='store_false')
+parser_sensor.set_defaults(func=sensor_handler)
+args = parser.parse_args()
+args.func(args)
+

@@ -2,3 +2,4 @@ Funmobile.iml
 .idea*
 /.env
 vanhub
+/playground.py
