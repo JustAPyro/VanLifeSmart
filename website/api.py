@@ -1,10 +1,13 @@
+import json
+
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 
 from lutil import create_checkpoint
 from .models import Maintenance
 from . import db
-
+import logging
+logger = logging.getLogger('funmobile_server')
 api = Blueprint('api', __name__)
 
 
@@ -22,31 +25,15 @@ def api_maintenance_record(record_id: int):
     return '{200: OKAY}'
 
 
-sample = {
-    'latitude': '?',
-    'longitude': '?',
-    'tomorrowIO': 'fillOnServer',
-    'dhts': {
-        'cabin': {
-            'temperature': 32.4,
-            'humidity': 43
-        },
-        'outdoor': {
-            'temperature': 43.2,
-            'humidity': 54
-        }
-    }
-
-}
-
-
 @api.route('update.json', methods=['GET', 'POST'])
 @login_required
 def status_update():
     latitude = request.json.get('latitude')
     longitude = request.json.get('longitude')
-    print(longitude)
-    print(request.json)
+    logger.info(f'---------- Update ----------'
+                f'Status update from {current_user.email} at {request.remote_addr} with the following payload:\n'
+                f'{json.dumps(request.json, sort_keys=True, indent=4, separators=(",", ":"))}')
+
     if latitude[1] == 'S':
         latitude = latitude[0] * -1
     else:

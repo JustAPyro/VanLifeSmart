@@ -7,6 +7,7 @@ from os import path
 import os
 from dotenv import load_dotenv
 import logging
+
 logging.basicConfig(level=logging.INFO)
 
 db = SQLAlchemy()
@@ -15,6 +16,7 @@ DB_NAME = 'database.db'
 
 # Load environment variables from hidden .env file
 load_dotenv()
+
 
 def create_app():
     # Setup Flask
@@ -37,7 +39,7 @@ def create_app():
     app.register_blueprint(api, url_prefix='/api/')
 
     # Create the database
-    from .models import User, Checkpoint
+    from .models import User
     create_database(app)
 
     # Set up the login manager for flask

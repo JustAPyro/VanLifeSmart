@@ -2,37 +2,32 @@ import os
 
 import requests
 
-from website.models import Checkpoint, User, TomorrowIO
+from website.models import User, TomorrowIO
 
 
 def normalize_email(email: str) -> str:
     return email.strip().lower()
 
 
-def create_checkpoint(user: User,
-                      latitude: float = None,
-                      longitude: float = None,
-                      load_tio: bool = False) -> Checkpoint:
+def create_tio(user: User,
+               latitude: float = None,
+               longitude: float = None,
+               load_tio: bool = False):
 
     # Input Verification
     if not latitude or not longitude:
         raise Exception('Latitude and Longitude are required for creating a checkpoint')
 
-    # Create the checkpoint
-    checkpoint = Checkpoint(
-        owner=user.id,
-        latitude=latitude,
-        longitude=longitude,
-    )
-
     # TomorrowIO (Weather)
     # https: // docs.tomorrow.io / reference / realtime - weather
     if load_tio:
         response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
-                                f'?location={checkpoint.latitude},{checkpoint.longitude}'
+                                f'?location={latitude},{longitude}'
                                 f'&apikey={os.environ["TOMORROWAPI"]}')
+        time = response.json()['data']['time']
         tio_data = response.json()['data']['values']
         tio = TomorrowIO(
+            time=time,
             uv_index=tio_data['uvIndex'],
             humidity=tio_data['humidity'],
             wind_gust=tio_data['windGust'],
@@ -54,5 +49,4 @@ def create_checkpoint(user: User,
             freezing_rain_intensity=tio_data['freezingRainIntensity'],
             precipitation_probability=tio_data['precipitationProbability'],
         )
-        checkpoint.tio = tio
-    return checkpoint
+        return tio

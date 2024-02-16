@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Mechanic, Maintenance, Checkpoint, TomorrowIO
+from .models import Mechanic, Maintenance, TomorrowIO
 from . import db
 import requests
 import os
@@ -27,11 +27,10 @@ def status():
     weather_data = {}  # response.json()['data']['values']
     weather_time = {}  # response.json()['data']['time']
 
-    print(current_user.checkpoints)
     temp_chart = {
-        'labels': [checkpoint.time for checkpoint in current_user.checkpoints],
-        'tio': [checkpoint.tio.temperature for checkpoint in current_user.checkpoints],
-        'tio_apparent': [checkpoint.tio.temperature_apparent for checkpoint in current_user.checkpoints]
+        'labels': [1, 2, 3, 4],
+        'tio': [1, 2, 3, 4],
+        'tio_apparent': [1, 2, 3, 4]
     }
 
     return render_template('status.html', user=current_user, gmkey=os.environ['GOOGLEAPI'],
