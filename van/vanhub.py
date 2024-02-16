@@ -73,16 +73,16 @@ def get_gps_data():
             return data
 
 
-def get_tio_data(latitude: float = None, longitude: float = None, cmd_args=None):
+def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
     if has_gps():
         data = get_gps_data()
         latitude = data['latitude']
         longitude = data['longitude']
 
-    if cmd_args and cmd_args.location and len(cmd_args.location) == 2:
-        latitude = cmd_args.location[0]
-        longitude = cmd_args.location[1]
-    elif cmd_args and cmd_args.location:
+    if arguments and arguments.location and len(arguments.location) == 2:
+        latitude = arguments.location[0]
+        longitude = arguments.location[1]
+    elif arguments and arguments.location:
         return {'Error': 'args.location should provide exactly 2 values.'}
 
     if latitude is None or longitude is None:
@@ -122,11 +122,10 @@ def get_tio_data(latitude: float = None, longitude: float = None, cmd_args=None)
 
 
 def sensor_handler(arguments):
-    print('hi')
     if args.input == 'gps':
         print(json.dumps(get_gps_data(), indent=4))
     elif args.input == 'tio':
-        print(json.dumps(get_tio_data(cmd_args=args)))
+        print(json.dumps(get_tio_data(arguments)))
     else:
         print("{'error': 'Sensor input parameters not recognized.'}")
 
