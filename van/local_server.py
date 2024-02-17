@@ -3,18 +3,18 @@ Demonstrates how to use the background scheduler to schedule a job that executes
 intervals.
 """
 import json
-import time
 import os
-from contextlib import asynccontextmanager
-from typing import Optional
-
-from fastapi import Request as fast_request
 import requests
 import uvicorn
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from dotenv import load_dotenv
 import logging
+
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from fastapi import Request as fastRequest
+from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 from fastapi import FastAPI
+from typing import Optional
+
 from vanhub import get_gps_data
 
 payload = {'gps': []}
@@ -119,7 +119,7 @@ def get_specific_scheduler(schedule: str):
 
 
 @app.patch('/scheduler/{schedule}.json')
-async def patch_specific_scheduler(schedule: str, request: fast_request):
+async def patch_specific_scheduler(schedule: str, request: fastRequest):
     job = scheduler.get_job(schedule)
     if not job:
         # TODO: JSON error format
@@ -138,4 +138,4 @@ async def patch_specific_scheduler(schedule: str, request: fast_request):
 
 
 if __name__ == '__main__':
-    uvicorn.run('van.local_server:app', reload=True)
+    uvicorn.run('local_server:app', reload=True)
