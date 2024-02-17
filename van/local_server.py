@@ -21,7 +21,6 @@ payload = {'gps': []}
 
 
 def get_online_server():
-    breakpoint()
     with open('van/vhs_cmd_config.json', 'r') as file:
         config = json.load(file)
         return config['ONLINE_SERVER_LOCATION']
@@ -81,7 +80,7 @@ logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
 
 # Logging Suppression
-# logging.getLogger('apscheduler.executors.default').setLevel(logging.CRITICAL + 1)
+logging.getLogger('apscheduler.executors.default').setLevel(logging.CRITICAL + 1)
 
 
 @app.get('/')
