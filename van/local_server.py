@@ -21,19 +21,19 @@ payload = {'gps': []}
 
 
 def get_online_server():
-    with open('../instance/vhs_cmd_config.json', 'r') as file:
+    with open('vhs_cmd_config.json', 'r') as file:
         return json.load(file)['ONLINE_SERVER_LOCATION']
 
 
 def report():
-    logger.info(f'---- Attempting to report to online server with email "{os.getenv("VLS_USERNAME")}" ----')
-
+    logger.info(f'Reporting to online server with email {os.getenv("VLS_USERNAME")}')
+    # TODO: Guard and throw useful error against missing .env variables
     session = requests.Session()
     auth_url = f'{get_online_server()}/api/auth.json'
     email = os.getenv('VLS_USERNAME')
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
     auth_response = session.post(auth_url, json=auth_json)
-    logger.info(f'Authorization returned: {auth_response.status_code} Now Sending payload:\n{json.dumps(payload, indent=4)}')
+    logger.info(f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
 
     report_url = f'{get_online_server()}/api/report.json'
     report_response = session.post(report_url, json=payload)

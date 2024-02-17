@@ -10,14 +10,10 @@ def normalize_email(email: str) -> str:
     return email.strip().lower()
 
 
-
-
-
 def create_tio(user: User,
                latitude: float = None,
                longitude: float = None,
                load_tio: bool = False):
-
     # Input Verification
     if not latitude or not longitude:
         raise Exception('Latitude and Longitude are required for creating a checkpoint')
