@@ -56,4 +56,5 @@ def status_update():
 @api.route('report.json', methods=['GET', 'POST'])
 @login_required
 def report():
-    print('Recieved: ' + request.json)
+    print('Recieved: ' + str(request.json))
+    return {'good': 'work'}

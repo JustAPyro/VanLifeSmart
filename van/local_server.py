@@ -1,0 +1,141 @@
+"""
+Demonstrates how to use the background scheduler to schedule a job that executes on 3 second
+intervals.
+"""
+import json
+import time
+import os
+from contextlib import asynccontextmanager
+from typing import Optional
+
+from fastapi import Request as fast_request
+import requests
+import uvicorn
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from dotenv import load_dotenv
+import logging
+from fastapi import FastAPI
+from vanhub import get_gps_data
+
+payload = {'gps': []}
+
+
+def report():
+    logger.info('---- Attempting to report to online server ----')
+
+    session = requests.Session()
+    auth_url = 'http://127.0.0.1:5000/api/auth.json'
+    email = os.getenv('VLS_USERNAME')
+    auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
+    auth_response = session.post(auth_url, json=auth_json)
+    logger.info(f'Authorizing as {email} returned status [{auth_response.status_code}]')
+    logger.info(f'Sending payload:\n{json.dumps(payload, indent=4)}')
+
+    report_url = 'http://127.0.0.1:5000/api/report.json'
+    report_response = session.post(report_url, json=payload)
+    logger.info(f'Report returned status code [{report_response.status_code}] '
+                f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
+
+
+def log_gps():
+    logger.info('Logged GPS data')
+    payload['gps'].append(get_gps_data())
+
+
+@asynccontextmanager
+async def lifespan(fast_app: FastAPI):
+    """Manages the lifespan of the FastAPI app"""
+
+    # ----- Startup ------------------------
+    load_dotenv()
+    global scheduler
+    try:
+        scheduler = AsyncIOScheduler()
+        scheduler.start()
+
+        scheduler.add_job(report, 'interval', id='report', minutes=1,
+                          name='Reports current payload to online server')
+        scheduler.add_job(log_gps, 'interval', id='log_gps', seconds=30,
+                          name='Logs GPS data to payload.')
+
+        logger.info('Successfully Created Scheduler Object')
+    except (Exception,) as e:
+        # If we get any type of exception we log it
+        logger.error('Error creating scheduler object', exc_info=e)
+
+    # ---- Yield To App --------------------
+    yield
+
+
+app = FastAPI(title='Van Hub', lifespan=lifespan)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+scheduler: Optional[AsyncIOScheduler] = None
+
+# Logging Suppression
+logging.getLogger('apscheduler.executors.default').setLevel(logging.CRITICAL + 1)
+
+
+@app.get('/')
+def resched():
+    return 'hello'
+
+
+@app.get('/scheduler.json')
+def get_scheduler():
+    report_job = scheduler.get_job('report')
+    log_gps_job = scheduler.get_job('log_gps')
+    return {
+        'report': {
+            'description': report_job.name,
+            'trigger': str(report_job.trigger),
+            'next_run_time': report_job.next_run_time,
+            'max_instances': report_job.max_instances,
+            'misfire_grace_time': report_job.misfire_grace_time
+        },
+        'log_gps': {
+            'description': log_gps_job.name,
+            'trigger': str(log_gps_job.trigger),
+            'next_run_time': log_gps_job.next_run_time,
+            'max_instances': log_gps_job.max_instances,
+            'misfire_grace_time': log_gps_job.misfire_grace_time
+        }
+    }
+
+
+@app.get('/scheduler/{schedule}.json')
+def get_specific_scheduler(schedule: str):
+    job = scheduler.get_job(schedule)
+    if not job:
+        # TODO: JSON Error format
+        return {'Error': f'Could not find scheduler: {schedule}'}
+    return {
+        'description': job.name,
+        'trigger': str(job.trigger),
+        'next_run_time': job.next_run_time,
+        'max_instances': job.max_instances,
+        'misfire_grace_time': job.misfire_grace_time
+    }
+
+
+@app.patch('/scheduler/{schedule}.json')
+async def patch_specific_scheduler(schedule: str, request: fast_request):
+    job = scheduler.get_job(schedule)
+    if not job:
+        # TODO: JSON error format
+        return {'Error': f'Could not find scheduler: {schedule}'}
+    patch_values = await request.json()
+    trigger = patch_values['trigger']['type']
+    intervals = patch_values['trigger']['interval']
+    scheduler.reschedule_job(job.id, trigger=trigger, **intervals)
+    return {
+        'description': job.name,
+        'trigger': str(job.trigger),
+        'next_run_time': job.next_run_time,
+        'max_instances': job.max_instances,
+        'misfire_grace_time': job.misfire_grace_time
+    }
+
+
+if __name__ == '__main__':
+    uvicorn.run('van.local_server:app', reload=True)
