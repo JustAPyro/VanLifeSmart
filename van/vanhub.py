@@ -6,7 +6,6 @@ import os
 import requests
 import serial
 from dotenv import load_dotenv
-from serial import SerialException
 
 NO_ARG = 1
 MISSING_ARG = 2
@@ -32,7 +31,7 @@ def has_gps():
     try:
         gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
         return True
-    except SerialException:
+    except (Exception, ):
         return False
 
 
