@@ -138,4 +138,4 @@ async def patch_specific_scheduler(schedule: str, request: fastRequest):
 
 
 if __name__ == '__main__':
-    uvicorn.run('local_server:app', reload=True)
+    uvicorn.run('local_server:app', host='0.0.0.0', reload=False)
