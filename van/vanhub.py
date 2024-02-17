@@ -13,13 +13,13 @@ load_dotenv()
 
 
 def get_van_hub():
-    with open('../bin/vhs_cmd_config.json', 'r') as file:
+    with open('../instance/vhs_cmd_config.json', 'r') as file:
         return json.load(file)['VAN_HUB_LOCATION']
 
 
 def set_van_hub(van_hub_location: str):
     # TODO: Try polling the new location before setting it
-    with open('../bin/vhs_cmd_config.json', 'r+') as file:
+    with open('../instance/vhs_cmd_config.json', 'r+') as file:
         data = json.load(file)
         data['VAN_HUB_LOCATION'] = van_hub_location
         file.seek(0)  # rewind
