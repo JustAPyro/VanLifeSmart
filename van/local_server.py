@@ -21,8 +21,10 @@ payload = {'gps': []}
 
 
 def get_online_server():
-    with open('vhs_cmd_config.json', 'r') as file:
-        return json.load(file)['ONLINE_SERVER_LOCATION']
+    breakpoint()
+    with open('van/vhs_cmd_config.json', 'r') as file:
+        config = json.load(file)
+        return config['ONLINE_SERVER_LOCATION']
 
 
 def report():
@@ -39,6 +41,8 @@ def report():
     report_response = session.post(report_url, json=payload)
     logger.info(f'Report returned status code [{report_response.status_code}] '
                 f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
+    payload.clear()
+
 
 
 def log_gps():
@@ -77,7 +81,7 @@ logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
 
 # Logging Suppression
-logging.getLogger('apscheduler.executors.default').setLevel(logging.CRITICAL + 1)
+# logging.getLogger('apscheduler.executors.default').setLevel(logging.CRITICAL + 1)
 
 
 @app.get('/')
