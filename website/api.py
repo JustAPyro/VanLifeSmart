@@ -51,3 +51,9 @@ def status_update():
 
         return '{200: OKAY}'
     return '{200: OKAY}'
+
+
+@api.route('report.json', methods=['GET', 'POST'])
+@login_required
+def report():
+    print('Recieved: ' + request.json)

@@ -4,42 +4,58 @@ intervals.
 """
 import time
 import os
+from contextlib import asynccontextmanager
+from typing import Optional
+
 import requests
+import uvicorn
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
+from fastapi import FastAPI
+
+payload = {}
+
+
+def report():
+    logger.info('Reporting to Public Server')
+
+
+@asynccontextmanager
+async def lifespan(fast_app: FastAPI):
+    """Manages the lifespan of the FastAPI app"""
+
+    # ----- Startup ------------------------
+    global scheduler
+    try:
+        scheduler = AsyncIOScheduler()
+        scheduler.start()
+        scheduler.add_job(report, 'interval', seconds=5, id='report')
+        logger.info('Successfully Created Scheduler Object')
+    except (Exception,) as e:
+        # If we get any type of exception we log it
+        logger.error('Error creating scheduler object', exc_info=e)
+
+    # ---- Yield To App --------------------
+    yield
+
+
+app = FastAPI(title='Van Hub', lifespan=lifespan)
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger('example_logger')
+logger = logging.getLogger(__name__)
+scheduler: Optional[AsyncIOScheduler] = None
 
 
-def update():
-    logger.info('Sending Server Update...')
-    load_dotenv()
-    session = requests.Session()
-    auth_url = 'http://127.0.0.1:5000/api/auth.json'
-    auth_json = {'email': 'luke.m.hanna@gmail.com', 'password': os.getenv('MYPASS'), 'remember': True}
-    auth_response = session.post(auth_url, json=auth_json)
+@app.get('/')
+def resched():
+    scheduler.reschedule_job('printer', trigger='interval', seconds=20)
 
-    if auth_response.status_code != 200:
-        raise Exception("Failed to authenticate with API")
 
-    update_url = 'http://127.0.0.1:5000/api/update.json'
-    update_json = {
-        'latitude': 41.6206289,
-        'longitude': -85.8266781
-    }
-    update_response = session.post(update_url, json=update_json)
+@app.get('/scheduler.json')
+def get_scheduler():
+    pass
 
 
 if __name__ == '__main__':
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(update, 'interval', seconds=60)
-    scheduler.start()
-
-    try:
-        # This is here to simulate application activity (which keeps the main thread alive).
-        while True:
-            time.sleep(2)
-    except (KeyboardInterrupt, SystemExit):
-        # Not strictly necessary if daemonic mode is enabled but should be done if possible
-        scheduler.shutdown()
+    uvicorn.run('van.main:app', reload=True)
