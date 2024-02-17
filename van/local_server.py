@@ -20,18 +20,23 @@ from vanhub import get_gps_data
 payload = {'gps': []}
 
 
+def get_online_server():
+    with open('../instance/vhs_cmd_config.json', 'r') as file:
+        return json.load(file)['ONLINE_SERVER_LOCATION']
+
+
 def report():
     logger.info('---- Attempting to report to online server ----')
 
     session = requests.Session()
-    auth_url = 'http://127.0.0.1:5000/api/auth.json'
+    auth_url = f'{get_online_server()}/api/auth.json'
     email = os.getenv('VLS_USERNAME')
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
     auth_response = session.post(auth_url, json=auth_json)
     logger.info(f'Authorizing as {email} returned status [{auth_response.status_code}]')
     logger.info(f'Sending payload:\n{json.dumps(payload, indent=4)}')
 
-    report_url = 'http://127.0.0.1:5000/api/report.json'
+    report_url = f'{get_online_server()}/api/report.json'
     report_response = session.post(report_url, json=payload)
     logger.info(f'Report returned status code [{report_response.status_code}] '
                 f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
