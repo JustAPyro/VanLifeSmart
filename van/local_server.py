@@ -26,15 +26,14 @@ def get_online_server():
 
 
 def report():
-    logger.info('---- Attempting to report to online server ----')
+    logger.info(f'---- Attempting to report to online server with email "{os.getenv("VLS_USERNAME")}" ----')
 
     session = requests.Session()
     auth_url = f'{get_online_server()}/api/auth.json'
     email = os.getenv('VLS_USERNAME')
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
     auth_response = session.post(auth_url, json=auth_json)
-    logger.info(f'Authorizing as {email} returned status [{auth_response.status_code}]')
-    logger.info(f'Sending payload:\n{json.dumps(payload, indent=4)}')
+    logger.info(f'Authorization returned: {auth_response.status_code} Now Sending payload:\n{json.dumps(payload, indent=4)}')
 
     report_url = f'{get_online_server()}/api/report.json'
     report_response = session.post(report_url, json=payload)
