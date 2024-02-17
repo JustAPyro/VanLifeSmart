@@ -40,7 +40,7 @@ def report():
     report_response = session.post(report_url, json=payload)
     logger.info(f'Report returned status code [{report_response.status_code}] '
                 f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
-    payload.clear()
+    payload['gps'].clear()
 
 
 
