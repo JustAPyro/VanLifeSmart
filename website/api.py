@@ -1,19 +1,15 @@
-import json
+import logging
+import datetime
 
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 
-from .models import Maintenance
+from .auth import authorize_user
+from .models import Maintenance, GPSData
 from . import db
-import logging
 
 logger = logging.getLogger('funmobile_server')
 api = Blueprint('api', __name__)
-
-
-@api.route('up.json')
-def is_up():
-    return {200: 'OKAY'}
 
 
 @api.route('maintenance/record/<record_id>/', methods=['GET', 'POST', 'DELETE'])
@@ -30,31 +26,24 @@ def api_maintenance_record(record_id: int):
     return '{200: OKAY}'
 
 
-@api.route('update.json', methods=['GET', 'POST'])
-@login_required
-def status_update():
-    latitude = request.json.get('latitude')
-    longitude = request.json.get('longitude')
-    logger.info(f'---------- Update ----------'
-                f'Status update from {current_user.email} at {request.remote_addr} with the following payload:\n'
-                f'{json.dumps(request.json, sort_keys=True, indent=4, separators=(",", ":"))}')
-
-    if latitude[1] == 'S':
-        latitude = latitude[0] * -1
-    else:
-        latitude = latitude[0]
-
-    if longitude[1] == 'W':
-        longitude = float(longitude[0]) * -1  # CAUSING A BUG????
-    else:
-        longitude = longitude[0]
-
-        return '{200: OKAY}'
-    return '{200: OKAY}'
-
-
 @api.route('report.json', methods=['GET', 'POST'])
-@login_required
 def report():
+    user = request.authorization.username
+    password = request.authorization.password
+    if not authorize_user(user, password):
+        return {'Error': 'Unauthorized'}
+    received_payload = request.json
+
+    # Process gps into DB entries
+    gps_updates = received_payload.get('gps')
+    for gps_update in gps_updates:
+        dt = datetime.datetime.utcfromtimestamp(gps_update.pop('utc_time'))
+        data = GPSData(owner=current_user.id, time=dt, **gps_update)
+        db.session.add(data)
+
+    print(gps_updates)
+
     print('Recieved: ' + str(request.json))
+    # End the sesion
+    db.session.commit()
     return {'good': 'work'}

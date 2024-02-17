@@ -28,10 +28,10 @@ class GPSData(db.Model):
     """GPS Sensor Data"""
     # DB identifiers
     id = db.Column(db.Integer, primary_key=True)
-    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     # Location and time information
-    time = db.Column(db.Integer)
+    time = db.Column(db.DateTime(timezone=True))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     altitude = db.Column(db.Float)
