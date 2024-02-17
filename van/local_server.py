@@ -15,8 +15,6 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from typing import Optional
 
-from requests.auth import HTTPBasicAuth
-
 from vanhub import get_gps_data
 
 payload = {'gps': []}
@@ -31,10 +29,15 @@ def get_online_server():
 def report():
     logger.info(f'Reporting to online server with email {os.getenv("VLS_USERNAME")}')
     # TODO: Guard and throw useful error against missing .env variables
+    session = requests.Session()
+    auth_url = f'{get_online_server()}/api/auth.json'
+    email = os.getenv('VLS_USERNAME')
+    auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
+    auth_response = session.post(auth_url, json=auth_json)
+    logger.info(f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
 
-    basic = HTTPBasicAuth(os.getenv('VLS_USERNAME'), os.getenv('VLS_PASSWORD'))
     report_url = f'{get_online_server()}/api/report.json'
-    report_response = requests.post(report_url, json=payload, auth=basic)
+    report_response = session.post(report_url, json=payload)
     logger.info(f'Report returned status code [{report_response.status_code}] '
                 f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
     payload['gps'].clear()

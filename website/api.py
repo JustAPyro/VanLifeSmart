@@ -4,7 +4,6 @@ import datetime
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 
-from .auth import authorize_user
 from .models import Maintenance, GPSData
 from . import db
 
@@ -27,11 +26,8 @@ def api_maintenance_record(record_id: int):
 
 
 @api.route('report.json', methods=['GET', 'POST'])
+@login_required
 def report():
-    user = request.authorization.username
-    password = request.authorization.password
-    if not authorize_user(user, password):
-        return {'Error': 'Unauthorized'}
     received_payload = request.json
 
     # Process gps into DB entries

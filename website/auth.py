@@ -7,12 +7,6 @@ from lutil import normalize_email
 
 auth = Blueprint('auth', __name__)
 
-def authorize_user(username: str, password: str) -> bool:
-    user = User.query.filter_by(email=username).first()
-    if user:
-        if check_password_hash(user.password, password):
-            return True
-    return False
 
 @auth.route('/api/auth.json', methods=['GET', 'POST'])
 def api_auth():
