@@ -227,4 +227,8 @@ if __name__ == '__main__':
     sched.set_defaults(func=adjust_handler)
 
     args = parser.parse_args()
-    args.func(args)
+
+    try:
+        args.func(args)
+    except (Exception,):
+        parser.print_help()
