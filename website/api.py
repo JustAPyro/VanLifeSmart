@@ -33,8 +33,16 @@ def report():
     # Process gps into DB entries
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
-        utc_time = gps_update.pop('utc_time')
-        print(utc_time)
+        time = gps_update.pop('utc_time')
+        date = datetime.date.today()
+        datetime.datetime(
+            year=date.year,
+            month=date.month,
+            day=date.day,
+            hour=int(time[0:2]),
+            minute=int(time[2:4]),
+            second=int(time[4:6])
+        )
         dt = datetime.datetime.fromtimestamp(utc_time)
         print(dt)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
