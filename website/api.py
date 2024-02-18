@@ -33,13 +33,13 @@ def report():
     # Process gps into DB entries
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
-        dt = datetime.datetime.utcfromtimestamp(gps_update.pop('utc_time'))
+        utc_time = gps_update.pop('utc_time')
+        print(utc_time)
+        dt = datetime.datetime.fromtimestamp(utc_time)
+        print(dt)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)
 
-    print(gps_updates)
-
-    print('Recieved: ' + str(request.json))
-    # End the sesion
+    # End the session
     db.session.commit()
     return {'good': 'work'}

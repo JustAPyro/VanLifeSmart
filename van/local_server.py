@@ -15,9 +15,9 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from typing import Optional
 
-from vanhub import get_gps_data
+from vanhub import get_gps_data, get_tio_data
 
-payload = {'gps': []}
+payload = {'gps': [], 'tio': []}
 
 
 def get_online_server():
@@ -34,19 +34,26 @@ def report():
     email = os.getenv('VLS_USERNAME')
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
     auth_response = session.post(auth_url, json=auth_json)
-    logger.info(f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
+    logger.info(
+        f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
 
     report_url = f'{get_online_server()}/api/report.json'
     report_response = session.post(report_url, json=payload)
     logger.info(f'Report returned status code [{report_response.status_code}] '
                 f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
+    # ABSTRACT: Step 2- Clear data from that sensor when it's submitted
     payload['gps'].clear()
-
+    payload['tio'].clear()
 
 
 def log_gps():
     logger.info('Logged GPS data')
     payload['gps'].append(get_gps_data())
+
+# ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
+def log_tio():
+    logger.info('Logged TomorrowIO data')
+    payload['tio'].append(get_tio_data())
 
 
 @asynccontextmanager
@@ -60,10 +67,13 @@ async def lifespan(fast_app: FastAPI):
         scheduler = AsyncIOScheduler()
         scheduler.start()
 
+        # ABSTRACT: Step 3- Add a job to call the log function on a regular basis
         scheduler.add_job(report, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
         scheduler.add_job(log_gps, 'interval', id='log_gps', seconds=30,
                           name='Logs GPS data to payload.')
+        scheduler.add_job(log_tio, 'interval', id='log_tio', minutes=30,
+                          name='Logs TIO data to payload.')
 
         logger.info('Successfully Created Scheduler Object')
     except (Exception,) as e:
@@ -92,6 +102,8 @@ def resched():
 def get_scheduler():
     report_job = scheduler.get_job('report')
     log_gps_job = scheduler.get_job('log_gps')
+    log_tio_job = scheduler.get_job('log_tio')
+    # ABSTRACT: Step 4?5? - Add it to the scheduler
     return {
         'report': {
             'description': report_job.name,
@@ -106,7 +118,14 @@ def get_scheduler():
             'next_run_time': log_gps_job.next_run_time,
             'max_instances': log_gps_job.max_instances,
             'misfire_grace_time': log_gps_job.misfire_grace_time
-        }
+        },
+        'log_tio': {
+            'description': log_tio_job.name,
+            'trigger': str(log_tio_job.trigger),
+            'next_run_time': log_tio_job.next_run_time,
+            'max_instances': log_tio_job.max_instances,
+            'misfire_grace_time': log_tio_job.misfire_grace_time
+        },
     }
 
 

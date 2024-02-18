@@ -77,7 +77,7 @@ def get_gps_data():
                 fq = f'Unknown Fix: {fq}'
             data['fix_quality'] = fq
             data['satellites_used'] = int(values[7])
-            data['HDOP'] = float(values[8])
+            data['hdop'] = float(values[8])
             data['altitude'] = float(values[9])
             found['GPGGA'] = True
         if formatting == 'GPVTG':
@@ -88,7 +88,7 @@ def get_gps_data():
         if all(value == True for value in found.values()):
             return data
 
-
+# ABSTRACT- Step 5/6: A function that actually generates the data
 def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
     if has_gps():
         data = get_gps_data()
@@ -191,7 +191,7 @@ if __name__ == '__main__':
     subparsers = parser.add_subparsers()
 
     parser_sensor = subparsers.add_parser('sensor', help='Get information from van hub sensors.')
-
+    # ABSTRACT SENSOR ADDED HERE
     parser_sensor.add_argument("input", choices=['gps', 'tio'], help="Get feedback from this van sensor.")
     # parser.add_argument('--location', nargs='+', type=float)
     # parser.add_argument('--raw', action='store_false')
@@ -209,8 +209,9 @@ if __name__ == '__main__':
     hub_parser.set_defaults(func=config_handler)
 
     # TODO :Refactor THIS!
+    # ADD TO CHOICES HERE
     sched = subparsers.add_parser('adjust')
-    sched.add_argument('scheduler', choices=['report'], help='Select the scheduler you want to change.')
+    sched.add_argument('scheduler', choices=['report', 'tio', 'gps'], help='Select the scheduler you want to change.')
     sched.add_argument('trigger_type', choices=['interval'],
                        help='The type of trigger you want to set on this scheduler.')
 
