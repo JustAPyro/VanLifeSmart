@@ -11,6 +11,8 @@ auth = Blueprint('auth', __name__)
 @auth.route('/api/auth.json', methods=['GET', 'POST'])
 def api_auth():
     if request.method == 'POST':
+        if not request.json['email']:
+            return {'Error': 'Failure to authenticate'}
         email = normalize_email(request.json['email'])
         password = request.json['password']
         remember = request.json.get('remember', False)
@@ -21,7 +23,7 @@ def api_auth():
                 login_user(user, remember=remember)
                 return {'status': 200}
             else:
-                return {'Failure to authenticate'}
+                return {'Error': 'Failure to authenticate'}
     return 'hello!'
 
 

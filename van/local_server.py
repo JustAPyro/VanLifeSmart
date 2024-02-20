@@ -29,6 +29,10 @@ def get_online_server():
 def report():
     logger.info(f'Reporting to online server with email {os.getenv("VLS_USERNAME")}')
     # TODO: Guard and throw useful error against missing .env variables
+
+    if os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
+        raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
+
     session = requests.Session()
     auth_url = f'{get_online_server()}/api/auth.json'
     email = os.getenv('VLS_USERNAME')

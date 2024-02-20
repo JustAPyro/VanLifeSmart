@@ -29,21 +29,21 @@ def api_maintenance_record(record_id: int):
 @login_required
 def report():
     received_payload = request.json
-
+    print(f'payload: {received_payload}')
     # Process gps into DB entries
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
-        time = gps_update.pop('utc_time')
+        time = str(gps_update.pop('utc_time'))
         date = datetime.date.today()
-        datetime.datetime(
+        dt = datetime.datetime(
             year=date.year,
             month=date.month,
             day=date.day,
             hour=int(time[0:2]),
             minute=int(time[2:4]),
-            second=int(time[4:6])
+            second=int(time[4:6]),
+            tzinfo=datetime.UTC
         )
-        dt = datetime.datetime.fromtimestamp(utc_time)
         print(dt)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)
