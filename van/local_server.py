@@ -61,6 +61,7 @@ def log_gps():
     logger.info('Logged GPS data')
     payload['gps'].append(get_gps_data())
 
+
 # ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
 def log_tio():
     logger.info('Logged TomorrowIO data')

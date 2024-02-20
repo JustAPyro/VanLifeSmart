@@ -47,6 +47,7 @@ class GPSData(db.Model):
 
     # Speed (if Applicable)
     ground_speed = db.Column(db.Float, nullable=True)
+    tio = db.relationship('TomorrowIO', uselist=False)
 
 
 class TomorrowIO(db.Model):
@@ -55,6 +56,7 @@ class TomorrowIO(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
     time = db.Column(db.DateTime(timezone=True))
+    gps = db.Column(db.Integer, db.ForeignKey('gps_data.id'), nullable=True)
 
     # TomorrowIO
     cloud_base = db.Column(db.Float, nullable=True)

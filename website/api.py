@@ -5,7 +5,7 @@ import pytz
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 
-from .models import Maintenance, GPSData
+from .models import Maintenance, GPSData, TomorrowIO
 from . import db
 
 logger = logging.getLogger('funmobile_server')
@@ -31,7 +31,7 @@ def api_maintenance_record(record_id: int):
 def report():
     received_payload = request.json
     print(f'payload: {received_payload}')
-    # Process gps into DB entries
+    # ---- Process GPS Updates ----
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
         time = str(gps_update.pop('utc_time')).split('.')[0]
@@ -50,6 +50,12 @@ def report():
         print(dt)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)
+
+    # ---- Process TomorrowIO Updates ----
+    tio_updates = received_payload.get('tio')
+    for tio_update in tio_updates:
+        tio_data = TomorrowIO(owner=current_user.id, **tio_update)
+        db.session.add(tio_data)
 
     # End the session
     db.session.commit()

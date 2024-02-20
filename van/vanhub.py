@@ -31,7 +31,7 @@ def has_gps():
     try:
         gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
         return True
-    except (Exception, ):
+    except (Exception,):
         return False
 
 
@@ -88,12 +88,17 @@ def get_gps_data():
         if all(value == True for value in found.values()):
             return data
 
+
 # ABSTRACT- Step 5/6: A function that actually generates the data
 def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
+    data = {}
     if has_gps():
-        data = get_gps_data()
-        latitude = data['latitude']
-        longitude = data['longitude']
+        gps = get_gps_data()
+        latitude = gps['latitude']
+        longitude = gps['longitude']
+        data['gps'] = gps
+    else:
+        data['gps'] = {'latitude': latitude, 'longitude': longitude}
 
     if arguments and arguments.location and len(arguments.location) == 2:
         latitude = arguments.location[0]
@@ -104,7 +109,8 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
     if latitude is None or longitude is None:
         return {'Error': 'Could not find latitude and longitude.'}
 
-    data = {}
+    if not os.getenv('TOMORROWAPI'):
+        return {}
     response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
                             f'?location={latitude},{longitude}'
                             f'&apikey={os.environ["TOMORROWAPI"]}')
