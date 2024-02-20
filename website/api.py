@@ -33,7 +33,9 @@ def report():
     # Process gps into DB entries
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
-        time = str(gps_update.pop('utc_time'))
+        time = str(gps_update.pop('utc_time')).split('.')[0]
+        if len(time) < 6:
+            time = '0' + time
         date = datetime.date.today()
         dt = datetime.datetime(
             year=date.year,

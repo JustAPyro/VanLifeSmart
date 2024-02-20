@@ -30,7 +30,8 @@ def report():
     logger.info(f'Reporting to online server with email {os.getenv("VLS_USERNAME")}')
     # TODO: Guard and throw useful error against missing .env variables
 
-    if os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
+    if not os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
+        logger.error('MISSING .env file with VLS_USERNAME and VLS_PASSWORD')
         raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
 
     session = requests.Session()
