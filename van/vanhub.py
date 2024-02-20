@@ -117,8 +117,6 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
 
     td = response.json()['data']['values']
     data['time'] = response.json()['data']['time']
-    data['latitude'] = response.json()['location']['lat']
-    data['longitude'] = response.json()['location']['lon']
 
     data['uv_index'] = td['uvIndex']
     data['humidity'] = td['humidity']

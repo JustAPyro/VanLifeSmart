@@ -25,6 +25,20 @@ def api_maintenance_record(record_id: int):
 
     return '{200: OKAY}'
 
+def get_time(gps_update):
+    time = str(gps_update.pop('utc_time')).split('.')[0]
+    if len(time) < 6:
+        time = '0' + time
+    date = datetime.date.today()
+    return datetime.datetime(
+        year=date.year,
+        month=date.month,
+        day=date.day,
+        hour=int(time[0:2]),
+        minute=int(time[2:4]),
+        second=int(time[4:6]),
+        tzinfo=datetime.timezone.utc
+    ).astimezone(pytz.timezone('US/Eastern'))
 
 @api.route('report.json', methods=['GET', 'POST'])
 @login_required
@@ -34,27 +48,19 @@ def report():
     # ---- Process GPS Updates ----
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
-        time = str(gps_update.pop('utc_time')).split('.')[0]
-        if len(time) < 6:
-            time = '0' + time
-        date = datetime.date.today()
-        dt = datetime.datetime(
-            year=date.year,
-            month=date.month,
-            day=date.day,
-            hour=int(time[0:2]),
-            minute=int(time[2:4]),
-            second=int(time[4:6]),
-            tzinfo=datetime.timezone.utc
-        ).astimezone(pytz.timezone('US/Eastern'))
-        print(dt)
+        dt = get_time(gps_update)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)
 
     # ---- Process TomorrowIO Updates ----
     tio_updates = received_payload.get('tio')
+    print('doing tio')
     for tio_update in tio_updates:
+        gps = tio_update.pop('gps')
+        dt = get_time(gps)
+        print(tio_update)
         tio_data = TomorrowIO(owner=current_user.id, **tio_update)
+        tio_data.gps = GPSData(owner=current_user.id, time=dt, **gps)
         db.session.add(tio_data)
 
     # End the session
