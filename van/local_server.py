@@ -41,7 +41,8 @@ def report():
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
     try:
         auth_response = session.post(auth_url, json=auth_json)
-    except requests.ConnectionError:
+    except (Exception,) as e:
+        logger.info(str(e))
         logger.info('Failed to establish connection, skipping report.')
         return
     logger.info(
@@ -82,7 +83,7 @@ async def lifespan(fast_app: FastAPI):
                           name='Reports current payload to online server')
         scheduler.add_job(log_gps, 'interval', id='log_gps', seconds=30,
                           name='Logs GPS data to payload.')
-        scheduler.add_job(log_tio, 'interval', id='log_tio', minutes=30,
+        scheduler.add_job(log_tio, 'interval', id='log_tio', seconds=30,
                           name='Logs TIO data to payload.')
 
         logger.info('Successfully Created Scheduler Object')
