@@ -1,5 +1,6 @@
 import logging
 import datetime
+import pytz
 
 from flask import Blueprint, request
 from flask_login import login_required, current_user
@@ -44,8 +45,8 @@ def report():
             hour=int(time[0:2]),
             minute=int(time[2:4]),
             second=int(time[4:6]),
-            tzinfo=datetime.UTC
-        )
+            tzinfo=datetime.timezone.utc
+        ).astimezone(pytz.timezone('US/Eastern'))
         print(dt)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)

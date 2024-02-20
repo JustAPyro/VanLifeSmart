@@ -54,7 +54,7 @@ class TomorrowIO(db.Model):
     # ID
     id = db.Column(db.Integer, primary_key=True)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
-    time = db.Column(db.DateTime)
+    time = db.Column(db.DateTime(timezone=True))
 
     # TomorrowIO
     cloud_base = db.Column(db.Float, nullable=True)

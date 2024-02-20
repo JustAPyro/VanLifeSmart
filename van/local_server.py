@@ -7,6 +7,7 @@ import os
 import requests
 import uvicorn
 import logging
+import pytz
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import Request as fastRequest
@@ -38,7 +39,11 @@ def report():
     auth_url = f'{get_online_server()}/api/auth.json'
     email = os.getenv('VLS_USERNAME')
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
-    auth_response = session.post(auth_url, json=auth_json)
+    try:
+        auth_response = session.post(auth_url, json=auth_json)
+    except requests.ConnectionError:
+        logger.info('Failed to establish connection, skipping report.')
+        return
     logger.info(
         f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
 
