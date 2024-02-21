@@ -49,26 +49,22 @@ def has_connection(timeout: int = 5) -> bool:
 
 def report():
 
+    # Check for missing server connectivity
     if not has_connection():
-        logger.info(f'Failed to connect to server, Skipping Report ...')
-        logger.info(f'Size of payload in memory: {sys.getsizeof(payload)}')
+        logger.info(f'Failed to connect to server, Storing and Skipping Report ...')
+        logger.info(f'Size of payload saved in memory: {sys.getsizeof(payload)} bytes')
         return
 
     logger.info('Established connection, Authorizing & Uploading...')
     session = requests.Session()
-    session.mount('http://', HTTPAdapter(max_retries=Retry(
-        total=5,
-        backoff_factor=1
-    )))
-    auth_url = f'{get_online_server()}/api/auth.json'
-    email = os.getenv('VLS_USERNAME')
-    auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
     try:
-        auth_response = session.post(auth_url, json=auth_json)
+        auth_response = session.post(f'{get_online_server()}/api/auth.json', json={
+            'email': os.getenv('VLS_USERNAME'),
+            'password': os.getenv('VLS_PASSWORD'),
+            'remember': True
+        })
     except (Exception,) as e:
-        logger.info(str(e))
-        logger.info('Failed to establish connection, skipping report.')
-        return
+        logger.exception(e)
     logger.info(
         f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
 
