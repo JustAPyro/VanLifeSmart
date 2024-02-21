@@ -10,6 +10,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from requests.adapters import Retry, HTTPAdapter
 from fastapi import Request as fastRequest
 from contextlib import asynccontextmanager
+from pympler import asizeof
 from dotenv import load_dotenv
 from functools import partial
 from fastapi import FastAPI
@@ -24,14 +25,6 @@ from sensors import sensor_config
 payload = {'gps': [], 'tio': []}
 for sensor in sensor_config.keys():
     payload[sensor] = []
-
-
-class LogExtraFilter(logging.Filter):
-    def filter(self, record):
-        if hasattr(record, 'ext') and len(record.ext) > 0:
-            for k, v in record.ext.iteritems():
-                record.msg = record.msg + '\n\t' + k + ': ' + v
-        return super(LogExtraFilter, self).filter(record)
 
 
 def get_online_server():
@@ -55,17 +48,11 @@ def has_connection(timeout: int = 5) -> bool:
         logger.exception(e)
 
 
-def payload_report(payload: dict) -> dict:
-    final_report = {'payload_size': f'{sys.getsizeof(payload)}'}
-    for data, report in payload.items():
-        final_report[f'{data}_size'] = f'Size: {sys.getsizeof(report)} | Items: {len(report)}'
-    return final_report
-
-
 def report():
     # Check for missing server connectivity
     if not has_connection():
-        logger.info(f'Failed to connect to server, Storing and Skipping Report ...', extra=payload_report(payload))
+        logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
+        logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload)}')
         return
 
     logger.info('Established connection, Authorizing & Uploading...')
@@ -148,7 +135,6 @@ async def lifespan(fast_app: FastAPI):
 app = FastAPI(title='Van Hub', lifespan=lifespan)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-logger.addFilter(LogExtraFilter())
 scheduler: Optional[AsyncIOScheduler] = None
 
 # Logging Suppression
