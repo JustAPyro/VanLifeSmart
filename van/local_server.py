@@ -58,7 +58,7 @@ def report():
     # Now that we know we have server connectivity the client will try to authorize
     # Using the username and email provided either in the system environment or in the
     # .env file with keys 'VLS_USERNAME' and 'VLS_PASSWORD'
-    logger.info('Established connection, Authorizing & Uploading...')
+    logger.info('Established connection, Attempting authorization & upload...')
     try:
         session = requests.Session()
         auth_response = session.post(f'{get_online_server()}/api/auth.json', json={
@@ -69,6 +69,7 @@ def report():
         # If we don't get the expected 200 response log the error and abort report
         if auth_response.status_code != 200:
             logger.error(f'Failed Server authentication (status: [{auth_response.status_code}]) aborting report')
+            logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload) / 1024}kb')
             return
 
     # If there's an error networking log it and abort
@@ -79,15 +80,15 @@ def report():
 
     logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload)/1024}kb)')
 
-    report_url = f'{get_online_server()}/api/report.json'
-    report_response = session.post(report_url, json=payload)
-    logger.info(f'Report returned status code [{report_response.status_code}] '
-                f'and the following payload:\n{json.dumps(report_response.json(), indent=4)}')
+    report_response = session.post(f'{get_online_server()}/api/report.json', json=payload)
+    if report_response.status_code != 200:
+        logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
+        return
+
+    logger.info(f'Report successful, clearing payload')
     # ABSTRACT: Step 2- Clear data from that sensor when it's submitted
     payload['gps'].clear()
     payload['tio'].clear()
-    logger.info('Resuming scheduler...')
-    scheduler.resume()
 
 
 def log_sensor(name: str, method: callable) -> None:
@@ -144,7 +145,8 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
 
