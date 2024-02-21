@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import argparse
 import json
-import adafruit_dht
-import board
 import os
 
 import requests
