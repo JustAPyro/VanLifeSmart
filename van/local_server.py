@@ -26,12 +26,6 @@ for sensor in sensor_config.keys():
     payload[sensor] = []
 
 
-class LogExtraFilter(logging.Filter):
-    def filter(self, record):
-        if hasattr(record, 'ext') and len(record.ext) > 0:
-            for k, v in record.ext.iteritems():
-                record.msg = record.msg + '\n\t' + k + ': ' + v
-        return super(LogExtraFilter, self).filter(record)
 
 def get_online_server():
     with open('van/vhs_cmd_config.json', 'r') as file:
@@ -65,7 +59,8 @@ def report():
 
     # Check for missing server connectivity
     if not has_connection():
-        logger.info(f'Failed to connect to server, Storing and Skipping Report ...', extra=payload_report(payload))
+        logger.info(f'Failed to connect to server, Storing and Skipping Report ...\n'
+                    f'{json.dumps(payload_report(payload), indent=4)}')
         return
 
     logger.info('Established connection, Authorizing & Uploading...')
