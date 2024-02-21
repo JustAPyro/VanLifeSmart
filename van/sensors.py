@@ -2,4 +2,8 @@ def get_dht_data():
     return {'stuff': "things"}
 
 
-enabled_sensors = {'dht': get_dht_data}
+sensor_config = {
+    'dht': {
+        'get': get_dht_data
+    }
+}

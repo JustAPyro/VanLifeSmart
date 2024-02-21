@@ -10,15 +10,17 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from typing import Optional
+from functools import partial
 
 from vanhub import get_gps_data, get_tio_data
-from sensors import enabled_sensors
+from sensors import sensor_config
 
-
+# Create the local server payload.
+# This is where data is stored in memory before
+# being sent to the server.
 payload = {'gps': [], 'tio': []}
-for sensor in enabled_sensors.keys():
+for sensor in sensor_config.keys():
     payload[sensor] = []
-print(payload)
 
 
 def get_online_server():
@@ -57,6 +59,10 @@ def report():
     payload['tio'].clear()
 
 
+def log_sensor(name: str, method: callable) -> None:
+    logger.info(f'Logged {name} Sensor Data')
+    payload[name].append(method())
+
 def log_gps():
     logger.info('Logged GPS data')
     payload['gps'].append(get_gps_data())
@@ -86,6 +92,11 @@ async def lifespan(fast_app: FastAPI):
                           name='Logs GPS data to payload.')
         scheduler.add_job(log_tio, 'interval', id='log_tio', seconds=30,
                           name='Logs TIO data to payload.')
+
+        for van_sensor in sensor_config.keys():
+            log_method = partial(log_sensor, van_sensor, sensor_config[van_sensor]['get'])
+            scheduler.add_job(log_method, 'interval', id=f'log_{van_sensor}', minutes=1,
+                              name=f'Logs {van_sensor} to payload.')
 
         logger.info('Successfully Created Scheduler Object')
     except (Exception,) as e:
