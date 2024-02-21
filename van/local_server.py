@@ -55,18 +55,29 @@ def report():
         logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload)/1024}kb')
         return
 
+    # Now that we know we have server connectivity the client will try to authorize
+    # Using the username and email provided either in the system environment or in the
+    # .env file with keys 'VLS_USERNAME' and 'VLS_PASSWORD'
     logger.info('Established connection, Authorizing & Uploading...')
-    session = requests.Session()
     try:
+        session = requests.Session()
         auth_response = session.post(f'{get_online_server()}/api/auth.json', json={
             'email': os.getenv('VLS_USERNAME'),
             'password': os.getenv('VLS_PASSWORD'),
-            'remember': True
-        })
+            'remember': True})
+
+        # If we don't get the expected 200 response log the error and abort report
+        if auth_response.status_code != 200:
+            logger.error(f'Failed Server authentication (status: [{auth_response.status_code}]) aborting report')
+            return
+
+    # If there's an error networking log it and abort
     except (Exception,) as e:
+        logger.error('Error during authentication request, aborting report')
         logger.exception(e)
-    logger.info(
-        f'Authorization returned: [{auth_response.status_code}] | Sending payload ({asizeof.asizeof(payload)/1024}kb):\n{json.dumps(payload, indent=4)}')
+        return
+
+    logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload)/1024}kb)')
 
     report_url = f'{get_online_server()}/api/report.json'
     report_response = session.post(report_url, json=payload)
