@@ -46,13 +46,19 @@ def has_connection(timeout: int = 5) -> bool:
     except (Exception, ) as e:
         logger.exception(e)
 
+def payload_report(payload: dict) -> dict:
+    final_report = {'payload_size': f'{sys.getsizeof(payload)}'}
+    for data, report in payload.items():
+        final_report[f'{data}_size'] = f'Size: {sys.getsizeof(report)} | Items: {len(report)}'
+
+
+
 
 def report():
 
     # Check for missing server connectivity
     if not has_connection():
-        logger.info(f'Failed to connect to server, Storing and Skipping Report ...')
-        logger.info(f'Size of payload saved in memory: {sys.getsizeof(payload)} bytes')
+        logger.info(f'Failed to connect to server, Storing and Skipping Report ...', extra=payload_report(payload))
         return
 
     logger.info('Established connection, Authorizing & Uploading...')
