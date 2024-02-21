@@ -13,7 +13,6 @@ from functools import partial
 from fastapi import FastAPI
 from typing import Optional
 
-
 from vanhub import get_gps_data, get_tio_data
 from sensors import sensor_config
 
@@ -41,7 +40,7 @@ def report():
 
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=Retry(
-        total=7,
+        total=5,
         backoff_factor=1
     )))
     auth_url = f'{get_online_server()}/api/auth.json'
@@ -68,6 +67,7 @@ def report():
 def log_sensor(name: str, method: callable) -> None:
     logger.info(f'Logged {name} Sensor Data')
     payload[name].append(method())
+
 
 def log_gps():
     logger.info('Logged GPS data')
@@ -111,6 +111,9 @@ async def lifespan(fast_app: FastAPI):
 
     # ---- Yield To App --------------------
     yield
+
+    # ---- Shutdown after app ------------
+    scheduler.shutdown()
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
