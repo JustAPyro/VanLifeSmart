@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Response
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
@@ -10,22 +10,33 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/api/auth.json', methods=['GET', 'POST'])
 def api_auth():
-    if request.method == 'POST':
-        if not request.json['email']:
-            return {'Error': 'Failure to authenticate'}
-        email = normalize_email(request.json['email'])
-        password = request.json['password']
-        remember = request.json.get('remember', False)
+    # The client will get the auth page
+    # To check for connectivity, so all
+    # get requests return 200 by default
+    if request.method == 'GET':
+        return Response(status=200)
 
+    if request.method == 'POST':
+
+        # First check to make sure they provided an E-mail and password
+        # If they haven't then return 403 (bad formatting)
+        if not request.json['email'] or not request.json['password']:
+            return Response(status=403)
+
+        # Try to get the user by email and if the user
+        # can't be found return 404 (resource not found)
+        email = normalize_email(request.json['email'])
         user = User.query.filter_by(email=email).first()
-        if user:
-            #TODO: Return not 200 for failures?
-            if check_password_hash(user.password, password):
-                login_user(user, remember=remember)
-                return {'status': 200}
-            else:
-                return {'Error': 'Failure to authenticate'}
-    return 'hello!'
+        if not user:
+            return Response(status=404)
+
+        # If the password was correct, log them in and return 200 (Success)
+        if check_password_hash(user.password, request.json['password']):
+            login_user(user, remember=request.json.get('remember', False))
+            return Response(status=200)
+
+        else:  # If the password was wrong return 401 (Unauthorized)
+            return Response(status=401)
 
 
 @auth.route('/log-in', methods=['GET', 'POST'])

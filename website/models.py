@@ -19,11 +19,9 @@ class User(db.Model, UserMixin):
     maintenance = db.relationship('Maintenance')
     gps_data = db.relationship('GPSData')
     tio = db.relationship('TomorrowIO')
-    dht = db.relationship('DHTData')
 
 
 # == Data Models ============================================
-
 
 class GPSData(db.Model):
     """GPS Sensor Data"""

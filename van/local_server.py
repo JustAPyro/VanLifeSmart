@@ -52,7 +52,7 @@ def report():
     # Check for missing server connectivity
     if not has_connection():
         logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
-        logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload)}')
+        logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload)/1024}kb')
         return
 
     logger.info('Established connection, Authorizing & Uploading...')
@@ -66,7 +66,7 @@ def report():
     except (Exception,) as e:
         logger.exception(e)
     logger.info(
-        f'Authorization returned: [{auth_response.status_code}] | Sending payload:\n{json.dumps(payload, indent=4)}')
+        f'Authorization returned: [{auth_response.status_code}] | Sending payload ({asizeof.asizeof(payload)/1024}kb):\n{json.dumps(payload, indent=4)}')
 
     report_url = f'{get_online_server()}/api/report.json'
     report_response = session.post(report_url, json=payload)
