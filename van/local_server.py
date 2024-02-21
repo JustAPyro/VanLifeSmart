@@ -31,31 +31,31 @@ def get_online_server():
         return config['ONLINE_SERVER_LOCATION']
 
 
-def has_connection():
+def has_connection(timeout: int = 5) -> bool:
+    """
+    Check if the local_server can establish an outgoing internet connection to the server.
+    :param timeout: The amount of time to try.
+    :return: True if we can connect to the server, False otherwise.
+    """
     try:
-        urllib.request.urlopen(f'{get_online_server()}/api/auth.json')
+        urllib.request.urlopen(f'{get_online_server()}/api/auth.json', timeout=timeout)
         return True
-    except (urllib.error.URLError,) as e:
+    except (urllib.error.URLError,):
         return False
     except (Exception, ) as e:
         logger.exception(e)
 
 
 def report():
-    logger.info(f'Reporting to online server with email {os.getenv("VLS_USERNAME")}')
-    # TODO: Guard and throw useful error against missing .env variables
+    logger.info(f'Attempting Report')
 
     if not has_connection():
-        logger.warning('FAILED TO CONNECT TO SERVER')
+        logger.info('Failed connection, Skipping...')
         return
 
     if not os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
         logger.error('MISSING .env file with VLS_USERNAME and VLS_PASSWORD')
         raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
-
-    if urllib.request.urlopen(f'{get_online_server()}/api/auth.json').getcode() != 200:
-        logger.warning('Failed to connect to server.')
-        return
 
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=Retry(
@@ -105,7 +105,7 @@ async def lifespan(fast_app: FastAPI):
 
     # ----- Startup ------------------------
     load_dotenv()
-
+    # TODO: Guard against missing ENV variables and such
     global scheduler
     try:
         scheduler = AsyncIOScheduler()
