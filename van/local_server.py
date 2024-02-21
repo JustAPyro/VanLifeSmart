@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import uvicorn
 import logging
@@ -47,14 +48,13 @@ def has_connection(timeout: int = 5) -> bool:
 
 
 def report():
-    logger.info(f'Attempting Report - Pausing Scheduler')
-    scheduler.pause()
-    if not has_connection():
-        logger.info('Failed connection, Skipping...')
-        scheduler.resume()
-        return
-    logger.info('Established connection, Uploading...')
 
+    if not has_connection():
+        logger.info(f'Failed to connect to server, Skipping Report ...')
+        logger.info(f'Size of payload in memory: {sys.getsizeof(payload)}')
+        return
+
+    logger.info('Established connection, Authorizing & Uploading...')
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=Retry(
         total=5,
