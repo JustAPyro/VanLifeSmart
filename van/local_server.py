@@ -26,6 +26,13 @@ for sensor in sensor_config.keys():
     payload[sensor] = []
 
 
+class LogExtraFilter(logging.Filter):
+    def filter(self, record):
+        if hasattr(record, 'ext') and len(record.ext) > 0:
+            for k, v in record.ext.iteritems():
+                record.msg = record.msg + '\n\t' + k + ': ' + v
+        return super(LogExtraFilter, self).filter(record)
+
 def get_online_server():
     with open('van/vhs_cmd_config.json', 'r') as file:
         config = json.load(file)
@@ -141,6 +148,7 @@ async def lifespan(fast_app: FastAPI):
 app = FastAPI(title='Van Hub', lifespan=lifespan)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+logger.addFilter(LogExtraFilter())
 scheduler: Optional[AsyncIOScheduler] = None
 
 # Logging Suppression
