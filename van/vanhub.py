@@ -6,6 +6,7 @@ import os
 import requests
 import serial
 from dotenv import load_dotenv
+from requests.adapters import Retry
 
 NO_ARG = 1
 MISSING_ARG = 2

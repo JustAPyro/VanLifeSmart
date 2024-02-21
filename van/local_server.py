@@ -5,12 +5,14 @@ import uvicorn
 import logging
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from requests.adapters import Retry, HTTPAdapter
 from fastapi import Request as fastRequest
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
+from functools import partial
 from fastapi import FastAPI
 from typing import Optional
-from functools import partial
+
 
 from vanhub import get_gps_data, get_tio_data
 from sensors import sensor_config
@@ -38,6 +40,10 @@ def report():
         raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
 
     session = requests.Session()
+    session.mount('http://', HTTPAdapter(max_retries=Retry(
+        total=7,
+        backoff_factor=1
+    )))
     auth_url = f'{get_online_server()}/api/auth.json'
     email = os.getenv('VLS_USERNAME')
     auth_json = {'email': email, 'password': os.getenv('VLS_PASSWORD'), 'remember': True}
