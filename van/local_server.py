@@ -1,9 +1,9 @@
-import json
 import os
-import requests
+import json
 import uvicorn
 import logging
-import urllib.request
+import requests
+import urllib.request, urllib.error
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from requests.adapters import Retry, HTTPAdapter
@@ -30,12 +30,15 @@ def get_online_server():
         config = json.load(file)
         return config['ONLINE_SERVER_LOCATION']
 
+
 def has_connection():
     try:
         urllib.request.urlopen(f'{get_online_server()}/api/auth.json')
         return True
-    except (Exception,) as e:
+    except (urllib.error.URLError,) as e:
         return False
+    except (Exception, ) as e:
+        logger.exception(e)
 
 
 def report():
@@ -45,6 +48,7 @@ def report():
     if not has_connection():
         logger.warning('FAILED TO CONNECT TO SERVER')
         return
+
     if not os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
         logger.error('MISSING .env file with VLS_USERNAME and VLS_PASSWORD')
         raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
@@ -101,6 +105,7 @@ async def lifespan(fast_app: FastAPI):
 
     # ----- Startup ------------------------
     load_dotenv()
+
     global scheduler
     try:
         scheduler = AsyncIOScheduler()
