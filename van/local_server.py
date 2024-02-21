@@ -3,6 +3,7 @@ import os
 import requests
 import uvicorn
 import logging
+import urllib.request
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from requests.adapters import Retry, HTTPAdapter
@@ -37,6 +38,10 @@ def report():
     if not os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
         logger.error('MISSING .env file with VLS_USERNAME and VLS_PASSWORD')
         raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
+
+    if urllib.request.urlopen(f'{get_online_server()}/api/auth.json').getcode() != 200:
+        logger.warning('Failed to connect to server.')
+        return
 
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=Retry(
