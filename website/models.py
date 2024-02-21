@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     maintenance = db.relationship('Maintenance')
     gps_data = db.relationship('GPSData')
     tio = db.relationship('TomorrowIO')
+    dht = db.relationship('DHTData')
 
 
 # == Data Models ============================================
@@ -47,16 +48,17 @@ class GPSData(db.Model):
 
     # Speed (if Applicable)
     ground_speed = db.Column(db.Float, nullable=True)
-    tio = db.relationship('TomorrowIO', uselist=False)
+    tio_id = db.Column(db.Integer, db.ForeignKey('tomorrow_io.id'), nullable=True)
 
 
 class TomorrowIO(db.Model):
     """TomorrowIO data"""
+    __tablename__ = 'tomorrow_io'
     # ID
     id = db.Column(db.Integer, primary_key=True)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
     time = db.Column(db.DateTime(timezone=True))
-    gps = db.Column(db.Integer, db.ForeignKey('gps_data.id'), nullable=True)
+    gps = db.relationship('GPSData', uselist=False)
 
     # TomorrowIO
     cloud_base = db.Column(db.Float, nullable=True)

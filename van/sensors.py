@@ -1,3 +1,3 @@
 
-def get_gps_data():
-    return 'hello'
+def get_dht_data():
+    return {'stuff': "things"}

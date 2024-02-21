@@ -1,13 +1,8 @@
-"""
-Demonstrates how to use the background scheduler to schedule a job that executes on 3 second
-intervals.
-"""
 import json
 import os
 import requests
 import uvicorn
 import logging
-import pytz
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import Request as fastRequest
@@ -17,6 +12,7 @@ from fastapi import FastAPI
 from typing import Optional
 
 from vanhub import get_gps_data, get_tio_data
+from sensors import get_dht_data
 
 payload = {'gps': [], 'tio': []}
 

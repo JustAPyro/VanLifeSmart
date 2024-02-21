@@ -19,6 +19,7 @@ def api_auth():
 
         user = User.query.filter_by(email=email).first()
         if user:
+            #TODO: Return not 200 for failures?
             if check_password_hash(user.password, password):
                 login_user(user, remember=remember)
                 return {'status': 200}

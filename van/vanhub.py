@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import argparse
 import json
+import adafruit_dht
+import board
 import os
 
 import requests
@@ -87,6 +89,9 @@ def get_gps_data():
             found['GPVTG'] = True
         if all(value == True for value in found.values()):
             return data
+
+def get_dht_data():
+    dht_device = adafruit_dht.DHT22(board.D4)
 
 
 # ABSTRACT- Step 5/6: A function that actually generates the data

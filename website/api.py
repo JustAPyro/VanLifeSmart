@@ -1,6 +1,7 @@
 import logging
 import datetime
 import pytz
+import time
 
 from flask import Blueprint, request
 from flask_login import login_required, current_user
@@ -44,7 +45,9 @@ def get_time(gps_update):
 @login_required
 def report():
     received_payload = request.json
-    print(f'payload: {received_payload}')
+    logger.info(f'Received Payload from user {current_user.email}'
+                f'\nGPS Updates: {len(received_payload["gps"])}'
+                f'\nTIO Updates: {len(received_payload["tio"])}')
     # ---- Process GPS Updates ----
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
@@ -54,13 +57,14 @@ def report():
 
     # ---- Process TomorrowIO Updates ----
     tio_updates = received_payload.get('tio')
-    print('doing tio')
     for tio_update in tio_updates:
         gps = tio_update.pop('gps')
-        dt = get_time(gps)
-        print(tio_update)
-        tio_data = TomorrowIO(owner=current_user.id, **tio_update)
-        tio_data.gps = GPSData(owner=current_user.id, time=dt, **gps)
+        gps_time = get_time(gps)
+        tio_time = (datetime.datetime.strptime(tio_update.pop('time'), '%Y-%m-%dT%H:%M:%SZ')
+                    .replace(tzinfo=datetime.timezone.utc)
+                    .astimezone(pytz.timezone('US/Eastern')))
+        tio_data = TomorrowIO(owner=current_user.id, time=tio_time, **tio_update)
+        tio_data.gps = GPSData(owner=current_user.id, time=gps_time, **gps)
         db.session.add(tio_data)
 
     # End the session
