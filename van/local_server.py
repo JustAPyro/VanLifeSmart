@@ -12,9 +12,13 @@ from fastapi import FastAPI
 from typing import Optional
 
 from vanhub import get_gps_data, get_tio_data
-from sensors import get_dht_data
+from sensors import enabled_sensors
+
 
 payload = {'gps': [], 'tio': []}
+for sensor in enabled_sensors.keys():
+    payload[sensor] = []
+print(payload)
 
 
 def get_online_server():
