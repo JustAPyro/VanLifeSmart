@@ -47,15 +47,13 @@ def has_connection(timeout: int = 5) -> bool:
 
 
 def report():
-    logger.info(f'Attempting Report')
-
+    logger.info(f'Attempting Report - Pausing Scheduler')
+    scheduler.pause()
     if not has_connection():
         logger.info('Failed connection, Skipping...')
+        scheduler.resume()
         return
-
-    if not os.getenv('VLS_PASSWORD') or not os.getenv('VLS_USERNAME'):
-        logger.error('MISSING .env file with VLS_USERNAME and VLS_PASSWORD')
-        raise Exception('Include .env file with VLS_USERNAME and VLS_PASSWORD')
+    logger.info('Established connection, Uploading...')
 
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=Retry(
@@ -81,6 +79,8 @@ def report():
     # ABSTRACT: Step 2- Clear data from that sensor when it's submitted
     payload['gps'].clear()
     payload['tio'].clear()
+    logger.info('Resuming scheduler...')
+    scheduler.resume()
 
 
 def log_sensor(name: str, method: callable) -> None:
