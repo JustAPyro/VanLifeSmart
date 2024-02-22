@@ -129,7 +129,8 @@ async def lifespan(fast_app: FastAPI):
 
         for van_sensor in sensor_config.keys():
             log_method = partial(log_sensor, van_sensor, sensor_config[van_sensor]['get'])
-            scheduler.add_job(log_method, 'interval', id=f'log_{van_sensor}', minutes=1,
+            scheduler.add_job(log_method, 'interval', id=f'log_{van_sensor}',
+                              **sensor_config[van_sensor]['polling'],
                               name=f'Logs {van_sensor} to payload.')
 
         logger.info('Successfully Created Scheduler Object')

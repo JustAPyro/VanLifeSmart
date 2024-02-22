@@ -3,9 +3,11 @@ from flask_login import login_required, current_user
 from .models import Mechanic, Maintenance, TomorrowIO
 from . import db
 import requests
+import folium
 import os
 from datetime import datetime
 import logging
+
 logger = logging.getLogger('funmobile_server')
 views = Blueprint('views', __name__)
 
@@ -97,6 +99,23 @@ def maintenance():
     return render_template('maintenance.html',
                            user=current_user,
                            mechanic_map={mechanic.id: mechanic for mechanic in current_user.mechanics})
+
+
+@views.route('/map')
+@login_required
+def view_map():
+    positions = [(getattr(data, 'latitude'), getattr(data, 'longitude') * -1) for data in current_user.gps_data]
+
+    map_view = folium.Map(
+        location=positions[-1]
+    )
+
+    folium.PolyLine(positions,
+                    color='red',
+                    weight=5,
+                    opacity=1).add_to(map_view)
+
+    return map_view._repr_html_()
 
 
 @views.route('/maintenance/post')

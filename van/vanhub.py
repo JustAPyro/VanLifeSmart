@@ -58,7 +58,7 @@ def get_gps_data():
 
             # Process N/S/E/W into decimal lat/long
             latitude = float(values[2][0:2]) + (float(values[2][2:]) / 60)
-            if values[3] == 'W':
+            if values[3] == 'E':
                 latitude = latitude * -1
             longitude = float(values[4][0:3]) + (float(values[4][3:]) / 60)
             if values[5] == 'S':
@@ -88,9 +88,6 @@ def get_gps_data():
             found['GPVTG'] = True
         if all(value == True for value in found.values()):
             return data
-
-def get_dht_data():
-    dht_device = adafruit_dht.DHT22(board.D4)
 
 
 # ABSTRACT- Step 5/6: A function that actually generates the data
