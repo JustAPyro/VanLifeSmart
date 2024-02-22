@@ -21,7 +21,7 @@ from sensors import get_gps_data, sensor_config
 # Create the local server payload.
 # This is where data is stored in memory before
 # being sent to the server.
-payload = {'tio': []}
+payload = {}
 for sensor in sensor_config.keys():
     payload[sensor] = []
 
@@ -114,8 +114,6 @@ async def lifespan(fast_app: FastAPI):
         # ABSTRACT: Step 3- Add a job to call the log function on a regular basis
         scheduler.add_job(report, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
-        scheduler.add_job(log_tio, 'interval', id='log_tio', seconds=30,
-                          name='Logs TIO data to payload.')
 
         # This is a fairly complicated block of code that generates a job for
         # each sensor listed in the sensor_config variable in sensors.py
