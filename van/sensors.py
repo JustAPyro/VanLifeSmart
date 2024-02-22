@@ -6,9 +6,10 @@ import pytz
 import serial
 import board
 import time
+from gps import GPSManager
 
 # Initialize Devices
-gps_device = serial.Serial('/dev/ttyACM0', baudrate=9600)
+gps = GPSManager()
 dht_device = adafruit_dht.DHT22(board.D4)
 
 
@@ -16,9 +17,7 @@ def get_gps_data(formats: tuple[str] = ('GPGGA', 'GPVTG')):
     found = {format_type: False for format_type in formats}
     data = {}
 
-    # Flush buffer
-    gps_device.flushInput()
-    gps_device.flushOutput()
+
 
     # Trash the first line because it might be malformed
     _ = gps_device.readline()
