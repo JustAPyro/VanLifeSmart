@@ -7,7 +7,6 @@ import requests
 import urllib.request, urllib.error
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from requests.adapters import Retry, HTTPAdapter
 from fastapi import Request as fastRequest
 from contextlib import asynccontextmanager
 from pympler import asizeof
@@ -22,7 +21,7 @@ from sensors import get_gps_data, sensor_config
 # Create the local server payload.
 # This is where data is stored in memory before
 # being sent to the server.
-payload = {'gps': [], 'tio': []}
+payload = {'tio': []}
 for sensor in sensor_config.keys():
     payload[sensor] = []
 
@@ -79,27 +78,21 @@ def report():
         return
 
     logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload)/1024}kb)')
+    logger.debug(f'Payload contents:\n{json.dumps(payload, indent=4)}')
     report_response = session.post(f'{get_online_server()}/api/report.json', json=payload)
     if report_response.status_code != 200:
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
         return
 
     logger.info(f'Report successful, clearing payload')
-    # ABSTRACT: Step 2- Clear data from that sensor when it's submitted
-    payload['gps'].clear()
-    payload['tio'].clear()
+    for data_log in payload.values():
+        data_log.clear()
 
 
 def log_sensor(name: str, method: callable) -> None:
     """This is just a helper method that will log the data collection and add results to payload"""
     logger.info(f'Logged {name} Sensor Data')
     payload[name].append(method())
-
-
-def log_gps():
-    logger.info('Logged GPS data')
-    payload['gps'].append(get_gps_data())
-
 
 # ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
 def log_tio():
@@ -122,8 +115,6 @@ async def lifespan(fast_app: FastAPI):
         # ABSTRACT: Step 3- Add a job to call the log function on a regular basis
         scheduler.add_job(report, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
-        scheduler.add_job(log_gps, 'interval', id='log_gps', seconds=30,
-                          name='Logs GPS data to payload.')
         scheduler.add_job(log_tio, 'interval', id='log_tio', seconds=30,
                           name='Logs TIO data to payload.')
 
@@ -151,7 +142,7 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
-logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None

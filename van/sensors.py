@@ -67,13 +67,18 @@ def get_gps_data(formats: tuple[str] = ('GPGGA', 'GPVTG')):
             return data
 
 
-def get_dht_data(retries: int = 3):
+def get_dht_data(retries: int = 3, include_gps: bool = True):
     for _ in range(retries):
         try:
-            return {
+            # DHT Information
+            data = {
                 'temperature': dht_device.temperature,
                 'humidity': dht_device.humidity
             }
+            # Add a GPS tag if requested
+            if include_gps:
+                data['gps'] = get_gps_data()
+            return data
         except RuntimeError:
             continue
 
@@ -81,6 +86,10 @@ def get_dht_data(retries: int = 3):
 sensor_config = {
     'dht': {
         'get': get_dht_data,
-        'polling': {'minutes': 10}
+        'polling': {'seconds': 10}
+    },
+    'gps': {
+        'get': get_gps_data,
+        'polling': {'seconds': 10}
     }
 }
