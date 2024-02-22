@@ -52,7 +52,10 @@ def _abort_report():
     logger.info('Aborting report and backing up files')
     for dtype, data in payload:
         with open(f'data_backups/{dtype}_backup.csv', 'a') as file:
-            file.write(','.join(*data.keys()))
+            if data[0]:
+                # Pull header on the first item
+                # TODO: Make this less fragile lol
+                file.write(','.join(*data[0].keys()))
             for item in data:
                 file.write((','.join(*[str(value) for value in item.values()]))+'\n')
 
