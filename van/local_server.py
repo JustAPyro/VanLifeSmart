@@ -51,9 +51,14 @@ def has_connection(timeout: int = 5) -> bool:
 def _abort_report():
     logger.info('Aborting report and backing up files')
     with open('backup.csv', 'a') as file:
-        for dtype, items in payload.items():
-            for item in items:
-                file.write(','.join([dtype, *item]))
+        for dtype, data in payload.items():
+            dtype: str
+            data: list
+
+            for item in data:
+                file.write(','.join([dtype, *item.values()]))
+
+
 
 
 
