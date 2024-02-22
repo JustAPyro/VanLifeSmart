@@ -6,6 +6,7 @@ import uvicorn
 import logging
 import requests
 import urllib.request, urllib.error
+from sensors import gps
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import Request as fastRequest
@@ -137,6 +138,7 @@ async def lifespan(fast_app: FastAPI):
     yield
 
     # ---- Shutdown after app ------------
+    gps.stop()
     scheduler.shutdown()
 
 
