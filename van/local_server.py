@@ -56,7 +56,8 @@ def _abort_report():
             data: list
 
             for item in data:
-                file.write(','.join([dtype, *item.values()]))
+                # This joins each data point along with the dtype and writes them as CSV
+                file.write((','.join([dtype, *[str(item) for item in item.values()]]))+'\n')
 
 
 
