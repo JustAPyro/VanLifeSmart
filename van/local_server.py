@@ -50,7 +50,7 @@ def has_connection(timeout: int = 5) -> bool:
 
 def _abort_report():
     logger.info('Aborting report and backing up files')
-    for dtype, data in payload:
+    for dtype, data in payload.items():
         with open(f'data_backups/{dtype}_backup.csv', 'a') as file:
             if data[0]:
                 # Pull header on the first item
