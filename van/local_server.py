@@ -48,12 +48,22 @@ def has_connection(timeout: int = 5) -> bool:
     except (Exception,) as e:
         logger.exception(e)
 
+def _abort_report():
+    logger.info('Aborting report and backing up files')
+    with open('backup.csv', 'a') as file:
+        for dtype, items in payload.items():
+            for item in items:
+                file.write(','.join([dtype, *item]))
+
+
+
 
 def report():
     # Check for missing server connectivity
     if not has_connection():
         logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
         logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload)/1024}kb')
+        _abort_report()
         return
 
     # Now that we know we have server connectivity the client will try to authorize
