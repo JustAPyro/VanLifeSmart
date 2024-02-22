@@ -94,7 +94,7 @@ def log_sensor(name: str, method: callable) -> None:
     """This is just a helper method that will log the data collection and add results to payload"""
     start = timeit.default_timer()
     payload[name].append(method())
-    logger.info(f'Logged {name} Sensor Data in {start-timeit.default_timer()}s.')
+    logger.info(f'Logged {name} Sensor Data in {(timeit.default_timer()-start):.2f}s.')
 
 # ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
 def log_tio():
@@ -141,7 +141,7 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
-logging.basicConfig(level=logging.info)
+logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None

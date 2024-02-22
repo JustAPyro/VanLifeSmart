@@ -134,7 +134,7 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
 sensor_config = {
     'dht': {
         'get': get_dht_data,
-        'polling': {'minutes': 10},
+        'polling': {'seconds': 10},
     },
     'gps': {
         'get': get_gps_data,
