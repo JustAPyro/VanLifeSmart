@@ -8,6 +8,8 @@ import serial
 from dotenv import load_dotenv
 from requests.adapters import Retry
 
+from van.sensors import get_gps_data, get_tio_data
+
 NO_ARG = 1
 MISSING_ARG = 2
 load_dotenv()
@@ -36,55 +38,7 @@ def has_gps():
         return False
 
 # ABSTRACT- Step 5/6: A function that actually generates the data
-def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
-    data = {}
-    if has_gps():
-        gps = get_gps_data()
-        latitude = gps['latitude']
-        longitude = gps['longitude']
-        data['gps'] = gps
-    else:
-        data['gps'] = {'latitude': latitude, 'longitude': longitude}
 
-    if arguments and arguments.location and len(arguments.location) == 2:
-        latitude = arguments.location[0]
-        longitude = arguments.location[1]
-    elif arguments and arguments.location:
-        return {'Error': 'args.location should provide exactly 2 values.'}
-
-    if latitude is None or longitude is None:
-        return {'Error': 'Could not find latitude and longitude.'}
-
-    if not os.getenv('TOMORROWAPI'):
-        return {}
-    response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
-                            f'?location={latitude},{longitude}'
-                            f'&apikey={os.environ["TOMORROWAPI"]}')
-
-    td = response.json()['data']['values']
-    data['time'] = response.json()['data']['time']
-
-    data['uv_index'] = td['uvIndex']
-    data['humidity'] = td['humidity']
-    data['wind_gust'] = td['windGust']
-    data['dew_point'] = td['dewPoint']
-    data['cloud_base'] = td['cloudBase']
-    data['wind_speed'] = td['windSpeed']
-    data['visibility'] = td['visibility']
-    data['cloud_cover'] = td['cloudCover']
-    data['temperature'] = td['temperature']
-    data['weather_code'] = td['weatherCode']
-    data['cloud_ceiling'] = td['cloudCeiling']
-    data['rain_intensity'] = td['rainIntensity']
-    data['snow_intensity'] = td['snowIntensity']
-    data['wind_direction'] = td['windDirection']
-    data['sleet_intensity'] = td['sleetIntensity']
-    data['uv_health_concern'] = td['uvHealthConcern']
-    data['temperature_apparent'] = td['temperatureApparent']
-    data['pressure_surface_level'] = td['pressureSurfaceLevel']
-    data['freezing_rain_intensity'] = td['freezingRainIntensity']
-    data['precipitation_probability'] = td['precipitationProbability']
-    return data
 
 
 def sensor_handler(arguments):

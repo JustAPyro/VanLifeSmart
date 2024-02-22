@@ -27,7 +27,7 @@ def api_maintenance_record(record_id: int):
     return '{200: OKAY}'
 
 def get_time(gps_update):
-    time = str(gps_update.pop('utc_time')).split('.')[0]
+    time = str(gps_update.pop('time')).split('.')[0]
     if len(time) < 6:
         time = '0' + time
     date = datetime.date.today()

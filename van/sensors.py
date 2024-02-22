@@ -1,9 +1,11 @@
 import adafruit_dht
 import datetime
-
+import requests
+import os
 import pytz
 import serial
 import board
+import time
 
 # Initialize Devices
 gps_device = serial.Serial('/dev/ttyACM0', baudrate=9600)
@@ -27,7 +29,19 @@ def get_gps_data(formats: tuple[str] = ('GPGGA', 'GPVTG')):
         if formatting == 'GPGGA':
 
             # Parse the time
-            data['time'] = float(values[1])
+            gps_time = values[1].split('.')[0]
+            if len(gps_time) < 6:
+                gps_time = '0' + gps_time
+            date = datetime.date.today()
+            data['time'] = datetime.datetime(
+                year=date.year,
+                month=date.month,
+                day=date.day,
+                hour=int(gps_time[0:2]),
+                minute=int(gps_time[2:4]),
+                second=int(gps_time[4:6]),
+                tzinfo=datetime.timezone.utc
+            ).timestamp()
 
             # Process N/S/E/W into decimal lat / long
             latitude = float(values[2][0:2]) + (float(values[2][2:]) / 60)
@@ -64,6 +78,7 @@ def get_gps_data(formats: tuple[str] = ('GPGGA', 'GPVTG')):
         if all((value is True) for value in found.values()):
             return data
 
+
 def get_dht_data(retries: int = 3, include_gps: bool = True):
     for _ in range(retries):
         try:
@@ -80,6 +95,42 @@ def get_dht_data(retries: int = 3, include_gps: bool = True):
             continue
 
 
+def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
+    data = {'gps': get_gps_data()}
+
+    response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
+                            f'?location={latitude},{longitude}'
+                            f'&apikey={os.environ["TOMORROWAPI"]}')
+
+    td = response.json()['data']['values']
+    # Parse time to unix timestamp, from format ex 2024-02-22T03:31:00Z (gmt)
+    data['time'] = (datetime.datetime.strptime(response.json()['data']['time'], '%Y-%m-%dT%H:%M:%SZ')
+                    .replace(tzinfo=datetime.timezone.utc)
+                    .timestamp())
+
+    data['uv_index'] = td['uvIndex']
+    data['humidity'] = td['humidity']
+    data['wind_gust'] = td['windGust']
+    data['dew_point'] = td['dewPoint']
+    data['cloud_base'] = td['cloudBase']
+    data['wind_speed'] = td['windSpeed']
+    data['visibility'] = td['visibility']
+    data['cloud_cover'] = td['cloudCover']
+    data['temperature'] = td['temperature']
+    data['weather_code'] = td['weatherCode']
+    data['cloud_ceiling'] = td['cloudCeiling']
+    data['rain_intensity'] = td['rainIntensity']
+    data['snow_intensity'] = td['snowIntensity']
+    data['wind_direction'] = td['windDirection']
+    data['sleet_intensity'] = td['sleetIntensity']
+    data['uv_health_concern'] = td['uvHealthConcern']
+    data['temperature_apparent'] = td['temperatureApparent']
+    data['pressure_surface_level'] = td['pressureSurfaceLevel']
+    data['freezing_rain_intensity'] = td['freezingRainIntensity']
+    data['precipitation_probability'] = td['precipitationProbability']
+    return data
+
+
 sensor_config = {
     'dht': {
         'get': get_dht_data,
@@ -88,5 +139,10 @@ sensor_config = {
     'gps': {
         'get': get_gps_data,
         'polling': {'seconds': 10},
+    },
+    'tio': {
+        'get': get_tio_data,
+        'polling': {'seconds': 10},
     }
+
 }
