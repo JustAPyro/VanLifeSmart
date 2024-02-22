@@ -25,6 +25,7 @@ class User(db.Model, UserMixin):
 # == Data Models ============================================
 
 class DHTData(db.Model):
+    __tablename__ = 'dht'
     id = db.Column(db.Integer, primary_key=True)
     sensor = db.Column(db.String(25), nullable=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -57,6 +58,8 @@ class GPSData(db.Model):
     # Speed (if Applicable)
     ground_speed = db.Column(db.Float, nullable=True)
     tio_id = db.Column(db.Integer, db.ForeignKey('tomorrow_io.id'), nullable=True)
+    dht_id = db.Column(db.Integer, db.ForeignKey('dht.id'))
+
 
 
 class TomorrowIO(db.Model):

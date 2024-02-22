@@ -27,9 +27,7 @@ def get_gps_data(formats: tuple[str] = ('GPGGA', 'GPVTG')):
         if formatting == 'GPGGA':
 
             # Parse the time
-            data['time'] = (datetime.datetime.strptime(values[1], '%Y-%m-%dT%H:%M:%SZ')
-                            .replace(tzinfo=datetime.timezone.utc)
-                            .timestamp())
+            data['time'] = float(values[1])
 
             # Process N/S/E/W into decimal lat / long
             latitude = float(values[2][0:2]) + (float(values[2][2:]) / 60)
@@ -66,7 +64,6 @@ def get_gps_data(formats: tuple[str] = ('GPGGA', 'GPVTG')):
         if all((value is True) for value in found.values()):
             return data
 
-
 def get_dht_data(retries: int = 3, include_gps: bool = True):
     for _ in range(retries):
         try:
@@ -86,10 +83,10 @@ def get_dht_data(retries: int = 3, include_gps: bool = True):
 sensor_config = {
     'dht': {
         'get': get_dht_data,
-        'polling': {'seconds': 10}
+        'polling': {'seconds': 10},
     },
     'gps': {
         'get': get_gps_data,
-        'polling': {'seconds': 10}
+        'polling': {'seconds': 10},
     }
 }

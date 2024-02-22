@@ -45,6 +45,8 @@ def get_time(gps_update):
 @login_required
 def report():
     received_payload = request.json
+    import json
+    print(json.dumps(received_payload, indent=4))
     logger.info(f'Received Payload from user {current_user.email}'
                 f'\nGPS Updates: {len(received_payload["gps"])}'
                 f'\nTIO Updates: {len(received_payload["tio"])}')
