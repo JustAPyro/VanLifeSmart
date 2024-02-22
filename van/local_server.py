@@ -15,7 +15,7 @@ from functools import partial
 from fastapi import FastAPI
 from typing import Optional
 
-from vanhub import get_tio_data
+
 from sensors import get_gps_data, sensor_config
 
 # Create the local server payload.
@@ -97,7 +97,6 @@ def log_sensor(name: str, method: callable) -> None:
 # ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
 def log_tio():
     logger.info('Logged TomorrowIO data')
-    payload['tio'].append(get_tio_data())
 
 
 @asynccontextmanager
