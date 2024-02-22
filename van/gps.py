@@ -85,6 +85,9 @@ class GPSManager:
         else:
             logger.warning(f'ATTENTION: Unseen NMEA Format: {formatting}')
 
+    def get_dict(self, items: list[str]):
+        return {item: self.data[item][0] for item in items if item in self.data}
+
     def stop(self):
         self._running = False
         self._gps.close()
@@ -92,5 +95,7 @@ class GPSManager:
 
 if __name__ == '__main__':
     x = GPSManager()
-    time.sleep(5)
+    for _ in range(60):
+        time.sleep(1)
+        print(x.get_dict(['latitude', 'longitude']))
     x.running = False
