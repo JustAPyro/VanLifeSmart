@@ -48,9 +48,10 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
     data = {'gps': get_gps_data()}
 
     response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
-                            f'?location={latitude},{longitude}'
+                            f'?location={data["gps"]["latitude"]},{data["gps"]["latitude"]}'
                             f'&apikey={os.environ["TOMORROWAPI"]}')
-
+    if response.status_code != 200:
+        print('ERROR:', response) # TODO: Log this
     td = response.json()['data']['values']
     # Parse time to unix timestamp, from format ex 2024-02-22T03:31:00Z (gmt)
     data['time'] = (datetime.datetime.strptime(response.json()['data']['time'], '%Y-%m-%dT%H:%M:%SZ')
