@@ -46,11 +46,12 @@ def get_time(gps_update):
 def report():
     received_payload = request.json
     import json
-    print(json.dumps(received_payload, indent=4))
     logger.info(f'Received Payload from user {current_user.email}'
                 f'\nGPS Updates: {len(received_payload["gps"])}'
-                f'\nTIO Updates: {len(received_payload["tio"])}')
+                f'\nTIO Updates: {len(received_payload["tio"])}'
+                f'\nDHT Updates: {len(received_payload["dht"])}')
     # ---- Process GPS Updates ----
+    return {'good': 'work'}
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
         dt = get_time(gps_update)
