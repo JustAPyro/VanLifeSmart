@@ -143,7 +143,12 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
-logging.basicConfig(level=logging.INFO)
+#  logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    filename='2.22.24_server_log.txt',
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S')
 
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
