@@ -19,9 +19,19 @@ class User(db.Model, UserMixin):
     maintenance = db.relationship('Maintenance')
     gps_data = db.relationship('GPSData')
     tio = db.relationship('TomorrowIO')
+    dht_data = db.relationship('DHTData')
 
 
 # == Data Models ============================================
+
+class DHTData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sensor = db.Column(db.String(25), nullable=False)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id'))
+    gps = db.relationship('GPSData', uselist=False)
+
+    temperature = db.Column(db.Float)
+    humidity = db.Column(db.Float)
 
 class GPSData(db.Model):
     """GPS Sensor Data"""

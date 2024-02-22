@@ -16,8 +16,8 @@ from functools import partial
 from fastapi import FastAPI
 from typing import Optional
 
-from vanhub import get_gps_data, get_tio_data
-from sensors import sensor_config
+from vanhub import get_tio_data
+from sensors import get_gps_data, sensor_config
 
 # Create the local server payload.
 # This is where data is stored in memory before
@@ -79,7 +79,6 @@ def report():
         return
 
     logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload)/1024}kb)')
-
     report_response = session.post(f'{get_online_server()}/api/report.json', json=payload)
     if report_response.status_code != 200:
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
@@ -92,6 +91,7 @@ def report():
 
 
 def log_sensor(name: str, method: callable) -> None:
+    """This is just a helper method that will log the data collection and add results to payload"""
     logger.info(f'Logged {name} Sensor Data')
     payload[name].append(method())
 
@@ -127,6 +127,11 @@ async def lifespan(fast_app: FastAPI):
         scheduler.add_job(log_tio, 'interval', id='log_tio', seconds=30,
                           name='Logs TIO data to payload.')
 
+        # This is a fairly complicated block of code that generates a job for
+        # each sensor listed in the sensor_config variable in sensors.py
+        # It does this first by creating a partial function, essentially passing the
+        # sensor name and get function into the log sensor method. Then it adds the partial
+        # function to a scheduler job, by unpacking the arguments given to the sensor under polling
         for van_sensor in sensor_config.keys():
             log_method = partial(log_sensor, van_sensor, sensor_config[van_sensor]['get'])
             scheduler.add_job(log_method, 'interval', id=f'log_{van_sensor}',
