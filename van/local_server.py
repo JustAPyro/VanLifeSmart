@@ -43,6 +43,7 @@ def has_connection(timeout: int = 5) -> bool:
 
 
 def _abort_report():
+    return
     backup_size = 0
     backup_payload = copy.deepcopy(payload)
     for data_log in payload.values():
@@ -168,16 +169,16 @@ async def lifespan(fast_app: FastAPI):
     # ---- Shutdown after app ------------
     # This is cleanup and shutdown code
     scheduler.shutdown()
-    gps.stop()  # Needs to be fixed
+    # gps.stop()  # Needs to be fixed
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
-#  logging.basicConfig(level=logging.INFO)
-logging.basicConfig(level=logging.INFO,
-                    filename='2.22.24_server_log.txt',
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S')
+logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO,
+#                    filename='2.22.24_server_log.txt',
+#                    filemode='a',
+#                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+#                    datefmt='%H:%M:%S')
 
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
