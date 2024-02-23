@@ -43,7 +43,7 @@ class TIO(AbstractSensor):
         return self._default_schedule
 
     def get_data(self):
-        data = {'gps': get_gps_data()}
+        data = {'gps': 'get_gps_data()'}
 
         response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
                                 f'?location={data["gps"]["latitude"]},{data["gps"]["latitude"]}'
@@ -100,7 +100,7 @@ class DHT(AbstractSensor):
                 }
                 # Add a GPS tag if requested
                 if self.include_gps:
-                    data['gps'] = get_gps_data()
+                    data['gps'] = "get_gps_data()"
                 return data
             except RuntimeError:
                 continue
@@ -140,14 +140,14 @@ def get_dht_data(retries: int = 3, include_gps: bool = True):
             }
             # Add a GPS tag if requested
             if include_gps:
-                data['gps'] = get_gps_data()
+                data['gps'] = 'TODO'
             return data
         except RuntimeError:
             continue
 
 
 def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
-    data = {'gps': get_gps_data()}
+    data = {'gps': 'TODO'}
 
     response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
                             f'?location={data["gps"]["latitude"]},{data["gps"]["latitude"]}'

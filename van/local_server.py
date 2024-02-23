@@ -112,7 +112,7 @@ def report():
         data_log.clear()
 
 
-def log_sensor(name: str, method: callable) -> None:
+def log_sensor(name: str, method: callable, log_to: dict) -> None:
     """This is just a helper method that will log the data collection and add results to payload"""
     start = timeit.default_timer()
     payload[name].append(method())
@@ -154,7 +154,7 @@ async def lifespan(fast_app: FastAPI):
         # sensor name and get function into the log sensor method. Then it adds the partial
         # function to a scheduler job, by unpacking the arguments from the sensors default schedule
         for sensor in sensors:
-            log_method = partial(log_sensor, sensor.sensor_type, sensor.get_data)
+            log_method = partial(log_sensor, sensor.sensor_type, sensor.get_data, payload)
             scheduler.add_job(log_method, 'interval', id=f'log_{sensor.sensor_type}',
                               **sensor.default_schedule,
                               name=f'Log {sensor.sensor_type}')
