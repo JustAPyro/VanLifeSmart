@@ -46,10 +46,10 @@ def unpack_backups(payload: dict[str, list]):
     for sensor in sensors:
         try:
             with open(f'van/data_backups/{sensor.sensor_type}_backup.csv', 'r') as file:
-                for line in file.readline():
+                for line in file.readlines():
                     data_entry = sensor.from_csv(line)
                     payload[sensor.sensor_type].append(data_entry)
-        except (Exception,) as e:
+        except (OSError,) as e:
             print(e)
 
 
@@ -61,8 +61,6 @@ def _abort_report(payload: dict[str, list]):
     backup_payload = copy.deepcopy(payload)
     for data_log in payload.values():
         data_log.clear()
-
-    print(backup_payload)
 
     # Open and create a backup file for each data table
     for dtype, data in backup_payload.items():

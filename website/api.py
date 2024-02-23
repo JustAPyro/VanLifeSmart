@@ -47,9 +47,9 @@ def report():
     received_payload = request.json
     import json
     logger.info(f'Received Payload from user {current_user.email}'
-                f'\nGPS Updates: {len(received_payload["gps"])}'
-                f'\nTIO Updates: {len(received_payload["tio"])}'
-                f'\nDHT Updates: {len(received_payload["dht"])}')
+                f'\nGPS Updates: {len(received_payload.get("gps", 0))}')
+                #f'\nTIO Updates: {len(received_payload.get("tio", 0))}'
+                #f'\nDHT Updates: {len(received_payload.get("dht", 0))}')
     # ---- Process GPS Updates ----
     return {'good': 'work'}
     gps_updates = received_payload.get('gps')
