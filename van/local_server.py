@@ -60,13 +60,13 @@ def _abort_report(payload: dict[str, list]):
             continue
 
         # If we have data, open a data_backup file for this sensor
-        with open(f'data_backups/{dtype}_backup.csv', 'a') as file:
+        with open(f'van/data_backups/{dtype}_backup.csv', 'a') as file:
 
             # Write the headers
             file.write(','.join(*data[0].keys()))
             for item in data:
                 # TODO: This is a little fragile imo
-                file.write((','.join(*[str(value) for value in item.values()])) + '\n')
+                file.write((','.join([str(value) for value in item.values()])) + '\n')
             file.seek(0, os.SEEK_END)
             backup_size += file.tell()
 
