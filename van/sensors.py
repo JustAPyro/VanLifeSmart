@@ -50,6 +50,11 @@ class AbstractSensor(ABC):
         """Returns a dict of data retrieved from the sensor"""
         pass
 
+    @abstractmethod
+    def from_csv(self, line: str) -> dict:
+        """Parses a CSV line into a dict data object"""
+        pass
+
 
 class TIO(AbstractSensor):
     def __init__(self, default_schedule: dict, **kwargs):
@@ -144,14 +149,30 @@ class GPS(AbstractSensor):
             'time',
             'latitude',
             'longitude',
+            'altitude',
             'fix_quality',
             'satellites_used',
             'hdop',
-            'altitude',
             'true_track',
             'magnetic_track',
             'ground_speed'
         ])
+
+    # TODO: This is very dangerous since ordering isn't guaranteed
+    def from_csv(self, line: str) -> dict:
+        vals = line.split(',')
+        return {
+            'time': float(vals[0]),
+            'latitude': float(vals[1]),
+            'longitude': float(vals[2]),
+            'altitude': float(vals[3]),
+            'fix_quality': str(vals[4]),
+            'satellites_used': int(vals[5]),
+            'hdop': float(vals[6]),
+            'true_track': None if vals[7] == 'null' else float(vals[7]),
+            'magnetic_track': None if vals[7] == 'null' else float(vals[8]),
+            'ground_speed': None if vals[7] == 'null' else float(vals[9]),
+        }
 
 
 def get_dht_data(retries: int = 3, include_gps: bool = True):

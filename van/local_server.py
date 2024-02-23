@@ -42,8 +42,18 @@ def has_connection(timeout: int = 5) -> bool:
         logger.exception(e)
 
 
-def _abort_report(payload: dict[str, list]):
+def unpack_backups(payload: dict[str, list]):
+    for sensor in sensors:
+        try:
+            with open(f'van/data_backups/{sensor.sensor_type}_backup.csv', 'r') as file:
+                for line in file.readline():
+                    data_entry = sensor.from_csv(line)
+                    payload[sensor.sensor_type].append(data_entry)
+        except (Exception,) as e:
+            print(e)
 
+
+def _abort_report(payload: dict[str, list]):
     # Potentially a little bit race y code, ideally we should probably
     # have some kind of mutex lock here, but to take the easy route
     # for now I just copy the pay load and clear it as quickly as possible
@@ -51,6 +61,8 @@ def _abort_report(payload: dict[str, list]):
     backup_payload = copy.deepcopy(payload)
     for data_log in payload.values():
         data_log.clear()
+
+    print(backup_payload)
 
     # Open and create a backup file for each data table
     for dtype, data in backup_payload.items():
@@ -63,7 +75,7 @@ def _abort_report(payload: dict[str, list]):
         with open(f'van/data_backups/{dtype}_backup.csv', 'a') as file:
 
             # Write the headers
-            file.write(','.join(*data[0].keys()))
+            file.write((','.join(data[0].keys())) + '\n')
             for item in data:
                 # TODO: This is a little fragile imo
                 file.write((','.join([str(value) for value in item.values()])) + '\n')
@@ -107,6 +119,11 @@ def report(payload: dict[str, list]):
 
     logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload) / 1024}kb)')
 
+    # This will unpack all the back-ups into the payload
+    # Danger... race?
+    unpack_backups(payload)
+
+    # Send payload to server
     report_response = session.post(f'{os.getenv("VLS_SERVER")}/api/report.json', json=payload)
     if report_response.status_code != 200:
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
@@ -185,10 +202,9 @@ async def lifespan(fast_app: FastAPI):
         sensor.shutdown()
 
 
-
 app = FastAPI(title='Van Hub', lifespan=lifespan)
 logging.basicConfig(level=logging.INFO)
-#logging.basicConfig(level=logging.INFO,
+# logging.basicConfig(level=logging.INFO,
 #                    filename='2.22.24_server_log.txt',
 #                    filemode='a',
 #                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
