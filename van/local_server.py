@@ -5,6 +5,7 @@ import timeit
 import uvicorn
 import logging
 import requests
+import copy
 import urllib.request, urllib.error
 from sensors import gps
 
@@ -17,15 +18,9 @@ from functools import partial
 from fastapi import FastAPI
 from typing import Optional
 
+from sensors import get_gps_data, sensor_config, sensors
 
-from sensors import get_gps_data, sensor_config
 
-# Create the local server payload.
-# This is where data is stored in memory before
-# being sent to the server.
-payload = {}
-for sensor in sensor_config.keys():
-    payload[sensor] = []
 
 
 def get_online_server():
@@ -48,27 +43,35 @@ def has_connection(timeout: int = 5) -> bool:
     except (Exception,) as e:
         logger.exception(e)
 
+
+def _pack_backups(payload: dict):
+    pass
+
+
 def _abort_report():
-    logger.info('Aborting report and backing up files')
-    for dtype, data in payload.items():
+    backup_size = 0
+    backup_payload = copy.deepcopy(payload)
+    for data_log in payload.values():
+        data_log.clear()
+
+    for dtype, data in backup_payload.items():
         with open(f'data_backups/{dtype}_backup.csv', 'a') as file:
             if data[0]:
                 # Pull header on the first item
                 # TODO: Make this less fragile lol
                 file.write(','.join(*data[0].keys()))
             for item in data:
-                file.write((','.join(*[str(value) for value in item.values()]))+'\n')
+                file.write((','.join(*[str(value) for value in item.values()])) + '\n')
+            file.seek(0, os.SEEK_END)
+            backup_size += file.tell()
 
-
-
-
+    logger.info(f'Aborted report and saved {backup_size / 1024}kb data to backup folders.')
 
 
 def report():
     # Check for missing server connectivity
     if not has_connection():
         logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
-        logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload)/1024}kb')
         _abort_report()
         return
 
@@ -86,17 +89,19 @@ def report():
         # If we don't get the expected 200 response log the error and abort report
         if auth_response.status_code != 200:
             logger.error(f'Failed Server authentication (status: [{auth_response.status_code}]) aborting report')
-            logger.info(f'Size of current payload: Memory/{asizeof.asizeof(payload) / 1024}kb')
+            _abort_report()
             return
 
     # If there's an error networking log it and abort
     except (Exception,) as e:
         logger.error('Error during authentication request, aborting report')
+        _abort_report()
         logger.exception(e)
         return
 
-    logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload)/1024}kb)')
-    logger.debug(f'Payload contents:\n{json.dumps(payload, indent=4)}')
+    logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload) / 1024}kb)')
+    _pack_backups(payload)
+
     report_response = session.post(f'{get_online_server()}/api/report.json', json=payload)
     if report_response.status_code != 200:
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
@@ -111,7 +116,8 @@ def log_sensor(name: str, method: callable) -> None:
     """This is just a helper method that will log the data collection and add results to payload"""
     start = timeit.default_timer()
     payload[name].append(method())
-    logger.info(f'Logged {name} Sensor Data in {(timeit.default_timer()-start):.2f}s.')
+    logger.info(f'Logged {name} Sensor Data in {(timeit.default_timer() - start):.2f}s.')
+
 
 # ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
 def log_tio():
@@ -124,6 +130,14 @@ async def lifespan(fast_app: FastAPI):
 
     # ----- Startup ------------------------
     load_dotenv()
+
+    # Create the local server payload with a list for each type of sensor.
+    # This is where data is stored in memory before
+    # being sent to the server.
+    payload = {}
+    for x_sensor in sensors:
+        payload[x_sensor.sensor_type] = []
+
     # TODO: Guard against missing ENV variables and such
     global scheduler
     try:
@@ -135,15 +149,15 @@ async def lifespan(fast_app: FastAPI):
                           name='Reports current payload to online server')
 
         # This is a fairly complicated block of code that generates a job for
-        # each sensor listed in the sensor_config variable in sensors.py
+        # each sensor provided in the sensors list of sensors.py
         # It does this first by creating a partial function, essentially passing the
         # sensor name and get function into the log sensor method. Then it adds the partial
-        # function to a scheduler job, by unpacking the arguments given to the sensor under polling
-        for van_sensor in sensor_config.keys():
-            log_method = partial(log_sensor, van_sensor, sensor_config[van_sensor]['get'])
-            scheduler.add_job(log_method, 'interval', id=f'log_{van_sensor}',
-                              **sensor_config[van_sensor]['polling'],
-                              name=f'Logs {van_sensor} to payload.')
+        # function to a scheduler job, by unpacking the arguments from the sensors default schedule
+        for sensor in sensors:
+            log_method = partial(log_sensor, sensor.sensor_type, sensor.get_data)
+            scheduler.add_job(log_method, 'interval', id=f'log_{sensor.sensor_type}',
+                              **sensor.default_schedule,
+                              name=f'Log {sensor.sensor_type}')
 
         logger.info('Successfully Created Scheduler Object')
     except (Exception,) as e:
@@ -168,7 +182,6 @@ logging.basicConfig(level=logging.INFO,
 
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
-
 
 
 @app.get('/')
