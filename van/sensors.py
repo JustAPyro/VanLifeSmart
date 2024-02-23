@@ -19,7 +19,6 @@ class AbstractSensor(ABC):
         self._default_schedule = default_schedule
 
     @property
-    @abstractmethod
     def default_schedule(self):
         return self._default_schedule
 
