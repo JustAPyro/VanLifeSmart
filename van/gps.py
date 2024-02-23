@@ -19,19 +19,22 @@ class GPSManager:
         self._running = True
         self.data = {}
 
-        # Create the gps serial connection and flush/clear buffer
-        self._gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
-        self._gps.flushInput()
-        self._gps.flushOutput()
-        _ = self._gps.readline()
-
-        gps_thread = threading.Thread(target=self.listen)
+        gps_thread = threading.Thread(name='gps_listener', target=self.listen)
         gps_thread.start()
 
     def listen(self):
-        _ = self._gps.readline()
+        # Create the serial connection
+        gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
+
+        # Flush the buffers
+        gps.flushInput()
+        gps.flushOutput()
+
+        # Skip the first line since it may be garbage
+        _ = gps.readline()
         while self._running:
-            sentence = self._gps.readline().decode('utf-8')
+            # Start parsing the sentences
+            sentence = gps.readline().decode('utf-8')
             self._parse_sentence(sentence)
 
     def _parse_sentence(self, sentence: str):
