@@ -170,8 +170,8 @@ class GPS(AbstractSensor):
             'satellites_used': int(vals[5]),
             'hdop': float(vals[6]),
             'true_track': None if vals[7] == 'null' else float(vals[7]),
-            'magnetic_track': None if vals[7] == 'null' else float(vals[8]),
-            'ground_speed': None if vals[7] == 'null' else float(vals[9]),
+            'magnetic_track': None if vals[8] == 'null' else float(vals[8]),
+            'ground_speed': None if vals[9] == 'null' else float(vals[9]),
         }
 
 
