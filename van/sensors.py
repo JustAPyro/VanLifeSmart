@@ -18,13 +18,13 @@ class AbstractSensor(ABC):
     def __init__(self, default_schedule):
         self._default_schedule = default_schedule
 
-    @abstractmethod
     @property
+    @abstractmethod
     def default_schedule(self):
         return self._default_schedule
 
-    @abstractmethod
     @property
+    @abstractmethod
     def sensor_type(self) -> str:
         pass
 
