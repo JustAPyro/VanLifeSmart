@@ -169,7 +169,11 @@ async def lifespan(fast_app: FastAPI):
     # ---- Shutdown after app ------------
     # This is cleanup and shutdown code
     scheduler.shutdown()
-    # gps.stop()  # Needs to be fixed
+
+    # Shutdown each sensor
+    for sensor in sensors:
+        sensor.shutdown()
+
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)

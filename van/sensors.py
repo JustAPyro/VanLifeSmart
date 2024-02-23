@@ -25,9 +25,19 @@ class AbstractSensor(ABC):
     2. A scheduler will be assigned to log data from this sensor
         to payload[{sensor_type}] based on the interval provided in
         the default_schedule dict.
+
+    3. On application exit the sensors shutdown() method will fire
+        giving the sensor a chance to close anything it needs to.
     """
     def __init__(self, default_schedule):
         self.default_schedule = default_schedule
+
+    def shutdown(self):
+        """
+        This method will get called on all sensors before application shutdown.
+        Override it to do things like close ports and files for a sensor.
+        """
+        pass
 
     @property
     @abstractmethod
@@ -121,6 +131,9 @@ class GPS(AbstractSensor):
         # Call super and then instantiate a GPS manager with given location and baud rate
         super().__init__(**kwargs)
         self.gps = GPSManager(location, baud)
+
+    def shutdown(self):
+        self.gps.stop()
 
     @property
     def sensor_type(self) -> str:
