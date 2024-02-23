@@ -1,32 +1,30 @@
 import os
 import sys
 import json
+import copy
 import timeit
 import uvicorn
 import logging
 import requests
-import copy
 import urllib.request, urllib.error
-from sensors import gps
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import Request as fastRequest
 from contextlib import asynccontextmanager
-from pympler import asizeof
 from dotenv import load_dotenv
 from functools import partial
+from pympler import asizeof
 from fastapi import FastAPI
 from typing import Optional
 
 from sensors import sensors
 
-
-
-
-def get_online_server():
-    with open('van/vhs_cmd_config.json', 'r') as file:
-        config = json.load(file)
-        return config['ONLINE_SERVER_LOCATION']
+required_environments = [
+    'VLS_USERNAME',  # Username for public server account
+    'VLS_PASSWORD',  # Password for public server account
+    'VLS_SERVER',  # Address of the public server to report to
+    'TOMORROWAPI'  # API key for Tomorrow API - Used to pull weather data
+]
 
 
 def has_connection(timeout: int = 5) -> bool:
@@ -36,7 +34,7 @@ def has_connection(timeout: int = 5) -> bool:
     :return: True if we can connect to the server, False otherwise.
     """
     try:
-        urllib.request.urlopen(f'{get_online_server()}/api/auth.json', timeout=timeout)
+        urllib.request.urlopen(f'{os.getenv("VLS_SERVER")}/api/auth.json', timeout=timeout)
         return True
     except (urllib.error.URLError,):
         return False
@@ -68,7 +66,7 @@ def _abort_report():
     logger.info(f'Aborted report and saved {backup_size / 1024}kb data to backup folders.')
 
 
-def report():
+def report(payload: dict[str, list]):
     # Check for missing server connectivity
     if not has_connection():
         logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
@@ -81,7 +79,7 @@ def report():
     logger.info('Established connection, Attempting authorization & upload...')
     try:
         session = requests.Session()
-        auth_response = session.post(f'{get_online_server()}/api/auth.json', json={
+        auth_response = session.post(f'{os.getenv("VLS_SERVER")}/api/auth.json', json={
             'email': os.getenv('VLS_USERNAME'),
             'password': os.getenv('VLS_PASSWORD'),
             'remember': True})
@@ -102,7 +100,7 @@ def report():
     logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload) / 1024}kb)')
     _pack_backups(payload)
 
-    report_response = session.post(f'{get_online_server()}/api/report.json', json=payload)
+    report_response = session.post(f'{os.getenv("VLS_SERVER")}/api/report.json', json=payload)
     if report_response.status_code != 200:
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
         return
@@ -112,10 +110,10 @@ def report():
         data_log.clear()
 
 
-def log_sensor(name: str, method: callable, log_to: dict) -> None:
+def log_sensor(name: str, method: callable, log_to: dict[str, list]) -> None:
     """This is just a helper method that will log the data collection and add results to payload"""
     start = timeit.default_timer()
-    payload[name].append(method())
+    log_to[name].append(method())
     logger.info(f'Logged {name} Sensor Data in {(timeit.default_timer() - start):.2f}s.')
 
 
@@ -129,7 +127,15 @@ async def lifespan(fast_app: FastAPI):
     """Manages the lifespan of the FastAPI app"""
 
     # ----- Startup ------------------------
+    # Load environment vars from .env
     load_dotenv()
+
+    # Here we check to make sure we have the expected environment variables
+    # as missing env variables down the line can cause silent failures
+    missing = []
+    for env in required_environments:
+        if os.getenv(env) is None:
+            raise RuntimeError(f'Missing environment variable: {env} | Add to .env or system environment')
 
     # Create the local server payload with a list for each type of sensor.
     # This is where data is stored in memory before
@@ -141,11 +147,15 @@ async def lifespan(fast_app: FastAPI):
     # TODO: Guard against missing ENV variables and such
     global scheduler
     try:
+        # Create an async scheduler to update and send data in the background
         scheduler = AsyncIOScheduler()
         scheduler.start()
 
-        # ABSTRACT: Step 3- Add a job to call the log function on a regular basis
-        scheduler.add_job(report, 'interval', id='report', minutes=1,
+        # bind the payload to report then schedule the report job.
+        # This is a schedule that will always run to report data to server
+        # if the server cannot be reached it will write it to csv files instead.
+        report_method = partial(report, payload)
+        scheduler.add_job(report_method, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
 
         # This is a fairly complicated block of code that generates a job for
@@ -158,18 +168,19 @@ async def lifespan(fast_app: FastAPI):
             scheduler.add_job(log_method, 'interval', id=f'log_{sensor.sensor_type}',
                               **sensor.default_schedule,
                               name=f'Log {sensor.sensor_type}')
-
-        logger.info('Successfully Created Scheduler Object')
+        logger.info('Successfully created and loaded schedulers')
     except (Exception,) as e:
         # If we get any type of exception we log it
         logger.error('Error creating scheduler object', exc_info=e)
 
     # ---- Yield To App --------------------
+    # This is where the app actually runs
     yield
 
     # ---- Shutdown after app ------------
-    gps.stop()
+    # This is cleanup and shutdown code
     scheduler.shutdown()
+    gps.stop()  # Needs to be fixed
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
