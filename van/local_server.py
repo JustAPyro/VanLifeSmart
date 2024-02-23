@@ -42,10 +42,6 @@ def has_connection(timeout: int = 5) -> bool:
         logger.exception(e)
 
 
-def _pack_backups(payload: dict):
-    pass
-
-
 def _abort_report():
     backup_size = 0
     backup_payload = copy.deepcopy(payload)
@@ -67,7 +63,8 @@ def _abort_report():
 
 
 def report(payload: dict[str, list]):
-    # Check for missing server connectivity
+    # Check for server connectivity
+    # and abort immediately if not found
     if not has_connection():
         logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
         _abort_report()
@@ -98,7 +95,6 @@ def report(payload: dict[str, list]):
         return
 
     logger.info(f'Authorization successful! | Sending payload ({asizeof.asizeof(payload) / 1024}kb)')
-    _pack_backups(payload)
 
     report_response = session.post(f'{os.getenv("VLS_SERVER")}/api/report.json', json=payload)
     if report_response.status_code != 200:
@@ -117,22 +113,15 @@ def log_sensor(name: str, method: callable, log_to: dict[str, list]) -> None:
     logger.info(f'Logged {name} Sensor Data in {(timeit.default_timer() - start):.2f}s.')
 
 
-# ABSTRACT: Step 1- Log function that collects the data and adds it to the payload
-def log_tio():
-    logger.info('Logged TomorrowIO data')
-
-
 @asynccontextmanager
 async def lifespan(fast_app: FastAPI):
     """Manages the lifespan of the FastAPI app"""
-
     # ----- Startup ------------------------
     # Load environment vars from .env
     load_dotenv()
 
     # Here we check to make sure we have the expected environment variables
     # as missing env variables down the line can cause silent failures
-    missing = []
     for env in required_environments:
         if os.getenv(env) is None:
             raise RuntimeError(f'Missing environment variable: {env} | Add to .env or system environment')
@@ -144,7 +133,6 @@ async def lifespan(fast_app: FastAPI):
     for x_sensor in sensors:
         payload[x_sensor.sensor_type] = []
 
-    # TODO: Guard against missing ENV variables and such
     global scheduler
     try:
         # Create an async scheduler to update and send data in the background
