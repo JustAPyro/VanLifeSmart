@@ -31,10 +31,13 @@ class GPSManager:
         self._gps.flushOutput()
 
         # First line can be corrupt
-        _ = self._gps.readline()
-        while self._running:
-            sentence = self._gps.readline().decode('utf-8')
-            self._parse_sentence(sentence)
+        try:
+            _ = self._gps.readline()
+            while self._running:
+                sentence = self._gps.readline().decode('utf-8')
+                self._parse_sentence(sentence)
+        except (Exception,) as e:
+            pass
 
     def _parse_sentence(self, sentence: str):
         words = sentence.split(',')
