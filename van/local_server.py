@@ -42,20 +42,30 @@ def has_connection(timeout: int = 5) -> bool:
         logger.exception(e)
 
 
-def _abort_report():
-    return
+def _abort_report(payload: dict[str, dict]):
+
+    # Potentially a little bit racey code, ideally we should probably
+    # have some kind of mutex lock here, but to take the easy route
+    # for now I just copy the pay load and clear it as quickly as possible
     backup_size = 0
     backup_payload = copy.deepcopy(payload)
     for data_log in payload.values():
         data_log.clear()
 
+    # Open and create a backup file for each data table
     for dtype, data in backup_payload.items():
+
+        # If we have no data for this sensor skip it
+        if len(data) == 0:
+            continue
+
+        # If we have data, open a data_backup file for this sensor
         with open(f'data_backups/{dtype}_backup.csv', 'a') as file:
-            if data[0]:
-                # Pull header on the first item
-                # TODO: Make this less fragile lol
-                file.write(','.join(*data[0].keys()))
+
+            # Write the headers
+            file.write(','.join(*data[0].keys()))
             for item in data:
+                # TODO: This is a little fragile imo
                 file.write((','.join(*[str(value) for value in item.values()])) + '\n')
             file.seek(0, os.SEEK_END)
             backup_size += file.tell()
