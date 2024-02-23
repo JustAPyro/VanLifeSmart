@@ -42,9 +42,9 @@ def has_connection(timeout: int = 5) -> bool:
         logger.exception(e)
 
 
-def _abort_report(payload: dict[str, dict]):
+def _abort_report(payload: dict[str, list]):
 
-    # Potentially a little bit racey code, ideally we should probably
+    # Potentially a little bit race y code, ideally we should probably
     # have some kind of mutex lock here, but to take the easy route
     # for now I just copy the pay load and clear it as quickly as possible
     backup_size = 0
@@ -78,7 +78,7 @@ def report(payload: dict[str, list]):
     # and abort immediately if not found
     if not has_connection():
         logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
-        _abort_report()
+        _abort_report(payload)
         return
 
     # Now that we know we have server connectivity the client will try to authorize
@@ -95,13 +95,13 @@ def report(payload: dict[str, list]):
         # If we don't get the expected 200 response log the error and abort report
         if auth_response.status_code != 200:
             logger.error(f'Failed Server authentication (status: [{auth_response.status_code}]) aborting report')
-            _abort_report()
+            _abort_report(payload)
             return
 
     # If there's an error networking log it and abort
     except (Exception,) as e:
         logger.error('Error during authentication request, aborting report')
-        _abort_report()
+        _abort_report(payload)
         logger.exception(e)
         return
 
