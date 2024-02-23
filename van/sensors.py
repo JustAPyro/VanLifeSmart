@@ -191,18 +191,3 @@ sensors: list[AbstractSensor] = [
     #TIO(default_schedule={'seconds': 15})
 ]
 
-sensor_config = {
-    'dht': {
-        'get': get_dht_data,
-        'polling': {'minutes': 10},
-    },
-    'gps': {
-        'get': get_gps_data,
-        'polling': {'seconds': 10},
-    },
-    'tio': {
-        'get': get_tio_data,
-        'polling': {'minutes': 10},
-    }
-
-}

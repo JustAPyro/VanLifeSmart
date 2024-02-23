@@ -18,7 +18,7 @@ from functools import partial
 from fastapi import FastAPI
 from typing import Optional
 
-from sensors import get_gps_data, sensor_config, sensors
+from sensors import sensors
 
 
 
