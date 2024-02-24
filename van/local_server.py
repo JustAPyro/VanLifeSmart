@@ -9,7 +9,6 @@ import urllib.request
 from contextlib import asynccontextmanager
 from functools import partial
 from typing import Optional
-from scheduler import scheduler
 
 import requests
 import uvicorn
@@ -21,7 +20,8 @@ from pympler import asizeof
 
 from sensors import sensors
 from data_backups.backup_manager import BackupManager
-from scheduler import schedule_urls
+from scheduling.tools import scheduler
+from scheduling.endpoints import schedule_urls
 
 # We abort startup if any of these environment variables are missing
 required_environments = [

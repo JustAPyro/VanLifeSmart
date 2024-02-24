@@ -1,18 +1,25 @@
 from typing import Optional
 
-import adafruit_dht
 import datetime
 import requests
 import os
 import pytz
 import serial
-import board
+
 import time
 from gps import GPSManager
 from abc import ABC, abstractmethod
 
-# Initialize Devices
-dht_device = adafruit_dht.DHT22(board.D4)
+try:
+    import adafruit_dht
+    import board
+    dht_enabled = True
+except ImportError:
+    adafruit_dht = None
+    board = None
+    dht_enabled = False
+
+
 
 
 class AbstractSensor(ABC):
@@ -110,6 +117,8 @@ class DHT(AbstractSensor):
         self.retries = retries
         self.include_gps = include_gps
         self.dht_device = adafruit_dht.DHT22(pin)
+        # Initialize Devices
+        dht_device = adafruit_dht.DHT22(board.D4)
 
     @property
     def sensor_type(self) -> str:
