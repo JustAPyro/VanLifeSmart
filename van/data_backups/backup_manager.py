@@ -30,6 +30,10 @@ class BackupManager:
         self._persistent['total_size'] = value
         self._refresh()
 
+    def _refresh(self):
+        with open('.backup', 'w') as file:
+            file.write(json.dumps(self._persistent, indent=4))
+
     def backup(self, data: dict) -> int:
         """
         :param data: The sensor payload you want to back up
@@ -40,28 +44,27 @@ class BackupManager:
 
         # Open and create a backup file for each data table
         for dtype, data in data.items():
+            dtype: str        # Name of the sensor
+            data: list[dict]  # List of dictionary data points
+
             # If we have no data for this sensor skip it
             if len(data) == 0:
                 continue
 
             # If we have data, open a data_backup file for this sensor
             with open(f'{self.folder}/{dtype}_backup.csv', 'a') as file:
-
-                # Write the headers
                 for item in data:
                     # TODO: This is a little fragile imo
+                    # Join with commas the string value of each data point in this item
                     file.write((','.join([str(value) for value in item.values()])) + '\n')
+
+                # Make sure we're at the end, then
+                # save the size of the file
+                # TODO: Fix bug here, why are we claiming added_size is the size of THIS backup
                 file.seek(0, os.SEEK_END)
                 added_size = file.tell()
                 self.total_size += added_size
         return added_size
-
-    def clear(self, sensors):
-        for sensor in sensors:
-            try:
-                os.remove(f'{self.folder}/{sensor.sensor_type}_backup.csv')
-            except FileNotFoundError:
-                pass
 
     def restore(self, payload, sensors):
         for sensor in sensors:
@@ -74,6 +77,11 @@ class BackupManager:
             except (OSError,) as e:
                 print(e)
 
-    def _refresh(self):
-        with open('.backup', 'w') as file:
-            file.write(json.dumps(self._persistent, indent=4))
+    def clear(self, sensors):
+        for sensor in sensors:
+            try:
+                os.remove(f'{self.folder}/{sensor.sensor_type}_backup.csv')
+            except FileNotFoundError:
+                pass
+
+
