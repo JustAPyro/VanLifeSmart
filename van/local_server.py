@@ -184,6 +184,7 @@ async def lifespan(fast_app: FastAPI):
 app = FastAPI(title='Van Hub', lifespan=lifespan)
 app.include_router(schedule_urls)
 log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
+
 # logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
                     filename=log_location,

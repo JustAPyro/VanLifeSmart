@@ -243,8 +243,8 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
 
 
 sensors: list[AbstractSensor] = [
-    GPS(location='/dev/ttyACM0', baud=9600,
-        default_schedule={'seconds': 10}),
+    #GPS(location='/dev/ttyACM0', baud=9600,
+    #    default_schedule={'seconds': 10}),
     #DHT(pin=board.D4, retries=3, include_gps=True,
     #    default_schedule={'seconds': 15}),
     #TIO(default_schedule={'seconds': 15})
