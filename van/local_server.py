@@ -20,6 +20,7 @@ from pympler import asizeof
 
 from sensors import sensors
 from data_backups.backup_manager import BackupManager
+from van.scheduler import schedule_urls
 
 # We abort startup if any of these environment variables are missing
 required_environments = [
@@ -183,6 +184,7 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
+app.include_router(schedule_urls)
 log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
 #logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
