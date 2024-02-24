@@ -11,8 +11,8 @@ def get_scheduler() -> AsyncIOScheduler:
 
 
 def schedule_info(job: Job):
-    print(job)
     return {
+        'id': job.id,
         'description': job.name,
         'trigger': str(job.trigger),
         'next_run_time': job.next_run_time,
