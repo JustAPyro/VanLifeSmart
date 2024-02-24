@@ -8,7 +8,11 @@ from local_server import scheduler
 def schedule_info(job_id: str):
     job = scheduler.get_job(job_id)
     if not job:
-        return {'Error': 'Could not find job'}
+        return {'error': 'could not find job', 'jobs': [{
+            'id': job.id,
+            'description': job.name
+        } for job in scheduler.get_jobs()]}
+
     return {
         'description': job.name,
         'trigger': str(job.trigger),
