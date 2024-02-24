@@ -143,8 +143,10 @@ class GPSManager:
             pass
         else:
             logger.warning(f'ATTENTION: Unseen NMEA Format: {formatting}')
+        print(self.data)
 
     def get_dict(self, items: list[str]):
+        print(self.data)
         return {item: self.data[item][0] for item in items if item in self.data}
 
     def stop(self):
