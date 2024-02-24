@@ -33,8 +33,6 @@ required_environments = [
 backup_manager = BackupManager(backup_location='van/data_backups')
 
 
-
-
 def has_connection(timeout: int = 5) -> bool:
     """
     Check if the local_server can establish an outgoing internet connection to the server.
@@ -184,12 +182,12 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
-logging.basicConfig(level=logging.INFO)
-# logging.basicConfig(level=logging.INFO,
-#                    filename='log.txt',
-#                    filemode='a',
-#                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-#                    datefmt='%H:%M:%S')
+#logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO,
+                    filename='log.txt',
+                    filemode='a',
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S')
 
 logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
