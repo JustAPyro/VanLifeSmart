@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.x
+
 import copy
 import logging
 import os
@@ -30,12 +32,7 @@ required_environments = [
 # This backup manager will handle storing payload on file
 backup_manager = BackupManager(backup_location='van/data_backups')
 
-# Create the local server payload with a list for each type of sensor.
-# This is where data is stored in memory before
-# being sent to the server.
-payload = {}
-for x_sensor in sensors:
-    payload[x_sensor.sensor_type] = []
+
 
 
 def has_connection(timeout: int = 5) -> bool:
@@ -69,7 +66,7 @@ def _abort_report(payload: dict[str, list]):
                 f'| Total: {backup_manager.total_size / 1024:.03f}kb')
 
 
-def report():
+def report(payload: dict):
     # Check for server connectivity
     # and abort immediately if not found
     if not has_connection():
@@ -139,6 +136,13 @@ async def lifespan(fast_app: FastAPI):
         if os.getenv(env) is None:
             raise RuntimeError(f'Missing environment variable: {env} | Add to .env or system environment')
 
+    # Create the local server payload with a list for each type of sensor.
+    # This is where data is stored in memory before
+    # being sent to the server.
+    payload = {}
+    for x_sensor in sensors:
+        payload[x_sensor.sensor_type] = []
+
     global scheduler
     try:
         # Create an async scheduler to update and send data in the background
@@ -147,6 +151,7 @@ async def lifespan(fast_app: FastAPI):
 
         # This is a schedule that will always run to report data to server
         # if the server cannot be reached it will write it to csv files instead.
+        report_partial = partial(report, payload)
         scheduler.add_job(report, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
 
