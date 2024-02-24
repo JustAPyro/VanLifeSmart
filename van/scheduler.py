@@ -3,14 +3,15 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import APIRouter, Depends
 
 schedule_urls = APIRouter(prefix='/schedule')
-scheduler = AsyncIOScheduler()
+vls_scheduler = AsyncIOScheduler()
 
 
 def get_scheduler() -> AsyncIOScheduler:
-    return scheduler
+    return vls_scheduler
 
 
 def schedule_info(job: Job):
+    print(job)
     return {
         'description': job.name,
         'trigger': str(job.trigger),
