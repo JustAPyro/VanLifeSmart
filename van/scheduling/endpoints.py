@@ -3,9 +3,18 @@ from fastapi import APIRouter, Depends
 
 from .tools import get_scheduler, schedule_info
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
 
 schedule_urls = APIRouter(prefix='/schedule')
 templates = Jinja2Templates(directory='templates')
+
+
+@schedule_urls.get('.html', response_class=HTMLResponse)
+async def schedule_page(request: Request):
+    return templates.TemplateResponse(
+        request=request, name="schedules.html", context={}
+    )
 
 
 @schedule_urls.get('.json')
