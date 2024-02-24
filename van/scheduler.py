@@ -1,6 +1,7 @@
 from apscheduler.job import Job
-from fastapi import APIRouter
-from local_server import scheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from fastapi import APIRouter, Depends
+from local_server import get_scheduler
 
 schedule_urls = APIRouter(prefix='/schedule')
 
@@ -16,5 +17,5 @@ def schedule_info(job: Job):
 
 
 @schedule_urls.get(".json")
-async def read_users():
+async def read_users(scheduler: AsyncIOScheduler = Depends(get_scheduler)):
     return [schedule_info(job) for job in scheduler.get_jobs()]
