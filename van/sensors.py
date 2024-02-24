@@ -116,9 +116,7 @@ class DHT(AbstractSensor):
         super().__init__(**kwargs)
         self.retries = retries
         self.include_gps = include_gps
-        self.dht_device = adafruit_dht.DHT22(pin)
-        # Initialize Devices
-        dht_device = adafruit_dht.DHT22(board.D4)
+        self.dht = adafruit_dht.DHT22(pin)
 
     @property
     def sensor_type(self) -> str:
@@ -129,8 +127,8 @@ class DHT(AbstractSensor):
             try:
                 # DHT Information
                 data = {
-                    'temperature': dht_device.temperature,
-                    'humidity': dht_device.humidity
+                    'temperature': self.dht.temperature,
+                    'humidity': self.dht.humidity
                 }
                 # Add a GPS tag if requested
                 if self.include_gps:
@@ -189,22 +187,6 @@ class GPS(AbstractSensor):
         }
 
 
-def get_dht_data(retries: int = 3, include_gps: bool = True):
-    for _ in range(retries):
-        try:
-            # DHT Information
-            data = {
-                'temperature': dht_device.temperature,
-                'humidity': dht_device.humidity
-            }
-            # Add a GPS tag if requested
-            if include_gps:
-                data['gps'] = 'TODO'
-            return data
-        except RuntimeError:
-            continue
-
-
 def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):
     data = {'gps': 'TODO'}
 
@@ -245,8 +227,8 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
 sensors: list[AbstractSensor] = [
     GPS(location='/dev/ttyACM0', baud=9600,
         default_schedule={'seconds': 10}),
-    #DHT(pin=board.D4, retries=3, include_gps=True,
-    #    default_schedule={'seconds': 15}),
+    DHT(pin=board.D4, retries=3, include_gps=True,
+        default_schedule={'seconds': 15}),
     #TIO(default_schedule={'seconds': 15})
 ]
 
