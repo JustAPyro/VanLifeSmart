@@ -9,6 +9,7 @@ import urllib.request
 from contextlib import asynccontextmanager
 from functools import partial
 from typing import Optional
+from scheduler import scheduler
 
 import requests
 import uvicorn
@@ -146,8 +147,7 @@ async def lifespan(fast_app: FastAPI):
     global scheduler
     try:
         # Create an async scheduler to update and send data in the background
-        scheduler = AsyncIOScheduler()
-        scheduler.start()
+
 
         # This is a schedule that will always run to report data to server
         # if the server cannot be reached it will write it to csv files instead.
