@@ -183,9 +183,10 @@ async def lifespan(fast_app: FastAPI):
 
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
+log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
 #logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
-                    filename=f'{os.getenv("VLS_LOCATION")}/log.txt',
+                    filename=log_location,
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S')
