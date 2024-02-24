@@ -1,3 +1,5 @@
+from typing import Optional
+
 import adafruit_dht
 import datetime
 import requests
@@ -159,8 +161,12 @@ class GPS(AbstractSensor):
         ])
 
     # TODO: This is very dangerous since ordering isn't guaranteed
-    def from_csv(self, line: str) -> dict:
+    def from_csv(self, line: str) -> Optional[dict]:
         vals = line.strip().split(',')
+        # If this doesn't have the right number of
+        #csv values we return None
+        if len(vals) != 10:
+            return None
         return {
             'time': float(vals[0]),
             'latitude': float(vals[1]),
