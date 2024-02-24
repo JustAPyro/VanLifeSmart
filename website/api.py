@@ -23,6 +23,10 @@ def api_maintenance_record(record_id: int):
         # TODO: Confirm they have permission to do this
         # Check to make sure they're allowed to delete and have confirmed it
         # Then delete thing
+        try:
+            print('hello')
+        except Exception:
+
 
     return '{200: OKAY}'
 
@@ -40,6 +44,7 @@ def get_time(gps_update):
         second=int(time[4:6]),
         tzinfo=datetime.timezone.utc
     ).astimezone(pytz.timezone('US/Eastern'))
+
 
 @api.route('report.json', methods=['GET', 'POST'])
 @login_required

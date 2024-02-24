@@ -1,24 +1,25 @@
-import os
-import sys
-import json
 import copy
-import timeit
-import uvicorn
 import logging
-import requests
-import urllib.request, urllib.error
-
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from fastapi import Request as fastRequest
+import os
+import timeit
+import urllib.error
+import urllib.request
 from contextlib import asynccontextmanager
-from dotenv import load_dotenv
 from functools import partial
-from pympler import asizeof
-from fastapi import FastAPI
 from typing import Optional
 
-from sensors import sensors
+import requests
+import uvicorn
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from dotenv import load_dotenv
+from fastapi import FastAPI
+from fastapi import Request as fastRequest
+from pympler import asizeof
 
+from sensors import sensors
+from data_backups.backup_manager import BackupManager
+
+# We abort startup if any of these environment variables are missing
 required_environments = [
     'VLS_USERNAME',  # Username for public server account
     'VLS_PASSWORD',  # Password for public server account
@@ -26,6 +27,8 @@ required_environments = [
     'TOMORROWAPI'  # API key for Tomorrow API - Used to pull weather data
 ]
 
+# This backup manager will handle storing payload on file
+backup_manager = BackupManager(backup_location='van/data_backups')
 
 def has_connection(timeout: int = 5) -> bool:
     """
@@ -62,25 +65,11 @@ def _abort_report(payload: dict[str, list]):
     for data_log in payload.values():
         data_log.clear()
 
-    # Open and create a backup file for each data table
-    for dtype, data in backup_payload.items():
-
-        # If we have no data for this sensor skip it
-        if len(data) == 0:
-            continue
-
-        # If we have data, open a data_backup file for this sensor
-        with open(f'van/data_backups/{dtype}_backup.csv', 'a') as file:
-
-            # Write the headers
-            file.write((','.join(data[0].keys())) + '\n')
-            for item in data:
-                # TODO: This is a little fragile imo
-                file.write((','.join([str(value) for value in item.values()])) + '\n')
-            file.seek(0, os.SEEK_END)
-            backup_size += file.tell()
-
-    logger.info(f'Aborted report and saved {backup_size / 1024}kb data to backup folders.')
+    # Backup the payload
+    added_size = backup_manager.backup(backup_payload)
+    logger.info(f'Aborted report & backed up files '
+                f'| Added: {added_size/1024}kb '
+                f'| Total: {backup_manager.total_size/1024}kb')
 
 
 def report(payload: dict[str, list]):
@@ -119,6 +108,7 @@ def report(payload: dict[str, list]):
 
     # This will unpack all the back-ups into the payload
     # Danger... race?
+    backup_manager.restore(payload)
     unpack_backups(payload)
 
     # Send payload to server
@@ -126,6 +116,8 @@ def report(payload: dict[str, list]):
     if report_response.status_code != 200:
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
         return
+
+    delete_backups(payload)
 
     logger.info(f'Report successful, clearing payload')
     for data_log in payload.values():
