@@ -39,6 +39,9 @@ class GPSManager:
         except (Exception,) as e:
             pass
 
+    def _detect_corruption(self, sentence: str) -> bool:
+
+
     def _parse_sentence(self, sentence: str):
         # All NMEA sentences start with $
         # So if this doesn't just skip it because
