@@ -200,7 +200,7 @@ def resched():
 
 
 @app.get('/scheduler.json')
-def get_scheduler():
+def get_scheduler_url():
     report_job = scheduler.get_job('report')
     log_gps_job = scheduler.get_job('log_gps')
     log_tio_job = scheduler.get_job('log_tio')

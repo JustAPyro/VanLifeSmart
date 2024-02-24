@@ -2,6 +2,8 @@ from apscheduler.job import Job
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import APIRouter, Depends
 
+from van.scheduling.tools import get_scheduler
+
 schedule_urls = APIRouter(prefix='/schedule')
 
 
