@@ -58,7 +58,7 @@ class BackupManager:
 
     def clear(self, sensors):
         for sensor in sensors:
-            os.remove(f'{self.folder}/{sensor.sensor_typed}_backup.csv')
+            os.remove(f'{self.folder}/{sensor.sensor_type}_backup.csv')
 
     def restore(self, payload, sensors):
         for sensor in sensors:
