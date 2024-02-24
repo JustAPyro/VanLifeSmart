@@ -45,17 +45,6 @@ def has_connection(timeout: int = 5) -> bool:
         logger.exception(e)
 
 
-def unpack_backups(payload: dict[str, list]):
-    for sensor in sensors:
-        try:
-            with open(f'van/data_backups/{sensor.sensor_type}_backup.csv', 'r') as file:
-                for line in file.readlines():
-                    data_entry = sensor.from_csv(line)
-                    payload[sensor.sensor_type].append(data_entry)
-        except (OSError,) as e:
-            print(e)
-
-
 def _abort_report(payload: dict[str, list]):
     # Potentially a little bit race y code, ideally we should probably
     # have some kind of mutex lock here, but to take the easy route
@@ -68,8 +57,8 @@ def _abort_report(payload: dict[str, list]):
     # Backup the payload
     added_size = backup_manager.backup(backup_payload)
     logger.info(f'Aborted report & backed up files '
-                f'| Added: {added_size/1024}kb '
-                f'| Total: {backup_manager.total_size/1024}kb')
+                f'| Added: {added_size/1024:.03f}kb '
+                f'| Total: {backup_manager.total_size/1024:.03f}kb')
 
 
 def report(payload: dict[str, list]):
@@ -108,8 +97,7 @@ def report(payload: dict[str, list]):
 
     # This will unpack all the back-ups into the payload
     # Danger... race?
-    backup_manager.restore(payload)
-    unpack_backups(payload)
+    backup_manager.restore(payload, sensors)
 
     # Send payload to server
     report_response = session.post(f'{os.getenv("VLS_SERVER")}/api/report.json', json=payload)
@@ -117,9 +105,8 @@ def report(payload: dict[str, list]):
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
         return
 
-    delete_backups(payload)
-
-    logger.info(f'Report successful, clearing payload')
+    logger.info(f'Report successful, clearing payload and backups')
+    backup_manager.clear(sensors)
     for data_log in payload.values():
         data_log.clear()
 
