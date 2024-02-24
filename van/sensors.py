@@ -137,6 +137,12 @@ class DHT(AbstractSensor):
             except RuntimeError:
                 continue
 
+    def from_csv(self, line: str) -> dict:
+        vals = line.strip().split(',')
+        return {
+
+        }
+
 
 class GPS(AbstractSensor):
     """USB GPS sensor"""
