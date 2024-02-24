@@ -165,7 +165,7 @@ async def lifespan(fast_app: FastAPI):
             log_method = partial(log_sensor, sensor.sensor_type, sensor.get_data, payload)
             scheduler.add_job(log_method, 'interval', id=f'log_{sensor.sensor_type}',
                               **sensor.default_schedule,
-                              name=f'Log {sensor.sensor_type}')
+                              name=sensor.sensor_description)
 
         logger.info('Successfully created and started schedulers')
     except (Exception,) as e:
@@ -204,22 +204,6 @@ logger = logging.getLogger(__name__)
 @app.get('/')
 def resched():
     return 'hello'
-
-
-@app.get('/scheduler/{schedule}.json')
-def get_specific_scheduler(schedule: str):
-    job = scheduler.get_job(schedule)
-    if not job:
-        # TODO: JSON Error format
-        return {'Error': f'Could not find scheduler: {schedule}'}
-    return {
-        'description': job.name,
-        'trigger': str(job.trigger),
-        'next_run_time': job.next_run_time,
-        'max_instances': job.max_instances,
-        'misfire_grace_time': job.misfire_grace_time
-    }
-
 
 @app.patch('/scheduler/{schedule}.json')
 async def patch_specific_scheduler(schedule: str, request: fastRequest):

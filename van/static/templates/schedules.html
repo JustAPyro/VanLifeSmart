@@ -20,6 +20,7 @@
       <th scope="col">next run time</th>
       <th scope="col">max instances</th>
       <th scope="col">misfire grace time</th>
+      <th scope="col">Active</th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +32,7 @@
       <td>{{schedule.next_run_time}}</td>
       <td>{{schedule.max_instances}}</td>
       <td>{{schedule.misfire_grace_time}}</td>
+      <td>{{schedule.active}}</td>
     </tr>
     {% endfor %}
   </tbody>

@@ -17,5 +17,6 @@ def schedule_info(job: Job):
         'trigger': str(job.trigger),
         'next_run_time': job.next_run_time,
         'max_instances': job.max_instances,
-        'misfire_grace_time': job.misfire_grace_time
+        'misfire_grace_time': job.misfire_grace_time,
+        'active': 'True'
     }
