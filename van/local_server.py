@@ -145,7 +145,7 @@ async def lifespan(fast_app: FastAPI):
         payload[x_sensor.sensor_type] = []
 
     try:
-        logger.info(str(scheduler))
+        scheduler.start()
         # Create an async scheduler to update and send data in the background
 
         # This is a schedule that will always run to report data to server
@@ -165,7 +165,7 @@ async def lifespan(fast_app: FastAPI):
                               **sensor.default_schedule,
                               name=f'Log {sensor.sensor_type}')
 
-        scheduler.start()
+
         logger.info('Successfully created and started schedulers')
     except (Exception,) as e:
         # If we get any type of exception we log it
