@@ -2,9 +2,10 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import APIRouter, Depends
 
 from .tools import get_scheduler, schedule_info
+from fastapi.templating import Jinja2Templates
 
 schedule_urls = APIRouter(prefix='/schedule')
-
+templates = Jinja2Templates(directory='templates')
 
 @schedule_urls.get('.json')
 async def all_schedules(scheduler: AsyncIOScheduler = Depends(get_scheduler)):

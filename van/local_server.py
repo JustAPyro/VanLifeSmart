@@ -9,6 +9,8 @@ import urllib.request
 from contextlib import asynccontextmanager
 from functools import partial
 from typing import Optional
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 import requests
 import uvicorn
@@ -165,7 +167,6 @@ async def lifespan(fast_app: FastAPI):
                               **sensor.default_schedule,
                               name=f'Log {sensor.sensor_type}')
 
-
         logger.info('Successfully created and started schedulers')
     except (Exception,) as e:
         # If we get any type of exception we log it
@@ -186,8 +187,10 @@ async def lifespan(fast_app: FastAPI):
 
 app = FastAPI(title='Van Hub', lifespan=lifespan)
 app.include_router(schedule_urls)
-log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
+app.mount(f'{os.getenv("VLS_LOCATION")}/static', StaticFiles(directory="static"), name="static")
 
+
+log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
 # logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
                     filename=log_location,
