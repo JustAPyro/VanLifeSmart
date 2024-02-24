@@ -203,37 +203,6 @@ def resched():
     return 'hello'
 
 
-@app.get('/scheduler.json')
-def get_scheduler_url():
-    report_job = scheduler.get_job('report')
-    log_gps_job = scheduler.get_job('log_gps')
-    log_tio_job = scheduler.get_job('log_tio')
-    # ABSTRACT: Step 4?5? - Add it to the scheduler
-    return {
-        'report': {
-            'description': report_job.name,
-            'trigger': str(report_job.trigger),
-            'next_run_time': report_job.next_run_time,
-            'max_instances': report_job.max_instances,
-            'misfire_grace_time': report_job.misfire_grace_time
-        },
-        'log_gps': {
-            'description': log_gps_job.name,
-            'trigger': str(log_gps_job.trigger),
-            'next_run_time': log_gps_job.next_run_time,
-            'max_instances': log_gps_job.max_instances,
-            'misfire_grace_time': log_gps_job.misfire_grace_time
-        },
-        'log_tio': {
-            'description': log_tio_job.name,
-            'trigger': str(log_tio_job.trigger),
-            'next_run_time': log_tio_job.next_run_time,
-            'max_instances': log_tio_job.max_instances,
-            'misfire_grace_time': log_tio_job.misfire_grace_time
-        },
-    }
-
-
 @app.get('/scheduler/{schedule}.json')
 def get_specific_scheduler(schedule: str):
     job = scheduler.get_job(schedule)
