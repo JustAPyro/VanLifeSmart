@@ -20,7 +20,7 @@ from pympler import asizeof
 
 from sensors import sensors
 from data_backups.backup_manager import BackupManager
-from van.scheduler import schedule_urls
+from scheduler import schedule_urls
 
 # We abort startup if any of these environment variables are missing
 required_environments = [
