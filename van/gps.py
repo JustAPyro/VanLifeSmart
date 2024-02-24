@@ -89,10 +89,11 @@ class GPSManager:
         return False
 
     def _parse_sentence(self, sentence: str):
+        # Causes bugs?
         # If this seems to be corrupted we just skip it
-        if self._detect_corruption(sentence):
-            logger.info(f'Ignoring sentence with likely corruption: {sentence}')
-            return
+        #if self._detect_corruption(sentence):
+        #    logger.info(f'Ignoring sentence with likely corruption: {sentence}')
+        #    return
 
         words = sentence.split(',')
         formatting = words.pop(0)[1:]
@@ -143,7 +144,6 @@ class GPSManager:
             pass
         else:
             logger.warning(f'ATTENTION: Unseen NMEA Format: {formatting}')
-        print(self.data)
 
     def get_dict(self, items: list[str]):
         print(self.data)

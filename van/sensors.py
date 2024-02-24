@@ -12,7 +12,6 @@ from gps import GPSManager
 from abc import ABC, abstractmethod
 
 # Initialize Devices
-gps = GPSManager()
 dht_device = adafruit_dht.DHT22(board.D4)
 
 
