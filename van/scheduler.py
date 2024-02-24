@@ -1,11 +1,14 @@
 from apscheduler.job import Job
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import APIRouter, Depends
-from local_server import get_scheduler
-
 
 schedule_urls = APIRouter(prefix='/schedule')
 scheduler = AsyncIOScheduler()
+
+
+def get_scheduler() -> AsyncIOScheduler:
+    return scheduler
+
 
 def schedule_info(job: Job):
     return {

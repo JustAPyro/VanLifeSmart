@@ -197,8 +197,6 @@ logger = logging.getLogger(__name__)
 scheduler: Optional[AsyncIOScheduler] = None
 
 
-def get_scheduler() -> AsyncIOScheduler:
-    return scheduler
 
 
 @app.get('/')
