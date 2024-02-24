@@ -65,6 +65,9 @@ class BackupManager:
             try:
                 with open(f'{self.folder}/{sensor.sensor_type}_backup.csv', 'r') as file:
                     for line in file.readlines():
+                        # If the line has 1 or less characters it's probably not valid
+                        if len(line) <= 1:
+                            pass
                         data_entry = sensor.from_csv(line)
                         payload[sensor.sensor_type].append(data_entry)
             except (OSError,) as e:
