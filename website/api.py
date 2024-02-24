@@ -23,12 +23,9 @@ def api_maintenance_record(record_id: int):
         # TODO: Confirm they have permission to do this
         # Check to make sure they're allowed to delete and have confirmed it
         # Then delete thing
-        try:
-            print('hello')
-        except Exception:
-
 
     return '{200: OKAY}'
+
 
 def get_time(gps_update):
     time = str(gps_update.pop('time')).split('.')[0]
@@ -53,8 +50,8 @@ def report():
     import json
     logger.info(f'Received Payload from user {current_user.email}'
                 f'\nGPS Updates: {len(received_payload.get("gps", 0))}')
-                #f'\nTIO Updates: {len(received_payload.get("tio", 0))}'
-                #f'\nDHT Updates: {len(received_payload.get("dht", 0))}')
+    # f'\nTIO Updates: {len(received_payload.get("tio", 0))}'
+    # f'\nDHT Updates: {len(received_payload.get("dht", 0))}')
     # ---- Process GPS Updates ----
     return {'good': 'work'}
     gps_updates = received_payload.get('gps')

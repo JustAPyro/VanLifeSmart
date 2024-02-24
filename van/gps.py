@@ -40,6 +40,11 @@ class GPSManager:
             pass
 
     def _parse_sentence(self, sentence: str):
+        # All NMEA sentences start with $
+        # So if this doesn't just skip it because
+        # it is probably corrupted
+        if sentence[0] != '$':
+            return
         words = sentence.split(',')
         formatting = words.pop(0)[1:]
         now = datetime.datetime.now()

@@ -160,7 +160,7 @@ class GPS(AbstractSensor):
 
     # TODO: This is very dangerous since ordering isn't guaranteed
     def from_csv(self, line: str) -> dict:
-        vals = line.split(',')
+        vals = line.strip().split(',')
         return {
             'time': float(vals[0]),
             'latitude': float(vals[1]),
