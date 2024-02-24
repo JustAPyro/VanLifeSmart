@@ -144,10 +144,8 @@ async def lifespan(fast_app: FastAPI):
     for x_sensor in sensors:
         payload[x_sensor.sensor_type] = []
 
-    global scheduler
     try:
         # Create an async scheduler to update and send data in the background
-
 
         # This is a schedule that will always run to report data to server
         # if the server cannot be reached it will write it to csv files instead.
@@ -194,9 +192,6 @@ logging.basicConfig(level=logging.INFO,
                     datefmt='%H:%M:%S')
 
 logger = logging.getLogger(__name__)
-scheduler: Optional[AsyncIOScheduler] = None
-
-
 
 
 @app.get('/')
