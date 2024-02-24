@@ -86,10 +86,12 @@ class GPSManager:
             return True
         if sentence[1:3] not in GPSManager.identifiers.keys():
             return True
+        return False
 
     def _parse_sentence(self, sentence: str):
         # If this seems to be corrupted we just skip it
         if self._detect_corruption(sentence):
+            logger.info(f'Ignoring sentence with likely corruption: {sentence}')
             return
 
         words = sentence.split(',')
