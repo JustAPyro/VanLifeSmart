@@ -30,6 +30,14 @@ required_environments = [
 # This backup manager will handle storing payload on file
 backup_manager = BackupManager(backup_location='van/data_backups')
 
+# Create the local server payload with a list for each type of sensor.
+# This is where data is stored in memory before
+# being sent to the server.
+payload = {}
+for x_sensor in sensors:
+    payload[x_sensor.sensor_type] = []
+
+
 def has_connection(timeout: int = 5) -> bool:
     """
     Check if the local_server can establish an outgoing internet connection to the server.
@@ -57,11 +65,11 @@ def _abort_report(payload: dict[str, list]):
     # Backup the payload
     added_size = backup_manager.backup(backup_payload)
     logger.info(f'Aborted report & backed up files '
-                f'| Added: {added_size/1024:.03f}kb '
-                f'| Total: {backup_manager.total_size/1024:.03f}kb')
+                f'| Added: {added_size / 1024:.03f}kb '
+                f'| Total: {backup_manager.total_size / 1024:.03f}kb')
 
 
-def report(payload: dict[str, list]):
+def report():
     # Check for server connectivity
     # and abort immediately if not found
     if not has_connection():
@@ -131,24 +139,15 @@ async def lifespan(fast_app: FastAPI):
         if os.getenv(env) is None:
             raise RuntimeError(f'Missing environment variable: {env} | Add to .env or system environment')
 
-    # Create the local server payload with a list for each type of sensor.
-    # This is where data is stored in memory before
-    # being sent to the server.
-    payload = {}
-    for x_sensor in sensors:
-        payload[x_sensor.sensor_type] = []
-
     global scheduler
     try:
         # Create an async scheduler to update and send data in the background
         scheduler = AsyncIOScheduler()
         scheduler.start()
 
-        # bind the payload to report then schedule the report job.
         # This is a schedule that will always run to report data to server
         # if the server cannot be reached it will write it to csv files instead.
-        report_method = partial(report, payload)
-        scheduler.add_job(report_method, 'interval', id='report', minutes=1,
+        scheduler.add_job(report, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
 
         # This is a fairly complicated block of code that generates a job for
