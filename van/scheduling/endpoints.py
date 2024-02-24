@@ -14,9 +14,9 @@ templates = Jinja2Templates(directory=template_path)
 
 
 @schedule_urls.get('.html', response_class=HTMLResponse)
-async def schedule_page(request: Request):
+async def schedule_page(request: Request, scheduler: AsyncIOScheduler = Depends(get_scheduler)):
     return templates.TemplateResponse(
-        request=request, name="schedules.html", context={}
+        request=request, name="schedules.html", context={'schedules': [schedule_info(job) for job in scheduler.get_jobs()]}
     )
 
 

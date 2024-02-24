@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Local Server Schedules</title>
 </head>
 <body>
-
+'id': job.id,
+        'description': job.name,
+        'trigger': str(job.trigger),
+        'next_run_time': job.next_run_time,
+        'max_instances': job.max_instances,
+        'misfire_grace_time': job.misfire_grace_time
+<table>
+  <tr>
+    <th>id</th>
+    <th>description</th>
+    <th>trigger</th>
+    <th>next run time</th>
+    <th>max instances</th>
+    <th>misfire grace time</th>
+  </tr>
+  {% for schedule in schedules %}
+  <tr>
+    <td>{{schedule.id}}</td>
+    <td>{{schedule.description}}</td>
+    <td>{{schedule.trigger}}</td>
+    <td>{{schedule.next_run_time}}</td>
+    <td>{{schedule.max_instances}}</td>
+    <td>{{schedule.misfire_grace_time}}</td>
+  </tr>
+</table>
 </body>
 </html>
