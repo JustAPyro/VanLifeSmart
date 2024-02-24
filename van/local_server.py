@@ -25,6 +25,7 @@ from data_backups.backup_manager import BackupManager
 required_environments = [
     'VLS_USERNAME',  # Username for public server account
     'VLS_PASSWORD',  # Password for public server account
+    'VLS_LOCATION',
     'VLS_SERVER',  # Address of the public server to report to
     'TOMORROWAPI'  # API key for Tomorrow API - Used to pull weather data
 ]
@@ -150,7 +151,7 @@ async def lifespan(fast_app: FastAPI):
         # This is a schedule that will always run to report data to server
         # if the server cannot be reached it will write it to csv files instead.
         report_partial = partial(report, payload)
-        scheduler.add_job(report, 'interval', id='report', minutes=1,
+        scheduler.add_job(report_partial, 'interval', id='report', minutes=1,
                           name='Reports current payload to online server')
 
         # This is a fairly complicated block of code that generates a job for
@@ -184,7 +185,7 @@ async def lifespan(fast_app: FastAPI):
 app = FastAPI(title='Van Hub', lifespan=lifespan)
 #logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
-                    filename='log.txt',
+                    filename=f'{os.getenv("VLS_LOCATION")}/log.txt',
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S')
