@@ -7,8 +7,7 @@ class BackupManager:
         self.folder = backup_location
 
         self._persistent = {
-            'total_size': 0,
-            'sensor_backups': {}
+            'total_size': 0
         }
 
         # This block of code will either load the values from the .backup file
@@ -31,13 +30,6 @@ class BackupManager:
         self._persistent['total_size'] = value
         self._refresh()
 
-    def add_sensor_backups(self, sensor: str, qty: int):
-        if sensor not in self._persistent['sensor_backups']:
-            self._persistent['sensor_backups'][sensor] = qty
-        else:
-            self._persistent['sensor_backups'][sensor] += qty
-        self._refresh()
-
     def backup(self, data: dict) -> int:
         """
         :param data: The sensor payload you want to back up
@@ -48,8 +40,6 @@ class BackupManager:
 
         # Open and create a backup file for each data table
         for dtype, data in data.items():
-            data_points = 0
-
             # If we have no data for this sensor skip it
             if len(data) == 0:
                 continue
@@ -59,22 +49,21 @@ class BackupManager:
 
                 # Write the headers
                 for item in data:
-                    data_points += 1
                     # TODO: This is a little fragile imo
                     file.write((','.join([str(value) for value in item.values()])) + '\n')
                 file.seek(0, os.SEEK_END)
                 added_size = file.tell()
                 self.total_size += added_size
-                self.add_sensor_backups(dtype, data_points)
-                return added_size
+        return added_size
 
-    def clear(self):
-        pass
+    def clear(self, sensors):
+        for sensor in sensors:
+            os.remove(f'{self.folder}/{sensor.sensor_typed}_backup.csv')
 
     def restore(self, payload, sensors):
         for sensor in sensors:
             try:
-                with open(f'van/data_backups/{sensor.sensor_type}_backup.csv', 'r') as file:
+                with open(f'{self.folder}/{sensor.sensor_type}_backup.csv', 'r') as file:
                     for line in file.readlines():
                         data_entry = sensor.from_csv(line)
                         payload[sensor.sensor_type].append(data_entry)
