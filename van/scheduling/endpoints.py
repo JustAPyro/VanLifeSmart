@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 schedule_urls = APIRouter(prefix='/schedule')
 templates = Jinja2Templates(directory='templates')
 
+
 @schedule_urls.get('.json')
 async def all_schedules(scheduler: AsyncIOScheduler = Depends(get_scheduler)):
     return [schedule_info(job) for job in scheduler.get_jobs()]
