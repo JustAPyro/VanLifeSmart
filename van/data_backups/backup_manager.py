@@ -83,5 +83,6 @@ class BackupManager:
                 os.remove(f'{self.folder}/{sensor.sensor_type}_backup.csv')
             except FileNotFoundError:
                 pass
+        self.total_size = 0
 
 
