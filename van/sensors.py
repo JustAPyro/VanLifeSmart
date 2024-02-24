@@ -53,6 +53,12 @@ class AbstractSensor(ABC):
         """Returns a string representing the type of sensor."""
         pass
 
+    @property
+    @abstractmethod
+    def sensor_description(self) -> str:
+        """Returns a string description of what the sensor records"""
+        pass
+
     @abstractmethod
     def get_data(self) -> dict:
         """Returns a dict of data retrieved from the sensor"""
@@ -158,6 +164,10 @@ class GPS(AbstractSensor):
     def sensor_type(self) -> str:
         return 'gps'
 
+    @property
+    def sensor_description(self) -> str:
+        return 'Records positional and navigational satellite data'
+
     def get_data(self):
         return self.gps.get_dict([
             'time',
@@ -233,8 +243,8 @@ def get_tio_data(latitude: float = None, longitude: float = None, arguments=None
 sensors: list[AbstractSensor] = [
     GPS(location='/dev/ttyACM0', baud=9600,
         default_schedule={'seconds': 10}),
-    DHT(pin=board.D4, retries=3, include_gps=True,
-        default_schedule={'seconds': 15}),
+    #DHT(pin=board.D4, retries=3, include_gps=True,
+    #    default_schedule={'seconds': 15}),
     #TIO(default_schedule={'seconds': 15})
 ]
 
