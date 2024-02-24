@@ -58,7 +58,10 @@ class BackupManager:
 
     def clear(self, sensors):
         for sensor in sensors:
-            os.remove(f'{self.folder}/{sensor.sensor_type}_backup.csv')
+            try:
+                os.remove(f'{self.folder}/{sensor.sensor_type}_backup.csv')
+            except FileNotFoundError:
+                pass
 
     def restore(self, payload, sensors):
         for sensor in sensors:
