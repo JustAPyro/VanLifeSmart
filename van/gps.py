@@ -14,6 +14,43 @@ class GPSManager:
         1: 'GPS Fix',
         2: 'DGPS Fix'
     }
+    identifiers = {
+        'GA': {
+            'short': 'Galileo',
+            'long': 'European Global Navigation System',
+            'region': 'Europe'
+        },
+        'GB': {
+            'short': 'BDS',
+            'long': 'BeiDou Navigation Satellite System',
+            'region': 'China'
+        },
+        'GI': {
+            'short': 'NavIC',
+            'long': 'Indian Regional Navigation Satellite System',
+            'region': 'India'
+        },
+        'GL': {
+            'short': 'GLONASS',
+            'long': 'Globalnaya Navigatsionnaya Sputnikovaya Sistema',
+            'region': 'Russia'
+        },
+        'GN': {
+            'short': 'GNSS',
+            'long': 'Global Navigation Satellite System',
+            'region': 'Multiple'
+        },
+        'GP': {
+            'short': 'GPS',
+            'long': 'Global Positioning System',
+            'region': 'United States'
+        },
+        'GQ': {
+            'short': 'QZSS',
+            'long': 'Quasi-Zenith Satellite System',
+            'region': 'Japan'
+        }
+    }
 
     def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600):
         self._running = True
@@ -40,14 +77,21 @@ class GPSManager:
             pass
 
     def _detect_corruption(self, sentence: str) -> bool:
-
+        """
+        Returns True if we detect corruption or bad formatting in this sentence.
+        Will cause the sentence to be ignored.
+        """
+        # All valid NMEA sentences start with $
+        if sentence[0] != '$':
+            return True
+        if sentence[1:3] not in GPSManager.identifiers.keys():
+            return True
 
     def _parse_sentence(self, sentence: str):
-        # All NMEA sentences start with $
-        # So if this doesn't just skip it because
-        # it is probably corrupted
-        if sentence[0] != '$':
+        # If this seems to be corrupted we just skip it
+        if self._detect_corruption(sentence):
             return
+
         words = sentence.split(',')
         formatting = words.pop(0)[1:]
         now = datetime.datetime.now()
