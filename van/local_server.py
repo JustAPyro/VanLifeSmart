@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.x
-
+import asyncio
 import copy
 import logging
 import os
@@ -16,7 +16,7 @@ import requests
 import uvicorn
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from fastapi import Request as fastRequest
 from pympler import asizeof
 
@@ -222,6 +222,44 @@ async def patch_specific_scheduler(schedule: str, request: fastRequest):
         'max_instances': job.max_instances,
         'misfire_grace_time': job.misfire_grace_time
     }
+
+
+# ---- LOG VIEWING STUFF ---- (Not sure where this should go)
+template_path = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/static/templates')
+templates = Jinja2Templates(directory=template_path)
+
+
+async def log_reader(n=5):
+    log_lines = []
+    with open(f'{os.getenv("VLS_LOCATION")}/log.txt', 'r') as file:
+        for line in file.readlines()[-n:]:
+            # Formatting
+            if line.__contains__('ERROR'):
+                log_lines.append(f'<span class="text-red-400">{line}</span><br/>')
+            else:
+                log_lines.append(f'{line}<br/>')
+        return log_lines
+
+
+@app.websocket('/ws/log')
+async def websocket_endpoint_log(websocket: WebSocket):
+    await websocket.accept()
+
+    try:
+        while True:
+            await asyncio.sleep(1)
+            logs = await log_reader(30)
+            await websocket.send_text(logs)
+    except Exception as e:
+        print(e)
+    finally:
+        await websocket.close()
+
+
+@app.get('/log.html')
+async def get_log(request: fastRequest):
+    context = {'title': 'log.txt', 'log_file': 'log.txt'}
+    return templates.TemplateResponse('log_viewer.html', {'request': request, 'context': context})
 
 
 if __name__ == '__main__':

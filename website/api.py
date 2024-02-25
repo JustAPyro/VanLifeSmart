@@ -58,7 +58,7 @@ def report():
     start = timeit.default_timer()
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
-        dt = get_time(gps_update)
+        dt = datetime.datetime.fromtimestamp(gps_update.pop('time'))
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)
     end = timeit.default_timer()
