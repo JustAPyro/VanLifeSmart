@@ -25,7 +25,7 @@
       </div>
     </div>
 <script>
-    var ws_log = new WebSocket("ws://localhost:8000/ws/log/");
+    var ws_log = new WebSocket("ws://raspberrypi.local:8000/ws/log/");
     ws_log.onmessage = function (event) {
         var logs = document.getElementById("logs");
         log_data = event.data;
