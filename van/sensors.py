@@ -189,18 +189,21 @@ class GPS(AbstractSensor):
         #csv values we return None
         if len(vals) != 10:
             return None
-        return {
-            'time': float(vals[0]),
-            'latitude': float(vals[1]),
-            'longitude': float(vals[2]),
-            'altitude': float(vals[3]),
-            'fix_quality': str(vals[4]),
-            'satellites_used': int(vals[5]),
-            'hdop': float(vals[6]),
-            'true_track': None if vals[7] == 'None' else float(vals[7]),
-            'magnetic_track': None if vals[8] == 'None' else float(vals[8]),
-            'ground_speed': None if vals[9] == 'None' else float(vals[9]),
-        }
+        try:
+             return {
+                'time': float(vals[0]),
+                'latitude': float(vals[1]),
+                'longitude': float(vals[2]),
+                'altitude': float(vals[3]),
+                'fix_quality': str(vals[4]),
+                'satellites_used': int(vals[5]),
+                'hdop': float(vals[6]),
+                'true_track': None if vals[7] == 'None' else float(vals[7]),
+                'magnetic_track': None if vals[8] == 'None' else float(vals[8]),
+                'ground_speed': None if vals[9] == 'None' else float(vals[9]),
+            }
+        except (Exception,):
+            raise Exception
 
 
 def get_tio_data(latitude: float = None, longitude: float = None, arguments=None):

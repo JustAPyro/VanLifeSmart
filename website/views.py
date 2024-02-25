@@ -123,3 +123,56 @@ def view_map():
 def post_maintenance():
     return render_template('post_maintenance.html', user=current_user)
 
+
+@views.route('/update/', methods=['GET', 'POST'])
+@login_required
+def update():
+    # different kinds of art
+    if request.method == 'POST':
+        logger.info(f'Post Update with payload: {request.json()}')
+        print(request.json())
+        # Collect all data from the POST
+        latitude = request.form.get('latitude')
+        longitude = request.form.get('longitude')
+
+        checkpoint = Checkpoint(
+            owner=current_user.id,
+            latitude=latitude,
+            longitude=longitude,
+        )
+
+        # TomorrowIO (Weather)
+        # https: // docs.tomorrow.io / reference / realtime - weather
+        response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
+                                f'?location={checkpoint.latitude},{checkpoint.longitude}'
+                                f'&apikey={os.environ["TOMORROWAPI"]}')
+        tio_data = response.json()['data']['values']
+        tio = TomorrowIO(
+            uv_index=tio_data['uvIndex'],
+            humidity=tio_data['humidity'],
+            wind_gust=tio_data['windGust'],
+            dew_point=tio_data['dewPoint'],
+            cloud_base=tio_data['cloudBase'],
+            wind_speed=tio_data['windSpeed'],
+            visibility=tio_data['visibility'],
+            cloud_cover=tio_data['cloudCover'],
+            temperature=tio_data['temperature'],
+            weather_code=tio_data['weatherCode'],
+            cloud_ceiling=tio_data['cloudCeiling'],
+            rain_intensity=tio_data['rainIntensity'],
+            snow_intensity=tio_data['snowIntensity'],
+            wind_direction=tio_data['windDirection'],
+            sleet_intensity=tio_data['sleetIntensity'],
+            uv_health_concern=tio_data['uvHealthConcern'],
+            temperature_apparent=tio_data['temperatureApparent'],
+            pressure_surface_level=tio_data['pressureSurfaceLevel'],
+            freezing_rain_intensity=tio_data['freezingRainIntensity'],
+            precipitation_probability=tio_data['precipitationProbability'],
+        )
+        checkpoint.tio = tio
+
+        db.session.add(checkpoint)
+        db.session.commit()
+        return redirect(url_for('views.update'))
+
+    return render_template('update.html', user=current_user)

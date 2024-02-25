@@ -1,5 +1,7 @@
 import logging
 import datetime
+import timeit
+
 import pytz
 import time
 
@@ -53,12 +55,15 @@ def report():
     # f'\nTIO Updates: {len(received_payload.get("tio", 0))}'
     # f'\nDHT Updates: {len(received_payload.get("dht", 0))}')
     # ---- Process GPS Updates ----
-    return {'good': 'work'}
+    start = timeit.default_timer()
     gps_updates = received_payload.get('gps')
     for gps_update in gps_updates:
         dt = get_time(gps_update)
         data = GPSData(owner=current_user.id, time=dt, **gps_update)
         db.session.add(data)
+    end = timeit.default_timer()
+    logger.info(f'Processed in {end-start} seconds')
+    return {'good': 'work'}
 
     # ---- Process TomorrowIO Updates ----
     tio_updates = received_payload.get('tio')

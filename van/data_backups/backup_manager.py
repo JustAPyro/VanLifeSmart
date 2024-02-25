@@ -71,7 +71,10 @@ class BackupManager:
             try:
                 with open(f'{self.folder}/{sensor.sensor_type}_backup.csv', 'r') as file:
                     for line in file.readlines():
-                        data_entry = sensor.from_csv(line)
+                        try:
+                            data_entry = sensor.from_csv(line)
+                        except (Exception,):
+                            pass
                         if data_entry:
                             payload[sensor.sensor_type].append(data_entry)
             except (OSError,) as e:

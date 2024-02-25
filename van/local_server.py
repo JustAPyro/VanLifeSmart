@@ -189,7 +189,6 @@ app = FastAPI(title='Van Hub', lifespan=lifespan)
 app.include_router(schedule_urls)
 app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
-
 log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
 # logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
@@ -204,6 +203,7 @@ logger = logging.getLogger(__name__)
 @app.get('/')
 def resched():
     return 'hello'
+
 
 @app.patch('/scheduler/{schedule}.json')
 async def patch_specific_scheduler(schedule: str, request: fastRequest):
