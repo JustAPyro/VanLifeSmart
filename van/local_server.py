@@ -251,7 +251,7 @@ templates = Jinja2Templates(directory=template_path)
 
 
 async def log_reader(n=5):
-    logs = ['log', 'aps']
+    logs = ['log', 'APScheduler', 'Webserver']
     output = {log: [] for log in logs}
 
     for log in logs:

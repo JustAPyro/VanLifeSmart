@@ -16,7 +16,7 @@
             <button class="nav-link" id="aps-tab" data-bs-toggle="tab" data-bs-target="#aps" type="button" role="tab" aria-controls="aps" aria-selected="false">APScheduler</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="traffic-tab" data-bs-toggle="tab" data-bs-target="#traffic" type="button" role="tab" aria-controls="traffic" aria-selected="false">Server Traffic</button>
+            <button class="nav-link" id="web-tab" data-bs-toggle="tab" data-bs-target="#web" type="button" role="tab" aria-controls="web" aria-selected="false">Server Traffic</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -30,6 +30,11 @@
             Loading logs..
         </div>
       </div>
+        <div class="tab-pane fade" id="web" role="tabpanel" aria-labelledby="web-tab">
+          <div id="web_log">
+            Loading logs..
+        </div>
+      </div>
     </div>
 </div>
 
@@ -39,11 +44,13 @@
     ws_log.onmessage = function (event) {
         var log_html = document.getElementById("log_log");
         var aps_html = document.getElementById("aps_log");
+        var web_html = document.getElementById("web_log");
 
         log_data = JSON.parse(event.data);
 
         log_html.innerHTML = log_data.log;
-        aps_html.innerHTML = log_data.aps;
+        aps_html.innerHTML = log_data.APScheduler;
+        web_html.innerHTML = log_data.Webserver;
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
