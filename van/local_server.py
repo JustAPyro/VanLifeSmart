@@ -268,7 +268,7 @@ async def websocket_endpoint_log(websocket: WebSocket):
             logs = await log_reader(30)
             await websocket.send_json(logs)
     except Exception as e:
-        print(e)
+        raise e
     finally:
         await websocket.close()
 
