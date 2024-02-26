@@ -194,7 +194,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 
 aps_logger = logging.getLogger('apscheduler.executors.default')
 aps_logger.setLevel(logging.INFO)
-aps_logger.handlers.clear()
+aps_logger.propagate = False
 aps_logger.addHandler(handler)
 
 log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
