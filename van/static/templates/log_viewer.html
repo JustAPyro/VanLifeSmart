@@ -35,7 +35,7 @@
     var ws_log = new WebSocket("ws://raspberrypi.local:8000/ws/log");
     ws_log.onmessage = function (event) {
         var log_html = document.getElementById("log_log");
-        var aps_html = document.getElementById("log_log");
+        var aps_html = document.getElementById("aps_log");
 
         log_data = JSON.parse(event.data);
 
