@@ -190,14 +190,23 @@ app.include_router(schedule_urls)
 app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
 
-aps_log_path = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/logs/aps.txt')
-handler = logging.FileHandler(aps_log_path)
-handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
+logger_map = {
+    'APScheduler.txt': ('apscheduler',),
+    'Webserver.txt': ('uvicorn', 'uvicorn.error')
+}
+for file_name, loggers in logger_map.items():
+    fpath = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/logs/{file_name}')
+    file_handler = logging.FileHandler(fpath)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 
-aps_logger = logging.getLogger('apscheduler')
-aps_logger.setLevel(logging.INFO)
-aps_logger.propagate = False
-aps_logger.addHandler(handler)
+    for logger_name in loggers:
+        logger = logging.getLogger(logger_name)
+        logger.handlers.clear()
+        logger.propagate = False
+        logger.addHandler(file_handler)
+
+
+
 
 
 
@@ -208,7 +217,7 @@ logging.basicConfig(level=logging.INFO,
                     filemode='a',
                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S')
-
+logging.info(logging.getLogger('uvicorn'))
 logger = logging.getLogger(__name__)
 
 
