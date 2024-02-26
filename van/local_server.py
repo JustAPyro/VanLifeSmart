@@ -238,15 +238,14 @@ templates = Jinja2Templates(directory=template_path)
 
 
 async def log_reader(n=5):
-    log_lines = []
-    with open(f'{os.getenv("VLS_LOCATION")}/log.txt', 'r') as file:
-        for line in file.readlines()[-n:]:
-            # Formatting
-            if line.__contains__('ERROR'):
-                log_lines.append(f'<span class="text-red-400">{line}</span><br/>')
-            else:
-                log_lines.append(f'{line}<br/>')
-        return log_lines
+    logs = ['log', 'aps']
+    output = {log: [] for log in logs}
+
+    for log in logs:
+        with open(f'{os.getenv("VLS_LOCATION")}/logs/{log}.txt', 'r') as file:
+            for line in file.readlines()[-n:]:
+                output[log].append(f'{line}<br/>')
+    return output
 
 
 @app.websocket('/ws/log')
@@ -257,7 +256,7 @@ async def websocket_endpoint_log(websocket: WebSocket):
         while True:
             await asyncio.sleep(1)
             logs = await log_reader(30)
-            await websocket.send_text(logs)
+            await websocket.send_json(logs)
     except Exception as e:
         print(e)
     finally:
