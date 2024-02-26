@@ -189,6 +189,13 @@ app = FastAPI(title='Van Hub', lifespan=lifespan)
 app.include_router(schedule_urls)
 app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
+handler = logging.FileHandler('aps.log')
+handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
+
+aps_logger = logging.getLogger('apscheduler.executors.default')
+aps_logger.setLevel(logging.INFO)
+aps_logger.addHandler(handler)
+
 log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
 # logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
