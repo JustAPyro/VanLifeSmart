@@ -7,46 +7,34 @@
 
 </head>
 <body>
-
+<div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+            <button class="nav-link active" id="log-tab" data-bs-toggle="tab" data-bs-target="#log" type="button" role="tab" aria-controls="log" aria-selected="true">Application Log</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="aps-tab" data-bs-toggle="tab" data-bs-target="#aps" type="button" role="tab" aria-controls="profile" aria-selected="false">APScheduler</button>
+            <button class="nav-link" id="aps-tab" data-bs-toggle="tab" data-bs-target="#aps" type="button" role="tab" aria-controls="aps" aria-selected="false">APScheduler</button>
         </li>
     </ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-  <div class="tab-pane fade" id="aps" role="tabpanel" aria-labelledby="profile-tab">
-      APS LOGS FOREVERRRRR
-  </div>
-</div>
-
-    <div class="flex items-center py-2 px-3">
-        <h1 class="text-3xl text-slate-300">{{context.title}}</h1>
-    </div>
-    <br />
-    <div class="flex items-center py-2 px-3">
-      <h2 class="text-2xl text-slate-400 overline decoration-4 decoration-pink-500">
-        {{context.log_file}}
-      </h2>
-    </div>
-
-    <div class="flex items-center py-2 px-3">
-      <div
-        id="logs"
-        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        reading logs...
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="log" role="tabpanel" aria-labelledby="log-tab">
+        <div id="logs">
+            Loading logs..
+        </div>
+      </div>
+      <div class="tab-pane fade" id="aps" role="tabpanel" aria-labelledby="aps-tab">
+          APS LOGS FOREVERRRRR
       </div>
     </div>
+</div>
+
+
 <script>
     var ws_log = new WebSocket("ws://raspberrypi.local:8000/ws/log");
     ws_log.onmessage = function (event) {
         var logs = document.getElementById("logs");
         log_data = event.data;
-        logs.innerHTML = log_data;
+        logs.innerHTML = log_data["log"];
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
