@@ -189,7 +189,7 @@ app = FastAPI(title='Van Hub', lifespan=lifespan)
 app.include_router(schedule_urls)
 app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
-handler = logging.FileHandler('aps.log')
+handler = logging.FileHandler('van/logs/aps.log')
 handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 
 aps_logger = logging.getLogger('apscheduler.executors.default')
@@ -197,7 +197,7 @@ aps_logger.setLevel(logging.INFO)
 aps_logger.propagate = False
 aps_logger.addHandler(handler)
 
-log_location = f'{os.getenv("VLS_LOCATION")}/log.txt'
+log_location = f'{os.getenv("VLS_LOCATION")}/van/logs/log.txt'
 # logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.INFO,
                     filename=log_location,
@@ -242,9 +242,15 @@ async def log_reader(n=5):
     output = {log: [] for log in logs}
 
     for log in logs:
-        with open(f'{os.getenv("VLS_LOCATION")}/logs/{log}.txt', 'r') as file:
-            for line in file.readlines()[-n:]:
-                output[log].append(f'{line}<br/>')
+        log_file = f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt'
+        try:
+            with open(log_file, 'r') as file:
+                for line in file.readlines()[-n:]:
+                    output[log].append(f'{line}<br/>')
+        except OSError:
+            with open(log_file, 'w') as file:
+                pass
+
     return output
 
 
