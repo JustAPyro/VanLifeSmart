@@ -190,7 +190,7 @@ app.include_router(schedule_urls)
 app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
 
-aps_log_path = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/logs.aps.log')
+aps_log_path = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/logs/aps.log')
 handler = logging.FileHandler(aps_log_path)
 handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s %(message)s'))
 
