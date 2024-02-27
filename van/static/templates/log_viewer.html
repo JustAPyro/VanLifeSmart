@@ -13,16 +13,15 @@
             <tr>
                 <th scope="col">Log Name</th>
                 <th scope="col">Size</th>
-                <th scope="col">Data Points</th>
                 <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <th scope="row">Sup</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                {% for log in context.log_sizes %}
+                <th scope="row">{{ log.name }}</th>
+                <td>{{ log.size }}</td>
+                <td>Delete</td>
             </tr>
         </tbody>
     </table>

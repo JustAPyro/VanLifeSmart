@@ -189,7 +189,6 @@ app = FastAPI(title='Van Hub', lifespan=lifespan)
 app.include_router(schedule_urls)
 app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
-
 logger_map = {
     'APScheduler.txt': ('apscheduler',),
     'Webserver.txt': ('uvicorn', 'uvicorn.error')
@@ -204,11 +203,6 @@ for file_name, loggers in logger_map.items():
         logger.handlers.clear()
         logger.propagate = False
         logger.addHandler(file_handler)
-
-
-
-
-
 
 log_location = f'{os.getenv("VLS_LOCATION")}/van/logs/log.txt'
 # logging.basicConfig(level=logging.INFO)
@@ -284,7 +278,15 @@ async def websocket_endpoint_log(websocket: WebSocket):
 
 @app.get('/log.html')
 async def get_log(request: fastRequest):
-    context = {'title': 'log.txt', 'log_info': []}
+    logs = ['log', 'APScheduler', 'Webserver']
+    log_sizes = []
+    for log in logs:
+        log_sizes.append({
+            'name': log,
+            'size': os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt')
+        })
+
+    context = {'title': 'log.txt', 'log_sizes': log_sizes}
     return templates.TemplateResponse('log_viewer.html', {'request': request, 'context': context})
 
 
