@@ -20,7 +20,7 @@
             {% for log in context.log_sizes %}
             <tr>
                 <th scope="row">{{ log.name }}</th>
-                <td>{{'%0.2f'| format(log.size|float)}}kb</td>
+                <td id="{{log.name}}_size"> Loading...</td>
                 <td><button type="button" value={{log.name}} onclick="delete_log(this.value)" class="btn btn-outline-danger btn-sm">Delete</button></td>
             </tr>
             {% endfor %}
@@ -42,17 +42,17 @@
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="log" role="tabpanel" aria-labelledby="log-tab">
         <div id="log_log">
-            Loading logs..
+            Loading logs...
         </div>
       </div>
       <div class="tab-pane fade" id="aps" role="tabpanel" aria-labelledby="aps-tab">
           <div id="aps_log">
-            Loading logs..
+            Loading logs...
         </div>
       </div>
         <div class="tab-pane fade" id="web" role="tabpanel" aria-labelledby="web-tab">
           <div id="web_log">
-            Loading logs..
+            Loading logs...
         </div>
       </div>
     </div>
@@ -68,9 +68,13 @@
 
         log_data = JSON.parse(event.data);
 
-        log_html.innerHTML = log_data.log;
-        aps_html.innerHTML = log_data.APScheduler;
-        web_html.innerHTML = log_data.Webserver;
+        log_html.innerHTML = log_data.log.log;
+        aps_html.innerHTML = log_data.APScheduler.log;
+        web_html.innerHTML = log_data.Webserver.log;
+
+        document.getElementById("log_size").innerHTML = log_data.log.size;
+        document.getElementById("APScheduler_size").innerHTML = log_data.APScheduler.size;
+        document.getElementById("Webserver_size").innerHTML = log_data.Webserver.size;
     }
 
     function delete_log(val){

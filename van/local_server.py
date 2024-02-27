@@ -248,14 +248,17 @@ templates = Jinja2Templates(directory=template_path)
 
 async def log_reader(n=5):
     logs = ['log', 'APScheduler', 'Webserver']
-    output = {log: [] for log in logs}
+    output = {log: {'log': []} for log in logs}
 
     for log in logs:
         log_file = f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt'
         try:
             with open(log_file, 'r') as file:
                 for line in file.readlines()[-n:]:
-                    output[log].append(f'{line}<br/>')
+                    output[log]['log'].append(f'{line}<br/>')
+
+                file.seek(0, os.SEEK_END)
+                output[log]['size'] = file.tell()
         except OSError:
             with open(log_file, 'w') as file:
                 pass
