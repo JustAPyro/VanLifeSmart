@@ -17,12 +17,13 @@
             </tr>
         </thead>
         <tbody>
+            {% for log in context.log_sizes %}
             <tr>
-                {% for log in context.log_sizes %}
                 <th scope="row">{{ log.name }}</th>
                 <td>{{ log.size }}</td>
                 <td><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
 
