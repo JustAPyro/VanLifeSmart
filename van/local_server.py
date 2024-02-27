@@ -282,10 +282,18 @@ async def websocket_endpoint_log(websocket: WebSocket):
 async def get_log(request: fastRequest):
     logs = ['log', 'APScheduler', 'Webserver']
     log_sizes = []
+
+
+
     for log in logs:
+        try:
+            size = os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt').st_size / 1024
+        except FileNotFoundError:
+            size = 0
+
         log_sizes.append({
             'name': log,
-            'size': os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt').st_size / 1024
+            'size': size
         })
 
     context = {'title': 'log.txt', 'log_sizes': log_sizes}
