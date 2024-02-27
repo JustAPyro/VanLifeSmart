@@ -13,7 +13,7 @@ async def schedule_page(request: Request):
 async def delete_log(log_name: str):
     # TODO: AUTHENTICATION VALIDATION
     try:
-        os.remove(f'{os.getenv("VLS_LOCATION")}/van/logs/{log_name}')
+        os.remove(f'{os.getenv("VLS_LOCATION")}/van/logs/{log_name}.txt')
         return Response(status_code=200)
     except OSError:
         return Response(status_code=400)
