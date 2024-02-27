@@ -20,7 +20,7 @@
             {% for log in context.log_sizes %}
             <tr>
                 <th scope="row">{{ log.name }}</th>
-                <td>{{ log.size }}</td>
+                <td>{{'%0.2f'| format(log.size|float)}}kb</td>
                 <td><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></td>
             </tr>
             {% endfor %}

@@ -24,7 +24,7 @@ from sensors import sensors
 from data_backups.backup_manager import BackupManager
 from scheduling.tools import scheduler
 from scheduling.endpoints import schedule_urls
-from van.logs.endpoints import log_urls
+from logs.endpoints import log_urls
 
 # We abort startup if any of these environment variables are missing
 required_environments = [
@@ -285,7 +285,7 @@ async def get_log(request: fastRequest):
     for log in logs:
         log_sizes.append({
             'name': log,
-            'size': os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt').st_size
+            'size': os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt').st_size / 1024
         })
 
     context = {'title': 'log.txt', 'log_sizes': log_sizes}
