@@ -71,11 +71,16 @@
         log_html.innerHTML = log_data.log;
         aps_html.innerHTML = log_data.APScheduler;
         web_html.innerHTML = log_data.Webserver;
-        console.log(log_data.Webserver);
     }
 
     function delete_log(val){
-        console.log(val);
+        fetch("raspberrypi.local:8000/logs/"+val, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: null //if you do not want to send any addional data,  replace the complete JSON.stringify(YOUR_ADDITIONAL_DATA) with null
+        })
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
