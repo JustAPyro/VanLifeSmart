@@ -284,7 +284,7 @@ async def websocket_endpoint_log(websocket: WebSocket):
 
 @app.get('/log.html')
 async def get_log(request: fastRequest):
-    context = {'title': 'log.txt', 'log_file': 'log.txt'}
+    context = {'title': 'log.txt', 'log_info': []}
     return templates.TemplateResponse('log_viewer.html', {'request': request, 'context': context})
 
 
