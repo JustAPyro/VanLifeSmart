@@ -21,7 +21,7 @@
             <tr>
                 <th scope="row">{{ log.name }}</th>
                 <td>{{'%0.2f'| format(log.size|float)}}kb</td>
-                <td><button type="button" class="btn btn-outline-danger btn-sm">Delete</button></td>
+                <td><button type="button" value={{log.name}} onclick="delete_log(this.value)" class="btn btn-outline-danger btn-sm">Delete</button></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -72,6 +72,10 @@
         aps_html.innerHTML = log_data.APScheduler;
         web_html.innerHTML = log_data.Webserver;
         console.log(log_data.Webserver);
+    }
+
+    function delete_log(val){
+        console.log(val);
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
