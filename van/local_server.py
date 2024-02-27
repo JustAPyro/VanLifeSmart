@@ -283,8 +283,6 @@ async def get_log(request: fastRequest):
     logs = ['log', 'APScheduler', 'Webserver']
     log_sizes = []
 
-
-
     for log in logs:
         try:
             size = os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt').st_size / 1024

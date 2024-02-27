@@ -74,7 +74,7 @@
     }
 
     function delete_log(val){
-        fetch("http://raspberrypi.local:8000/logs/"+val, {
+        fetch("http://raspberrypi.local:8000/logs/"+val+".json", {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
