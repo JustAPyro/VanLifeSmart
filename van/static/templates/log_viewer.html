@@ -72,9 +72,9 @@
         aps_html.innerHTML = log_data.APScheduler.log;
         web_html.innerHTML = log_data.Webserver.log;
 
-        document.getElementById("log_size").innerHTML = log_data.log.size;
-        document.getElementById("APScheduler_size").innerHTML = log_data.APScheduler.size;
-        document.getElementById("Webserver_size").innerHTML = log_data.Webserver.size;
+        document.getElementById("log_size").innerHTML = log_data.log.size + " " + log_data.log.size_type;
+        document.getElementById("APScheduler_size").innerHTML = log_data.APScheduler.size + " " + log_data.log.size_type;
+        document.getElementById("Webserver_size").innerHTML = log_data.Webserver.size + " " + log_data.log.size_type;
     }
 
     function delete_log(val){

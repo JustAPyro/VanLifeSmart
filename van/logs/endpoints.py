@@ -33,7 +33,25 @@ async def log_reader(n=5):
                     output[log]['log'].append(text)
 
                 file.seek(0, os.SEEK_END)
-                output[log]['size'] = file.tell()
+                size = file.tell()
+                type = 'b'
+
+                if size//1024 != 0:
+                    size = size / 1024
+                    type = 'kb'
+
+                if size//1024 != 0:
+                    size = size / 1024
+                    type = 'mb'
+
+                if size//1024 != 0:
+                    size = size / 1024
+                    type = 'gb'
+
+                output[log]['size'] = size
+                output[log]['size_type'] = type
+
+
         except OSError:
             with open(log_file, 'w') as file:
                 pass
