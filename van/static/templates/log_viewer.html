@@ -75,12 +75,12 @@
 
         var aps_div = document.getElementById("aps_log");
         for (line in log_data.log.aps) {
-            log_div.insertAdjacentHTML("beforeend", aps_data.aps.log[line]);
+            aps_div.insertAdjacentHTML("beforeend", aps_data.aps.log[line]);
         }
 
         var server_div = document.getElementById("web_log");
         for (line in log_data.log.web) {
-            log_div.insertAdjacentHTML("beforeend", log_data.web.log[line]);
+            server_div.insertAdjacentHTML("beforeend", log_data.web.log[line]);
         }
 
 
