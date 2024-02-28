@@ -193,7 +193,7 @@ app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/sta
 
 logger_map = {
     'APScheduler.txt': ('apscheduler',),
-    'Webserver.txt': ('uvicorn', 'uvicorn.error')
+    'Webserver.txt': ('uvicorn.error', 'uvicorn')
 }
 for file_name, loggers in logger_map.items():
     fpath = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/logs/{file_name}')
