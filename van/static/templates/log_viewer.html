@@ -67,10 +67,15 @@
         var web_html = document.getElementById("web_log");
 
         log_data = JSON.parse(event.data);
-
-        log_html.innerHTML = log_data.log.log;
         aps_html.innerHTML = log_data.APScheduler.log;
         web_html.innerHTML = log_data.Webserver.log;
+
+        var log_div = document.getElementById("log_log");
+        for (line in log_data.log.log) {
+            log_div.insertAdjacentHTML("beforeend", line);
+        }
+
+
 
         document.getElementById("log_size").innerHTML = log_data.log.size.toFixed(3) + " " + log_data.log.size_type;
         document.getElementById("APScheduler_size").innerHTML = log_data.APScheduler.size.toFixed(3) + " " + log_data.log.size_type;
