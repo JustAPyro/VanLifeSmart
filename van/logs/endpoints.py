@@ -29,7 +29,7 @@ async def log_reader(n=5):
                         for trigger_text, tag in coloring.items():
                             if trigger_text in line:
                                 text = tag
-                    text = text + f'{line}</p><br/>'
+                    text = text + f'{line}</p>'
                     output[log]['log'].append(text)
 
                 file.seek(0, os.SEEK_END)
