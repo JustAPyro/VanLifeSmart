@@ -69,9 +69,10 @@
         log_data = JSON.parse(event.data);
         aps_html.innerHTML = log_data.APScheduler.log;
         web_html.innerHTML = log_data.Webserver.log;
-
+        console.log(log_data.log.log)
         var log_div = document.getElementById("log_log");
         for (line in log_data.log.log) {
+            console.log(line)
             log_div.insertAdjacentHTML("beforeend", line);
         }
 
