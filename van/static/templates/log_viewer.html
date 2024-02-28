@@ -60,7 +60,7 @@
 
 
 <script>
-    var ws_log = new WebSocket("ws://raspberrypi.local:8000/ws/log");
+    var ws_log = new WebSocket("ws://raspberrypi.local:8000/logs/ws/logs");
     ws_log.onmessage = function (event) {
         var log_html = document.getElementById("log_log");
         var aps_html = document.getElementById("aps_log");

@@ -74,7 +74,7 @@ def report(payload: dict):
     # Check for server connectivity
     # and abort immediately if not found
     if not has_connection():
-        logger.info(f'Failed to connect to server, Storing and Skipping Report ...', )
+        logger.info(f'[SKIP_REPORT] Failed to connect to server, Storing and Skipping Report ...', )
         _abort_report(payload)
         return
 
@@ -91,13 +91,13 @@ def report(payload: dict):
 
         # If we don't get the expected 200 response log the error and abort report
         if auth_response.status_code != 200:
-            logger.error(f'Failed Server authentication (status: [{auth_response.status_code}]) aborting report')
+            logger.error(f'[SKIP_REPORT] Failed Server authentication (status: [{auth_response.status_code}]) aborting report')
             _abort_report(payload)
             return
 
     # If there's an error networking log it and abort
     except (Exception,) as e:
-        logger.error('Error during authentication request, aborting report')
+        logger.error('[SKIP_REPORT] Error during authentication request, aborting report')
         _abort_report(payload)
         logger.exception(e)
         return
@@ -114,7 +114,7 @@ def report(payload: dict):
         logger.warning(f'Server responded to report with {report_response.status_code}, aborting report')
         return
 
-    logger.info(f'Report successful, clearing payload and backups')
+    logger.info(f'[OKAY_REPORT] Report successful, clearing payload and backups')
     backup_manager.clear(sensors)
     for data_log in payload.values():
         data_log.clear()
@@ -244,62 +244,6 @@ async def patch_specific_scheduler(schedule: str, request: fastRequest):
 # ---- LOG VIEWING STUFF ---- (Not sure where this should go)
 template_path = os.path.abspath(f'{os.getenv("VLS_LOCATION")}/van/static/templates')
 templates = Jinja2Templates(directory=template_path)
-
-
-async def log_reader(n=5):
-    logs = ['log', 'APScheduler', 'Webserver']
-    output = {log: {'log': []} for log in logs}
-
-    for log in logs:
-        log_file = f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt'
-        try:
-            with open(log_file, 'r') as file:
-                for line in file.readlines()[-n:]:
-                    output[log]['log'].append(f'{line}<br/>')
-
-                file.seek(0, os.SEEK_END)
-                output[log]['size'] = file.tell()
-        except OSError:
-            with open(log_file, 'w') as file:
-                pass
-
-    return output
-
-
-@app.websocket('/ws/log')
-async def websocket_endpoint_log(websocket: WebSocket):
-    await websocket.accept()
-
-    try:
-        while True:
-            await asyncio.sleep(1)
-            logs = await log_reader(30)
-            await websocket.send_json(logs)
-    except Exception as e:
-        raise e
-    finally:
-        await websocket.close()
-
-
-@app.get('/log.html')
-async def get_log(request: fastRequest):
-    logs = ['log', 'APScheduler', 'Webserver']
-    log_sizes = []
-
-    for log in logs:
-        try:
-            size = os.stat(f'{os.getenv("VLS_LOCATION")}/van/logs/{log}.txt').st_size / 1024
-        except FileNotFoundError:
-            size = 0
-
-        log_sizes.append({
-            'name': log,
-            'size': size
-        })
-
-    context = {'title': 'log.txt', 'log_sizes': log_sizes}
-    return templates.TemplateResponse('log_viewer.html', {'request': request, 'context': context})
-
 
 if __name__ == '__main__':
     uvicorn.run('local_server:app', host='0.0.0.0', reload=False)
