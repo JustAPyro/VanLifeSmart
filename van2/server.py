@@ -20,7 +20,6 @@ logging_map = {
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-
     # Map library logs to output log files
     for log_file, logger_name in logging_map.items():
         path = os.path.abspath(f'{os.getenv("VLS_INSTALL")}/van2/data/logs/{log_file}')
@@ -28,6 +27,9 @@ async def lifespan(app: FastAPI):
         logger = logging.getLogger(logger_name)
         logger.addHandler(file_handler)
 
+    # Fail to launch if any environment variable listed in required are missing
+    if not all([(os.getenv(env) is not None) for env in required_environment]):
+        raise NotImplementedError("You are missing a required environment variable.")
 
     yield
 
