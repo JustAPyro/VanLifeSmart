@@ -36,7 +36,7 @@ class BackupManager:
 
     def backup(self, data: dict) -> int:
         """
-        :param data: The sensor payload you want to back up
+        :param data: The sensors payload you want to back up
         :return: The bytes of storage consumed by this addition to backup.
         """
         # Track the number of byte storage used by this backup
@@ -44,14 +44,14 @@ class BackupManager:
 
         # Open and create a backup file for each data table
         for dtype, data in data.items():
-            dtype: str        # Name of the sensor
+            dtype: str        # Name of the sensors
             data: list[dict]  # List of dictionary data points
 
-            # If we have no data for this sensor skip it
+            # If we have no data for this sensors skip it
             if len(data) == 0:
                 continue
 
-            # If we have data, open a data_backup file for this sensor
+            # If we have data, open a data_backup file for this sensors
             with open(f'{self.folder}/{dtype}_backup.csv', 'a') as file:
                 for item in data:
                     # TODO: This is a little fragile imo

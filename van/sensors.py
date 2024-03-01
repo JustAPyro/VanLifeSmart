@@ -24,18 +24,18 @@ except ImportError:
 
 class AbstractSensor(ABC):
     """
-    Defines the abstract interface that a sensor must implement to be
-    included in the local server. A sensor inheriting from this can be
+    Defines the abstract interface that a sensors must implement to be
+    included in the local server. A sensors inheriting from this can be
     added to the sensors list at the bottom of this file and the following
     will then happen automatically.
 
-    1. A section of payload will be dedicated to this sensor.
-    2. A scheduler will be assigned to log data from this sensor
+    1. A section of payload will be dedicated to this sensors.
+    2. A scheduler will be assigned to log data from this sensors
         to payload[{sensor_type}] based on the interval provided in
         the default_schedule dict.
 
     3. On application exit the sensors shutdown() method will fire
-        giving the sensor a chance to close anything it needs to.
+        giving the sensors a chance to close anything it needs to.
     """
     def __init__(self, default_schedule):
         self.default_schedule = default_schedule
@@ -43,25 +43,25 @@ class AbstractSensor(ABC):
     def shutdown(self):
         """
         This method will get called on all sensors before application shutdown.
-        Override it to do things like close ports and files for a sensor.
+        Override it to do things like close ports and files for a sensors.
         """
         pass
 
     @property
     @abstractmethod
     def sensor_type(self) -> str:
-        """Returns a string representing the type of sensor."""
+        """Returns a string representing the type of sensors."""
         pass
 
     @property
     @abstractmethod
     def sensor_description(self) -> str:
-        """Returns a string description of what the sensor records"""
+        """Returns a string description of what the sensors records"""
         pass
 
     @abstractmethod
     def get_data(self) -> dict:
-        """Returns a dict of data retrieved from the sensor"""
+        """Returns a dict of data retrieved from the sensors"""
         pass
 
     @abstractmethod
@@ -151,7 +151,7 @@ class DHT(AbstractSensor):
 
 
 class GPS(AbstractSensor):
-    """USB GPS sensor"""
+    """USB GPS sensors"""
     def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, **kwargs):
         # Call super and then instantiate a GPS manager with given location and baud rate
         super().__init__(**kwargs)

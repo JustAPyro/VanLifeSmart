@@ -140,7 +140,7 @@ async def lifespan(fast_app: FastAPI):
         if os.getenv(env) is None:
             raise RuntimeError(f'Missing environment variable: {env} | Add to .env or system environment')
 
-    # Create the local server payload with a list for each type of sensor.
+    # Create the local server payload with a list for each type of sensors.
     # This is where data is stored in memory before
     # being sent to the server.
     payload = {}
@@ -158,9 +158,9 @@ async def lifespan(fast_app: FastAPI):
                           name='Reports current payload to online server')
 
         # This is a fairly complicated block of code that generates a job for
-        # each sensor provided in the sensors list of sensors.py
+        # each sensors provided in the sensors list of sensors.py
         # It does this first by creating a partial function, essentially passing the
-        # sensor name and get function into the log sensor method. Then it adds the partial
+        # sensors name and get function into the log sensors method. Then it adds the partial
         # function to a scheduler job, by unpacking the arguments from the sensors default schedule
         for sensor in sensors:
             log_method = partial(log_sensor, sensor.sensor_type, sensor.get_data, payload)
@@ -181,7 +181,7 @@ async def lifespan(fast_app: FastAPI):
     # This is cleanup and shutdown code
     scheduler.shutdown()
 
-    # Shutdown each sensor
+    # Shutdown each sensors
     for sensor in sensors:
         sensor.shutdown()
 

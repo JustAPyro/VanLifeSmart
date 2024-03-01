@@ -94,9 +94,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='vanhub')
     subparsers = parser.add_subparsers()
 
-    parser_sensor = subparsers.add_parser('sensor', help='Get information from van hub sensors.')
+    parser_sensor = subparsers.add_parser('sensors', help='Get information from van hub sensors.')
     # ABSTRACT SENSOR ADDED HERE
-    parser_sensor.add_argument("input", choices=['gps', 'tio'], help="Get feedback from this van sensor.")
+    parser_sensor.add_argument("input", choices=['gps', 'tio'], help="Get feedback from this van sensors.")
     # parser.add_argument('--location', nargs='+', type=float)
     # parser.add_argument('--raw', action='store_false')
     parser_sensor.set_defaults(func=sensor_handler)
