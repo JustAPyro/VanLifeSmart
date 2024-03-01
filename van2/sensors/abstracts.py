@@ -27,3 +27,8 @@ class DataPoint(ABC):
 class MalformedDataPointException(Exception):
     def __init__(self, msg):
         super().__init__(msg)
+
+
+class UnknownUnitException(Exception):
+    def __init__(self, msg):
+        super().__init__(msg)
