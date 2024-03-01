@@ -7,7 +7,8 @@ from serial import SerialException
 from van2.sensors.abstracts import DataFactory, DataPoint, MalformedDataPointException
 import logging
 
-from van2.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFix, GPSFixQuality
+from van2.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFix, GPSFixQuality, Number, PositiveNumber, \
+    DecimalNormalized
 
 logger = logging.getLogger(__name__)
 
@@ -31,9 +32,8 @@ class GPSPoint(DataPoint):
         self.coordinates: Coordinates = Coordinates(latitude, longitude)
         self.altitude: Distance = Distance(meters=altitude)
         self.fix_quality: GPSFixQuality = GPSFixQuality(fix_quality)
-
-        self.satellites_used = satellites_used
-        self.hdop = hdop
+        self.satellites_used = PositiveNumber(satellites_used)
+        self.hdop: DecimalNormalized = DecimalNormalized(hdop)
         self.true_track = true_track
         self.magnetic_track = magnetic_track
         self.ground_speed = ground_speed
@@ -44,7 +44,7 @@ class GPSPoint(DataPoint):
             self.coordinates.latitude,
             self.coordinates.longitude,
             self.altitude.meters,
-            self.GPSFixQuality.text,
+            self.fix_quality.text,
             self.satellites_used,
             self.hdop,
             self.true_track,

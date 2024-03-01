@@ -42,6 +42,32 @@ class Text:
         self.text = text
 
 
+class Number:
+    def __init__(self, number: int):
+        tcheck('Number', number, int)
+        self.number = number
+
+
+class Decimal:
+    def __init__(self, decimal: float):
+        tcheck('Decimal', decimal, float)
+        self.decimal = decimal
+
+
+class DecimalNormalized(Decimal):
+    def __init__(self, decimal: float):
+        super().__init__(decimal)
+        if not 0 >= decimal >= 1:
+            raise MalformedDataPointException('DecimalNormalized cannot have values outside the range 0-1')
+
+
+class PositiveNumber(Number):
+    def __init__(self, number: int):
+        super().__init__(number)
+        if number < 0:
+            raise MalformedDataPointException('PositiveNumber was found less than zero')
+
+
 class GPSFixQuality(Text):
     def __init__(self, text):
         super().__init__(text)
