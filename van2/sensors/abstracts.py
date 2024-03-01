@@ -16,4 +16,14 @@ class DataFactory(ABC):
 
 
 class DataPoint(ABC):
-    pass
+    def __init__(self, fake: bool = False):
+        self.fake = fake
+
+    @abstractmethod
+    def to_line(self) -> str:
+        pass
+
+
+class MalformedDataPointException(Exception):
+    def __init__(self, msg):
+        super().__init__(msg)

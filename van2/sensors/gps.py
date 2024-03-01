@@ -4,7 +4,7 @@ from typing import Optional
 
 import serial
 from serial import SerialException
-from van2.sensors.abstracts import DataFactory, DataPoint
+from van2.sensors.abstracts import DataFactory, DataPoint, MalformedDataPointException
 import logging
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,42 @@ class GPSPoint(DataPoint):
                  magnetic_track: Optional[float],
                  ground_speed: Optional[float],
                  fake: bool = False):
-        super().__init__()
+        super().__init__(fake=fake)
+        self.time = time
+
+        print(f'HERE: type {type(longitude)}')
+        print(f'-> {longitude}')
+
+        if not -90 < latitude < 90:
+            raise MalformedDataPointException(f'Latitude must be between -90 and 90')
+        self.latitude = latitude
+
+        if not -180 < longitude < 180:
+            raise MalformedDataPointException(f'Longitude must be between -180 and 180')
+        self.longitude = longitude
+
+        self.altitude = altitude
+        self.fix_quality = fix_quality
+        self.satellites_used = satellites_used
+        self.hdop = hdop
+        self.true_track = true_track
+        self.magnetic_track = magnetic_track
+        self.ground_speed = ground_speed
+
+    def to_line(self) -> str:
+        return ','.join([str(item) for item in [
+            self.time,
+            self.latitude,
+            self.longitude,
+            self.altitude,
+            self.fix_quality,
+            self.satellites_used,
+            self.hdop,
+            self.true_track,
+            self.magnetic_track,
+            self.ground_speed,
+            self.fake,
+        ]])
 
 
 class GPS(DataFactory):
@@ -74,7 +109,8 @@ class GPS(DataFactory):
             hdop=0,
             true_track=None,
             magnetic_track=None,
-            ground_speed=None
+            ground_speed=None,
+            fake=True
         )
 
 
