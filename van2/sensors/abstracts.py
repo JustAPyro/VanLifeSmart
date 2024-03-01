@@ -1,6 +1,15 @@
 from abc import ABC, abstractmethod
 
 
+class DataPoint(ABC):
+    def __init__(self, fake: bool = False):
+        self.fake = fake
+
+    @abstractmethod
+    def to_line(self) -> str:
+        pass
+
+
 class DataFactory(ABC):
     def __init__(self, development: bool = False):
         self.development = development
@@ -11,16 +20,7 @@ class DataFactory(ABC):
         pass
 
     @abstractmethod
-    def get_data(self) -> dict:
-        pass
-
-
-class DataPoint(ABC):
-    def __init__(self, fake: bool = False):
-        self.fake = fake
-
-    @abstractmethod
-    def to_line(self) -> str:
+    def get_data(self) -> DataPoint:
         pass
 
 
