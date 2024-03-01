@@ -1,4 +1,6 @@
 #!/usr/bin/env python3.x
+from functools import partial
+
 import uvicorn
 import os
 from fastapi import FastAPI
@@ -8,7 +10,9 @@ from contextlib import asynccontextmanager
 from sensors import activate_sensors
 from scheduling.tools import get_scheduler, schedule_sensors
 import apscheduler
+
 from core import heartbeat
+from van2.scheduling.endpoints import schedule_urls
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -37,14 +41,21 @@ async def lifespan(app: FastAPI):
     if not all([(os.getenv(env) is not None) for env in required_environment]):
         raise NotImplementedError("You are missing a required environment variable.")
 
-    # Activate each sensor
+    # Get and start the scheduler
+    scheduler = get_scheduler()
+    scheduler.start()
+
+    # Activate the sensors, create a payload for them, then schedule them
     sensors = activate_sensors(development=True)
-
-    # Create a payload dictionary with a list for each sensor
     payload = {sensor: [] for sensor in sensors}
-
-    # Schedule output for each sensor
     schedule_sensors(sensors, payload)
+
+    # schedule the heartbeat call
+    heartbeat_call = partial(heartbeat, payload)
+    scheduler.add_job(heartbeat_call, trigger='interval', seconds=30)
+
+    # Register all the subdomain routers
+    app.include_router(schedule_urls)
 
     yield
 
