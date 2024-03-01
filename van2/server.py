@@ -34,8 +34,10 @@ async def lifespan(app: FastAPI):
     if not all([(os.getenv(env) is not None) for env in required_environment]):
         raise NotImplementedError("You are missing a required environment variable.")
 
-    # This will create all sensors with the given configuration
+    # This will create all sensors and then create basic schedulers for all of them
+    # If you want to add a sensor to the project, please do so by initializing it in sensors/__init__.py
     sensors = activate_sensors(development=True)
+    schedule_sensors(sensors)
 
     yield
 

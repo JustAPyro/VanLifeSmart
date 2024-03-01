@@ -28,6 +28,10 @@ class GPS(DataFactory):
                 # If we're not in development and still can't open the GPS continue the exception
                 raise exception
 
+    @property
+    def data_type(self):
+        return 'gps'
+
 
 class GPSManager:
     unimplemented_formats = ('GPGSA', 'GPGSV', 'GPGLL', 'GPTXT', 'GPRMC')

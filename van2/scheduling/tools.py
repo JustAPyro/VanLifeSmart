@@ -18,4 +18,6 @@ def get_scheduler() -> AsyncIOScheduler:
 
 
 def schedule_sensors(sensors: list[DataFactory]):
-    pass
+    scheduler = get_scheduler()
+    for sensor in sensors:
+        pass
