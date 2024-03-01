@@ -4,10 +4,26 @@ from typing import Optional
 
 import serial
 from serial import SerialException
-from van2.sensors.abstracts import DataFactory
+from van2.sensors.abstracts import DataFactory, DataPoint
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+class GPSPoint(DataPoint):
+    def __init__(self,
+                 time: float,
+                 latitude: float,
+                 longitude: float,
+                 altitude: float,
+                 fix_quality: str,
+                 satellites_used: int,
+                 hdop: float,
+                 true_track: Optional[float],
+                 magnetic_track: Optional[float],
+                 ground_speed: Optional[float],
+                 fake: bool = False):
+        super().__init__()
 
 
 class GPS(DataFactory):
@@ -31,6 +47,35 @@ class GPS(DataFactory):
     @property
     def data_type(self):
         return 'gps'
+
+    def get_data(self) -> GPSPoint:
+        if self.manager:
+            return GPSPoint(**self.manager.get_dict([
+                'time',
+                'latitude',
+                'longitude',
+                'altitude',
+                'fix_quality',
+                'satellites_used',
+                'hdop',
+                'true_track',
+                'magnetic_track',
+                'ground_speed'
+            ]))
+
+        # Otherwise we need to return a fake data point
+        return GPSPoint(
+            time=datetime.now().timestamp(),
+            latitude=-33.865143,
+            longitude=151.209900,
+            altitude=3,
+            fix_quality='FAKE',
+            satellites_used=0,
+            hdop=0,
+            true_track=None,
+            magnetic_track=None,
+            ground_speed=None
+        )
 
 
 class GPSManager:

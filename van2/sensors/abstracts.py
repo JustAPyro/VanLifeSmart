@@ -15,3 +15,5 @@ class DataFactory(ABC):
         pass
 
 
+class DataPoint(ABC):
+    pass
