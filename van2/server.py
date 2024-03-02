@@ -11,6 +11,8 @@ from functools import partial
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
 
+from starlette.staticfiles import StaticFiles
+
 from core import heartbeat
 from sensors import activate_sensors
 from van2.scheduling.endpoints import schedule_urls
@@ -29,6 +31,7 @@ logging_map = {
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
     # Map library logs to output log files
     logging.basicConfig(level=logging.INFO)
     for log_file, logger_name in logging_map.items():
@@ -56,6 +59,8 @@ async def lifespan(app: FastAPI):
     # Register all the subdomain routers
     app.include_router(schedule_urls)
 
+    # Mount static files (html, css, js, etc)
+    app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van2/static'), name="static")
     yield
 
 

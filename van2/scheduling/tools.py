@@ -11,7 +11,12 @@ from van2.sensors import DataFactory
 
 logger = logging.getLogger(__name__)
 scheduler = AsyncIOScheduler()
-print(f'tools => {scheduler}')
+
+
+def get_scheduler():
+    return scheduler
+
+
 def schedule_sensors(sensors: list[DataFactory], payload: dict[DataFactory, list]):
     def schedule_sensor(sensor_to_schedule: DataFactory, to_payload: dict[DataFactory, list]):
         start = timeit.default_timer()
