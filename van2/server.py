@@ -1,23 +1,23 @@
 #!/usr/bin/env python3.x
-from functools import partial
 
-import uvicorn
+# TODO: If data/backups and data/logs don't exist on startup create automagically
+
 import os
-from fastapi import FastAPI
-from dotenv import load_dotenv
 import logging
+import uvicorn
+
+from fastapi import FastAPI
+from functools import partial
+from dotenv import load_dotenv
 from contextlib import asynccontextmanager
-from sensors import activate_sensors
-from scheduling.tools import get_scheduler, schedule_sensors
-import apscheduler
 
 from core import heartbeat
+from sensors import activate_sensors
 from van2.scheduling.endpoints import schedule_urls
+from van2.scheduling.tools import scheduler, schedule_sensors
 
 # Refuse to start if these environment variables aren't set
-required_environment = (
-    'VLS_INSTALL',  # Install location
-)
+required_environment = ('VLS_INSTALL',)  # Install location
 
 # This maps loggers to output files
 logging_map = {
@@ -42,7 +42,6 @@ async def lifespan(app: FastAPI):
         raise NotImplementedError("You are missing a required environment variable.")
 
     # Get and start the scheduler
-    scheduler = get_scheduler()
     scheduler.start()
 
     # Activate the sensors, create a payload for them, then schedule them
@@ -64,10 +63,5 @@ load_dotenv()
 server = FastAPI(title='Van Hub', lifespan=lifespan)
 
 
-@server.get('/')
-def thing():
-    return 'hi'
-
-
 if __name__ == '__main__':
-    uvicorn.run('server:server', host='localhost', reload=True)
+    uvicorn.run('server:server', host='localhost')
