@@ -1,5 +1,5 @@
-from van2.sensors.abstracts import Sensor
-from van2.sensors.gps import GPS
+from van.sensors.abstracts import Sensor
+from van.sensors.gps import GPS
 
 
 # This method will return data factories based

@@ -16,8 +16,8 @@ from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
 from core import heartbeat
 from sensors import activate_sensors
-from van2.scheduling.endpoints import schedule_urls
-from van2.scheduling.tools import scheduler, schedule_sensors
+from van.scheduling.endpoints import schedule_urls
+from van.scheduling.tools import scheduler, schedule_sensors
 
 # Refuse to start if these environment variables aren't set
 required_environment = (

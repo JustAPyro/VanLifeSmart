@@ -4,11 +4,11 @@ from typing import Optional
 
 import serial
 from serial import SerialException
-from van2.sensors.abstracts import Sensor,  MalformedDataPointException
+from van.sensors.abstracts import Sensor,  MalformedDataPointException
 import logging
 import models
 from models import GPSData
-from van2.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFixQuality, Number, PositiveNumber, \
+from van.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFixQuality, Number, PositiveNumber, \
     DecimalNormalized
 
 logger = logging.getLogger(__name__)

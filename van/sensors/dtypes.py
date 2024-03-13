@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from enum import Enum
 
-from van2.sensors.abstracts import MalformedDataPointException, UnknownUnitException
+from van.sensors.abstracts import MalformedDataPointException, UnknownUnitException
 
 
 def tcheck(name, variable, dtype):

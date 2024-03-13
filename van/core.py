@@ -1,5 +1,5 @@
 import logging
-from van2.sensors import Sensor
+from van.sensors import Sensor
 
 logger = logging.getLogger(__name__)
 
