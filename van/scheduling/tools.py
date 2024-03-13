@@ -39,8 +39,12 @@ def schedule_sensors(sensors: list[Sensor], database: Engine):
     # We create a partial function by binding the above method to the database and each sensor
     # And then schedule the sensor to run on a set interval
     for sensor in sensors:
+        sensor: Sensor
         report_sensor = partial(schedule_sensor, sensor, database)
-        scheduler.add_job(report_sensor, 'interval', id=f'report_{sensor.data_type}', seconds=10)
+        scheduler.add_job(report_sensor, 'interval',
+                          id=sensor.schedule_config['id'], seconds=10,
+                          name=sensor.schedule_config['description'],
+                          )
     # ** sensor.default_schedule,
     # name = sensor.sensor_description)
 

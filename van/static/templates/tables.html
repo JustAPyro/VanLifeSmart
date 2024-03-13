@@ -161,8 +161,8 @@
                                             <td>{{ job.trigger }}</td>
                                             <td>{{ job.next_run_time }}</td>
                                             <td>{{ job.max_instances }}</td>
-                                            <td>{{ misfire_grace_time }}</td>
-                                            <td>{{ active }}</td>
+                                            <td>{{ job.misfire_grace_time }}</td>
+                                            <td>{{ job.active }}</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

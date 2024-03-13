@@ -63,7 +63,9 @@ async def lifespan(app: FastAPI):
     payload = {sensor: [] for sensor in sensors}
     # schedule the heartbeat call
     heartbeat_call = partial(heartbeat, payload)
-    scheduler.add_job(heartbeat_call, trigger='interval', seconds=30)
+    scheduler.add_job(heartbeat_call, trigger='interval', seconds=30,
+                      id='heartbeat',
+                      name="Connect to the online server to upload/download data.")
 
     # Register all the subdomain routers
     app.include_router(schedule_urls)

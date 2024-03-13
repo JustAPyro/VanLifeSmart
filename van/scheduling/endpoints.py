@@ -15,5 +15,7 @@ templates = Jinja2Templates(directory=template_path)
 async def schedule_page(request: Request, scheduler=Depends(get_scheduler)):
     jobs = scheduler.get_jobs()
     return templates.TemplateResponse(
-        request=request, name="tables.html", context={'schedules': [schedule_info(job) for job in jobs]}
+        request=request,
+        name="tables.html",
+        context={'schedules': [schedule_info(job) for job in jobs]}
     )
