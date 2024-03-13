@@ -1,20 +1,18 @@
 #!/usr/bin/env python3.x
-
-# TODO: If data/backups and data/logs don't exist on startup create automagically
-
-import os
 import logging
-import uvicorn
-from sqlalchemy import create_engine
-
-from models import Base
-from fastapi import FastAPI
+import os
+from contextlib import asynccontextmanager
 from functools import partial
 from pathlib import Path
+
+import uvicorn
 from dotenv import load_dotenv
-from contextlib import asynccontextmanager
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import create_engine
+
 from core import heartbeat
+from models import Base
 from sensors import activate_sensors
 from van.scheduling.endpoints import schedule_urls
 from van.scheduling.tools import scheduler, schedule_sensors
