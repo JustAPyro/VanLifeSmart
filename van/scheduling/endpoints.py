@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from van.scheduling.tools import get_scheduler, schedule_info
 
 schedule_urls = APIRouter(prefix='/schedule')
-template_path = os.path.abspath(f'{os.getenv("VLS_INSTALL")}/van2/static/templates')
+template_path = os.path.abspath(f'{os.getenv("VLS_INSTALL")}/van/static/templates')
 templates = Jinja2Templates(directory=template_path)
 
 

@@ -71,7 +71,7 @@ async def lifespan(app: FastAPI):
     app.include_router(schedule_urls)
 
     # Mount static files (html, css, js, etc)
-    app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van2/static'), name="static")
+    app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
 
     # Launch the server
     yield

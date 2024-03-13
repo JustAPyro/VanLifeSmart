@@ -1,23 +1,21 @@
+import logging
 import threading
-from datetime import datetime
+import datetime
 from typing import Optional
 
 import serial
 from serial import SerialException
-from van.sensors.abstracts import Sensor,  MalformedDataPointException
-import logging
-import models
+
 from models import GPSData
-from van.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFixQuality, Number, PositiveNumber, \
-    DecimalNormalized
+from van.sensors.abstracts import Sensor
 
 logger = logging.getLogger(__name__)
+
 
 class GPS(Sensor):
     def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, development: bool = False):
         super().__init__(development=development)
-        x = models.GPSData(latitude=3, longitude=3)
-        print(x.time)
+
         # The following code tries to launch the GPSManager using specified location and baud
         # If it can not it will either switch to fake data is development is true, otherwise raise an exception
         self.manager: Optional[GPSManager] = None
@@ -114,7 +112,7 @@ class GPSManager:
         self.data = {}
 
         # Create the gps serial connection and flush/clear buffer
-        self._gps = serial.Serial('/dev/ttyACM0', baudrate=9600)
+        self._gps = serial.Serial(location, baud)
 
         gps_thread = threading.Thread(target=self.listen)
         gps_thread.start()
@@ -131,27 +129,9 @@ class GPSManager:
                 sentence = self._gps.readline().decode('utf-8')
                 self._parse_sentence(sentence)
         except (Exception,) as e:
-            pass
-
-    def _detect_corruption(self, sentence: str) -> bool:
-        """
-        Returns True if we detect corruption or bad formatting in this sentence.
-        Will cause the sentence to be ignored.
-        """
-        # All valid NMEA sentences start with $
-        if sentence[0] != '$':
-            return True
-        if sentence[1:3] not in GPSManager.identifiers.keys():
-            return True
-        return False
+            raise e
 
     def _parse_sentence(self, sentence: str):
-        # Causes bugs?
-        # If this seems to be corrupted we just skip it
-        # if self._detect_corruption(sentence):
-        #    logger.info(f'Ignoring sentence with likely corruption: {sentence}')
-        #    return
-
         words = sentence.split(',')
         formatting = words.pop(0)[1:]
         now = datetime.datetime.now()
