@@ -34,6 +34,7 @@ class DHTData(db.Model):
     temperature = db.Column(db.Float)
     humidity = db.Column(db.Float)
 
+
 class GPSData(db.Model):
     """GPS Sensor Data"""
     # DB identifiers
@@ -59,7 +60,6 @@ class GPSData(db.Model):
     ground_speed = db.Column(db.Float, nullable=True)
     tio_id = db.Column(db.Integer, db.ForeignKey('tomorrow_io.id'), nullable=True)
     dht_id = db.Column(db.Integer, db.ForeignKey('dht.id'))
-
 
 
 class TomorrowIO(db.Model):

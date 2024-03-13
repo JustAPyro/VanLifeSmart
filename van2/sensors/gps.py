@@ -4,61 +4,20 @@ from typing import Optional
 
 import serial
 from serial import SerialException
-from van2.sensors.abstracts import Sensor, DataPoint, MalformedDataPointException
+from van2.sensors.abstracts import Sensor,  MalformedDataPointException
 import logging
-
+import models
+from models import GPSData
 from van2.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFixQuality, Number, PositiveNumber, \
     DecimalNormalized
 
 logger = logging.getLogger(__name__)
 
-
-class GPSPoint(DataPoint):
-    def __init__(self,
-                 time: float,
-                 latitude: float,
-                 longitude: float,
-                 altitude: float,
-                 fix_quality: str,
-                 satellites_used: int,
-                 hdop: float,
-                 true_track: Optional[float],
-                 magnetic_track: Optional[float],
-                 ground_speed: Optional[float],
-                 fake: bool = False):
-        super().__init__(fake=fake)
-
-        self.time: Time = Time(time)
-        self.coordinates: Coordinates = Coordinates(latitude, longitude)
-        self.altitude: Distance = Distance(meters=altitude)
-        self.fix_quality: GPSFixQuality = GPSFixQuality(fix_quality)
-        self.satellites_used = PositiveNumber(satellites_used)
-        self.hdop: DecimalNormalized = DecimalNormalized(hdop)
-        # TODO: Add unit types for these
-        self.true_track = true_track
-        self.magnetic_track = magnetic_track
-        self.ground_speed = ground_speed
-
-    def to_line(self) -> str:
-        return ','.join([str(item) for item in [
-            self.time.posix,
-            self.coordinates.latitude,
-            self.coordinates.longitude,
-            self.altitude.meters,
-            self.fix_quality.text,
-            self.satellites_used.number,
-            self.hdop.decimal,
-            self.true_track,
-            self.magnetic_track,
-            self.ground_speed,
-            self.fake,
-        ]])
-
-
 class GPS(Sensor):
     def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, development: bool = False):
         super().__init__(development=development)
-
+        x = models.GPSData(latitude=3, longitude=3)
+        print(x.time)
         # The following code tries to launch the GPSManager using specified location and baud
         # If it can not it will either switch to fake data is development is true, otherwise raise an exception
         self.manager: Optional[GPSManager] = None
@@ -77,10 +36,9 @@ class GPS(Sensor):
     def data_type(self):
         return 'gps'
 
-    def get_data(self) -> GPSPoint:
+    def get_data(self) -> GPSData:
         if self.manager:
-            return GPSPoint(**self.manager.get_dict([
-                'time',
+            return GPSData(**self.manager.get_dict([
                 'latitude',
                 'longitude',
                 'altitude',
@@ -93,8 +51,7 @@ class GPS(Sensor):
             ]))
 
         # Otherwise we need to return a fake data point
-        return GPSPoint(
-            time=datetime.now().timestamp(),
+        return GPSData(
             latitude=-33.865143,
             longitude=151.209900,
             altitude=3,
@@ -104,7 +61,6 @@ class GPS(Sensor):
             true_track=None,
             magnetic_track=None,
             ground_speed=None,
-            fake=True
         )
 
 

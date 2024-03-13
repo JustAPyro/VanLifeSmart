@@ -1,13 +1,5 @@
 from abc import ABC, abstractmethod
-
-
-class DataPoint(ABC):
-    def __init__(self, fake: bool = False):
-        self.fake = fake
-
-    @abstractmethod
-    def to_line(self) -> str:
-        pass
+from models import Base
 
 
 class Sensor(ABC):
@@ -20,7 +12,7 @@ class Sensor(ABC):
         pass
 
     @abstractmethod
-    def get_data(self) -> DataPoint:
+    def get_data(self) -> Base:
         pass
 
 
