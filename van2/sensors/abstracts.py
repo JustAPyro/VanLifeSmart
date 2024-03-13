@@ -10,7 +10,7 @@ class DataPoint(ABC):
         pass
 
 
-class DataFactory(ABC):
+class Sensor(ABC):
     def __init__(self, development: bool = False):
         self.development = development
 

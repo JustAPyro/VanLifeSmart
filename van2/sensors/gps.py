@@ -4,7 +4,7 @@ from typing import Optional
 
 import serial
 from serial import SerialException
-from van2.sensors.abstracts import DataFactory, DataPoint, MalformedDataPointException
+from van2.sensors.abstracts import Sensor, DataPoint, MalformedDataPointException
 import logging
 
 from van2.sensors.dtypes import Coordinates, Time, Distance, Text, GPSFixQuality, Number, PositiveNumber, \
@@ -55,7 +55,7 @@ class GPSPoint(DataPoint):
         ]])
 
 
-class GPS(DataFactory):
+class GPS(Sensor):
     def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, development: bool = False):
         super().__init__(development=development)
 

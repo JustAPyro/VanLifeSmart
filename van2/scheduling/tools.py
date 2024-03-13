@@ -7,7 +7,7 @@ from apscheduler.job import Job
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import logging
 
-from van2.sensors import DataFactory
+from van2.sensors import Sensor
 
 logger = logging.getLogger(__name__)
 scheduler = AsyncIOScheduler()
@@ -17,16 +17,15 @@ def get_scheduler():
     return scheduler
 
 
-def schedule_sensors(sensors: list[DataFactory], payload: dict[DataFactory, list]):
-    def schedule_sensor(sensor_to_schedule: DataFactory, to_payload: dict[DataFactory, list]):
+def schedule_sensors(sensors: list[Sensor], payload: dict[Sensor, list]):
+    def schedule_sensor(sensor_to_schedule: Sensor, to_payload: dict[Sensor, list]):
         start = timeit.default_timer()
         to_payload.get(sensor_to_schedule).append(sensor_to_schedule.get_data())
         sensor_time = timeit.default_timer() - start
         logger.info(f'Recorded {sensor_to_schedule.data_type} sensor data in {sensor_time}')
 
-    print(f'tools:schedule => {scheduler}')
     for sensor in sensors:
-        sensor: DataFactory
+        sensor: Sensor
         report_sensor = partial(schedule_sensor, sensor, payload)
         scheduler.add_job(report_sensor, 'interval', id=f'report_{sensor.data_type}', seconds=10)
     # ** sensor.default_schedule,

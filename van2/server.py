@@ -10,8 +10,7 @@ from fastapi import FastAPI
 from functools import partial
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
-
-from starlette.staticfiles import StaticFiles
+from fastapi.staticfiles import StaticFiles
 
 from core import heartbeat
 from sensors import activate_sensors
@@ -61,12 +60,12 @@ async def lifespan(app: FastAPI):
 
     # Mount static files (html, css, js, etc)
     app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van2/static'), name="static")
+
+    # Launch the server
     yield
 
 
 load_dotenv()
 server = FastAPI(title='Van Hub', lifespan=lifespan)
-
-
 if __name__ == '__main__':
     uvicorn.run('server:server', host='localhost')
