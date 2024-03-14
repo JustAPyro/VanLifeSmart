@@ -13,4 +13,12 @@ templates = Jinja2Templates(directory=template_path)
 async def log_page(request: Request):
     return templates.TemplateResponse(
         request=request,
-        name="logs.html")
+        name='logs.html')
+
+
+@endpoints.get('/data.html', response_class=HTMLResponse)
+async def data_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name='data.html'
+    )
