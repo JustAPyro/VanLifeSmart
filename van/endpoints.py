@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from fastapi import Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.exceptions import HTTPException
 import os
 
 endpoints = APIRouter()
@@ -16,9 +17,17 @@ async def log_page(request: Request):
         name='logs.html')
 
 
-@endpoints.get('/data.html', response_class=HTMLResponse)
-async def data_page(request: Request):
+@endpoints.get('/sql.html', response_class=HTMLResponse)
+async def sql_page(request: Request):
     return templates.TemplateResponse(
         request=request,
-        name='data.html'
+        name='sql.html'
+    )
+
+
+# This is imported and loaded in the main server.py code as an exception handler
+async def not_found_exception_handler(request: Request, exc: HTTPException):
+    return templates.TemplateResponse(
+        request=request,
+        name='404.html'
     )

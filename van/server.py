@@ -16,7 +16,7 @@ from models import Base
 from sensors import activate_sensors
 from van.scheduling.endpoints import schedule_urls
 from van.scheduling.tools import scheduler, schedule_sensors
-from endpoints import endpoints
+from endpoints import endpoints, not_found_exception_handler
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -80,7 +80,11 @@ async def lifespan(app: FastAPI):
 
 
 load_dotenv()
-server = FastAPI(title='Van Hub', lifespan=lifespan)
+server = FastAPI(title='Van Hub',
+                 lifespan=lifespan,
+                 exception_handlers={
+                     404: not_found_exception_handler
+                 })
 
 if __name__ == '__main__':
     uvicorn.run('server:server', host='localhost')
