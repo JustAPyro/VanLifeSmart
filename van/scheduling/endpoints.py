@@ -16,6 +16,6 @@ async def schedule_page(request: Request, scheduler=Depends(get_scheduler)):
     jobs = scheduler.get_jobs()
     return templates.TemplateResponse(
         request=request,
-        name="tables.html",
+        name="schedule.html",
         context={'schedules': [schedule_info(job) for job in jobs]}
     )
