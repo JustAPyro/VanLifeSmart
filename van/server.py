@@ -1,4 +1,6 @@
 #!/usr/bin/env python3.x
+from dotenv import load_dotenv
+
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -6,17 +8,16 @@ from functools import partial
 from pathlib import Path
 
 import uvicorn
-from dotenv import load_dotenv
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from sqlalchemy import create_engine
 
 from core import heartbeat
-from models import Base
 from sensors import activate_sensors
 from van.scheduling.endpoints import schedule_urls
 from van.scheduling.tools import scheduler, schedule_sensors
 from endpoints import endpoints, not_found_exception_handler
+from database import engine
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -34,17 +35,15 @@ logging_map = {
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Start by loading any environment variables we can find
+    load_dotenv()
+
     # Fail to launch if any environment variable listed in required are missing
     if not all([(os.getenv(env) is not None) for env in required_environment]):
         raise NotImplementedError("You are missing a required environment variable.")
 
     # Check to make sure the data path exists for logs (Database will go in the data path root)
     Path(f'{os.getenv("VLS_DATA_PATH")}/logs').mkdir(parents=True, exist_ok=True)
-
-    engine = create_engine(
-        f'sqlite:///{os.getenv("VLS_DATA_PATH")}/database.db',
-        connect_args={"check_same_thread": False})
-    Base.metadata.create_all(engine)
 
     # Map library logs to output log files
     logging.basicConfig(level=logging.INFO)
@@ -73,7 +72,7 @@ async def lifespan(app: FastAPI):
     app.include_router(endpoints)
 
     # Mount static files (html, css, js, etc)
-    app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
+    app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_INSTALL")}/van/static'), name="static")
 
     # Launch the server
     yield
