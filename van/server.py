@@ -16,6 +16,7 @@ from models import Base
 from sensors import activate_sensors
 from van.scheduling.endpoints import schedule_urls
 from van.scheduling.tools import scheduler, schedule_sensors
+from endpoints import endpoints
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -69,6 +70,7 @@ async def lifespan(app: FastAPI):
 
     # Register all the subdomain routers
     app.include_router(schedule_urls)
+    app.include_router(endpoints)
 
     # Mount static files (html, css, js, etc)
     app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_LOCATION")}/van/static'), name="static")
