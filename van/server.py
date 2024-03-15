@@ -86,4 +86,4 @@ server = FastAPI(title='Van Hub',
                  })
 
 if __name__ == '__main__':
-    uvicorn.run('server:server', host='localhost')
+    uvicorn.run('server:server', host='localhost', reload=True)

@@ -1,0 +1,94 @@
+{% extends "root.html" %}
+{% block title %}{{ data_type }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">{{ data_type }}</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+        <li class="breadcrumb-item active">Data</li>
+        <li class="breadcrumb-item active">{{ data_type }}</li>
+    </ol>
+    <!--
+    <div class="card mb-4">
+        <div class="card-body">
+            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+        </div>
+    </div>
+    -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <i class="fas fa-table me-1"></i>
+                    {{ data_type }} Data
+                </div>
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle"
+                           type="button"
+                           id="columnMenu"
+                           data-bs-toggle="dropdown"
+                           data-bs-auto-close="false"
+                           aria-haspopup="true"
+                           aria-expanded="true">
+                            <i class="fas fa-location-dot"></i>
+                            Columns
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for header in all_headers %}
+                            <li>
+                                <label class="dropdown-item">
+                                     <input class="form-check-input"
+                                            type="checkbox"
+                                            value="{{header}}"
+                                            id="{{header}}"
+                                            onchange="toggle_column({{loop.index}})"
+                                            checked>
+                                    {{ header }}
+                                </label>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table id="data_table">
+                <thead>
+                <tr>
+                    {% for head in headers %}
+                    <th>{{ head }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    {% for head in headers %}
+                    <th>{{ head }}</th>
+                    {% endfor %}
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for row in data %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+<script src="static/js/data.js"></script>
+{% endblock %}

@@ -30,18 +30,18 @@ document.getElementById("submit_query").onclick = async () => {
 
     const formData = new FormData();
     formData.append("sql_query", editor.getValue())
-    let new_data = {}
+    let results = {}
 
     try {
         const response = await fetch("sql.json", {
             method: "POST",
             body: formData,
         });
-        new_data = await response.json()
+        results = await response.json()
     } catch (e) {
         console.error(e)
     }
 
-
-    result_table.insert(new_data)
+    result_table.insert(results["insert"])
+    document.getElementById("query_info").innerHTML = "Fetched " + results["rows"] + " in " + results["time"] + " seconds."
 };
