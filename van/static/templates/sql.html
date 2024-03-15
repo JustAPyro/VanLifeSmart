@@ -1,6 +1,10 @@
 {% extends "root.html" %}
 {% block title %}Data{% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="static/css/sql.css"/>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid px-4">
     <h1 class="mt-4">SQL Queries</h1>
@@ -9,10 +13,17 @@
         <li class="breadcrumb-item active">SQL</li>
     </ol>
 </div>
-<form method="POST">
-    <div class="form-group">
-        <textarea class="form-control" name='sql_query' rows="5"></textarea>
-    </div>
-    <button class="btn btn-primary">Query</button>
-</form>
+
+<div class="editor-container">
+    <div id="editor">SELECT * FROM gps;</div>
+</div>
+<button class="btn btn-primary" id="submit_query">Query</button>
+<table id="sql_result_table">
+</table>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.32.7/ace.js" integrity="sha512-oz/97HdPI510jvvYzVqE2tzz+jWpvUeVkK5OT0S2kPZOxuR+9cE8zT1V6UgwtRG71ThICBEtkPEzN5tfP/YeYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="static/js/sql.js"></script>
 {% endblock %}

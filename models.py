@@ -9,6 +9,10 @@ from sqlalchemy import func, create_engine
 from sqlalchemy import DOUBLE
 
 
+def as_dict(self):
+    return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 # I'm not sure if this is necessary, but as of 3/13/24 the sqlalchemy quickstart recommends it
 # https://docs.sqlalchemy.org/en/20/orm/quickstart.html
 class Base(DeclarativeBase):
