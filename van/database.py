@@ -3,6 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 
 from models import Base
 
@@ -14,8 +15,16 @@ Path(f'{os.getenv("VLS_DATA_PATH")}').mkdir(parents=True, exist_ok=True)
 
 # Create the database
 engine = create_engine(
-        f'sqlite:///{os.getenv("VLS_DATA_PATH")}/database.db',
-        connect_args={"check_same_thread": False})
+    f'sqlite:///{os.getenv("VLS_DATA_PATH")}/database.db',
+    connect_args={"check_same_thread": False})
 
 # Instantiate all database tables
 Base.metadata.create_all(engine)
+
+
+async def get_db():
+    database = Session(engine)
+    try:
+        yield database
+    finally:
+        database.close()

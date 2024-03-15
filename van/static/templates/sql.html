@@ -9,9 +9,10 @@
         <li class="breadcrumb-item active">SQL</li>
     </ol>
 </div>
-<form>
+<form method="POST">
     <div class="form-group">
-        <textarea class="form-control" id="sqlEntry" rows="5"></textarea>
+        <textarea class="form-control" name='sql_query' rows="5"></textarea>
     </div>
+    <button class="btn btn-primary">Query</button>
 </form>
 {% endblock %}

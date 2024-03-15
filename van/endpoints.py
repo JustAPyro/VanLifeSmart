@@ -1,8 +1,13 @@
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Form
 from fastapi import Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.exceptions import HTTPException
+from sqlalchemy.orm import Session
+from database import get_db
+from fastapi import Depends
 import os
 
 endpoints = APIRouter()
@@ -19,6 +24,17 @@ async def log_page(request: Request):
 
 @endpoints.get('/sql.html', response_class=HTMLResponse)
 async def sql_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name='sql.html'
+    )
+
+
+@endpoints.post('/sql.html', response_class=HTMLResponse)
+async def post_sql_page(request: Request, sql_query: Annotated[str, Form()],
+                        database: Annotated[Session, Depends(get_db)]):
+    print(sql_query)
+    print(database)
     return templates.TemplateResponse(
         request=request,
         name='sql.html'
