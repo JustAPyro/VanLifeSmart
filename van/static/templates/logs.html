@@ -10,6 +10,28 @@
         <li class="breadcrumb-item active">Logs</li>
     </ol>
     <div class="card mb-4">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Log Name</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in log_sizes %}
+                    <tr>
+                        <th scope="row">{{ log.name }}</th>
+                        <td id="{{log.name}}_size"> Loading...</td>
+                        <td><button type="button" value={{log.name}} onclick="delete_log(this.value)" class="btn btn-outline-danger btn-sm">Delete</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card mb-4">
         <div class="card-header">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -44,4 +66,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="static/js/logs.js"></script>
 {% endblock %}

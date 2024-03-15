@@ -1,3 +1,4 @@
+import asyncio
 import timeit
 from typing import Annotated
 
@@ -5,6 +6,7 @@ from fastapi import APIRouter, Form
 from fastapi import Request
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.websockets import WebSocket
 from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
@@ -20,9 +22,79 @@ templates = Jinja2Templates(directory=template_path)
 
 @endpoints.get('/logs.html', response_class=HTMLResponse)
 async def log_page(request: Request):
+    log_files = os.listdir(os.getenv('VLS_DATA_PATH')+'/logs')
+    log_sizes = []
+
+    for log in log_files:
+        try:
+            size = os.stat(f'{os.getenv("VLS_DATA_PATH")}/logs/{log}').st_size / 1024
+        except FileNotFoundError:
+            size = 0
+
+        log_sizes.append({
+            'name': log,
+            'size': size
+        })
+
+    context = {'title': 'log.txt', 'log_sizes': log_sizes}
     return templates.TemplateResponse(
         request=request,
-        name='logs.html')
+        name='logs.html',
+        context=context)
+
+
+@endpoints.websocket('/ws/logs')
+async def websocket_endpoint_log(websocket: WebSocket):
+    await websocket.accept()
+
+    # Define the process for reading logs
+    async def log_reader(n=5):
+        # Create an output object for each log file we can find
+        log_files = os.listdir(os.getenv('VLS_DATA_PATH') + '/logs')
+        output = {log: {'log': []} for log in log_files}
+        for log in log_files:
+            log_file = f'{os.getenv("VLS_DATA_PATH")}/logs/{log}'
+            try:
+                with open(log_file, 'r') as file:
+                    for line in file.readlines()[-n:]:
+                        html_line = f'<p>{line}</p>'
+                        output[log]['log'].append(html_line)
+
+                    file.seek(0, os.SEEK_END)
+                    size = file.tell()
+                    ftype = 'b'
+
+                    if size // 1024 != 0:
+                        size = size / 1024
+                        ftype = 'kb'
+
+                    if size // 1024 != 0:
+                        size = size / 1024
+                        ftype = 'mb'
+
+                    if size // 1024 != 0:
+                        size = size / 1024
+                        ftype = 'gb'
+
+                    output[log]['size'] = size
+                    output[log]['size_type'] = ftype
+
+
+            except OSError:
+                with open(log_file, 'w') as file:
+                    pass
+
+        return output
+
+    try:
+        while True:
+            await asyncio.sleep(1)
+            logs = await log_reader(30)
+            await websocket.send_json(logs)
+    except Exception as e:
+        raise e
+    finally:
+        await websocket.close()
 
 
 @endpoints.get('/sql.html', response_class=HTMLResponse)
