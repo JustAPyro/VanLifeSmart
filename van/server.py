@@ -14,7 +14,6 @@ from fastapi.staticfiles import StaticFiles
 
 from core import heartbeat
 from sensors import activate_sensors
-from van.scheduling.endpoints import schedule_urls
 from van.scheduling.tools import scheduler, schedule_sensors
 from endpoints import endpoints, not_found_exception_handler
 from database import engine
@@ -69,7 +68,6 @@ async def lifespan(app: FastAPI):
                       name="Connect to the online server to upload/download data.")
 
     # Register all the subdomain routers
-    app.include_router(schedule_urls)
     app.include_router(endpoints)
 
     # Mount static files (html, css, js, etc)

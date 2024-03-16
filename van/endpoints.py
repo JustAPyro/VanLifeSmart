@@ -14,6 +14,7 @@ from fastapi import Depends
 from sqlalchemy.sql import text
 from models import GPSData, TomorrowIO
 import os
+from van.scheduling.tools import get_scheduler, schedule_info
 
 endpoints = APIRouter()
 template_path = os.path.abspath(f'{os.getenv("VLS_INSTALL")}/van/static/templates')
@@ -22,7 +23,7 @@ templates = Jinja2Templates(directory=template_path)
 
 @endpoints.get('/logs.html', response_class=HTMLResponse)
 async def log_page(request: Request):
-    log_files = os.listdir(os.getenv('VLS_DATA_PATH')+'/logs')
+    log_files = os.listdir(os.getenv('VLS_DATA_PATH') + '/logs')
     log_sizes = []
 
     for log in log_files:
@@ -161,6 +162,22 @@ async def tio_page(request: Request, database: Annotated[Session, Depends(get_db
             'data': data
         }
     )
+
+
+@endpoints.get('schedule.html', response_class=HTMLResponse)
+async def schedule_page(request: Request, scheduler=Depends(get_scheduler)):
+    jobs = scheduler.get_jobs()
+    return templates.TemplateResponse(
+        request=request,
+        name="schedule.html",
+        context={'schedules': [schedule_info(job) for job in jobs]}
+    )
+
+
+@endpoints.post('schedule.json', response_class=JSONResponse)
+async def change_schedule_json(request: Request):
+    print(request)
+    return 'hi'
 
 
 # This is imported and loaded in the main server.py code as an exception handler
