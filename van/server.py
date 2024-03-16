@@ -22,7 +22,8 @@ from database import engine
 # Refuse to start if these environment variables aren't set
 required_environment = (
     'VLS_INSTALL',  # Install location
-    'VLS_DATA_PATH'  # Location of logs and local database
+    'VLS_DATA_PATH',  # Location of logs and local database
+    'TOMORROW_IO_KEY',  # API Key for weather information
 )
 
 # This maps loggers to output files

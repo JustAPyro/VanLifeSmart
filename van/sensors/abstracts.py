@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import Optional
+
 from models import Base
 
 
@@ -16,7 +18,7 @@ class Sensor(ABC):
         pass
 
     @abstractmethod
-    def get_data(self) -> Base:
+    def get_data(self) -> Optional[Base]:
         pass
 
 

@@ -22,18 +22,30 @@ def schedule_sensors(sensors: list[Sensor], database: Engine):
     """This takes a list of sensors and records their output to the provided database."""
 
     # Methodology for scheduling sensors
-    def schedule_sensor(s: Sensor, db: Engine):
+    async def schedule_sensor(s: Sensor, db: Engine):
         # Get the start time so we can check runtime
         start = timeit.default_timer()
 
         # Create a database session and commit the data
         with Session(db) as session:
-            session.add(s.get_data())
-            session.commit()
+            data = s.get_data()
 
-        # Calculate and log the time to get data and commit
-        sensor_time = timeit.default_timer() - start
-        logger.info(f'Recorded {s.data_type} sensor data in {sensor_time}')
+            if data:
+                session.add(data)
+                session.commit()
+
+                # Calculate and log the time to get data and commit
+                sensor_time = timeit.default_timer() - start
+                logger.info(f'Recorded {s.data_type} sensor data in {sensor_time}')
+                return
+
+            # Calculate and log the time to get data and commit
+            sensor_time = timeit.default_timer() - start
+            logger.info(f'Failed to record {s.data_type} sensor data in {sensor_time}')
+
+
+
+
 
     # Now that we've defined the method that logs the data,
     # We create a partial function by binding the above method to the database and each sensor

@@ -21,9 +21,7 @@ def create_tio(user: User,
     # TomorrowIO (Weather)
     # https: // docs.tomorrow.io / reference / realtime - weather
     if load_tio:
-        response = requests.get('https://api.tomorrow.io/v4/weather/realtime'
-                                f'?location={latitude},{longitude}'
-                                f'&apikey={os.environ["TOMORROWAPI"]}')
+
         time = response.json()['data']['time']
         tio_data = response.json()['data']['values']
         tio = TomorrowIO(

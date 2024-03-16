@@ -22,7 +22,7 @@ engine = create_engine(
 Base.metadata.create_all(engine)
 
 
-async def get_db():
+def get_db():
     database = Session(engine)
     try:
         yield database

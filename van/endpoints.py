@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from fastapi import Depends
 from sqlalchemy.sql import text
-from models import GPSData
+from models import GPSData, TomorrowIO
 import os
 
 endpoints = APIRouter()
@@ -137,6 +137,25 @@ async def gps_page(request: Request, database: Annotated[Session, Depends(get_db
         name='data.html',
         context={
             'data_type': 'GPS',
+            'all_headers': all_headers,
+            'headers': headers,
+            'data': data
+        }
+    )
+
+
+@endpoints.get('/tio.html', response_class=HTMLResponse)
+async def tio_page(request: Request, database: Annotated[Session, Depends(get_db)]):
+    tio_query = database.query(TomorrowIO)
+    all_headers = TomorrowIO.__table__.columns.keys()
+    print(all_headers)
+    headers = TomorrowIO.__table__.columns.keys()
+    data = [row.as_list() for row in tio_query.all()]
+    return templates.TemplateResponse(
+        request=request,
+        name='data.html',
+        context={
+            'data_type': 'TomorrowIO',
             'all_headers': all_headers,
             'headers': headers,
             'data': data

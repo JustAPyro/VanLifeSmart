@@ -34,7 +34,7 @@ class GPS(Sensor):
     def data_type(self):
         return 'gps'
 
-    def get_data(self) -> GPSData:
+    def get_data(self) -> Optional[GPSData]:
         if self.manager:
             return GPSData(**self.manager.get_dict([
                 'latitude',
