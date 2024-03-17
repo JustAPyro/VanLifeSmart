@@ -25,13 +25,15 @@ templates = Jinja2Templates(directory=template_path)
 @endpoints.get('/', response_class=HTMLResponse)
 async def control_page(request: Request, database=Depends(get_db)):
     last_weather: TomorrowIO = database.query(TomorrowIO).order_by(desc('utc_time')).first()
+    last_gps = database.query(GPSData).order_by(desc('utc_time')).first()
+
     weather_location = f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}'
 
     geolocator = Nominatim(user_agent=__name__)
     weather_location = geolocator.reverse(f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}',
                                           zoom=10)
     weather_time = last_weather.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
-
+    gps_time =last_gps.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
 
     print(weather_location)
     return templates.TemplateResponse(
@@ -40,7 +42,8 @@ async def control_page(request: Request, database=Depends(get_db)):
         context={'last_weather': last_weather.as_dict(),
                  'weather_location': weather_location,
                  'weather_time': weather_time,
-                 'last_gps': database.query(GPSData).order_by(desc('utc_time')).first().as_dict()}
+                 'last_gps': last_gps.as_dict(),
+                 'gps_time': gps_time}
     )
 
 
