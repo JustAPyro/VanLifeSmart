@@ -22,8 +22,16 @@ template_path = os.path.abspath(f'{os.getenv("VLS_INSTALL")}/van/static/template
 templates = Jinja2Templates(directory=template_path)
 
 
+@endpoints.get('/control.html', response_class=HTMLResponse)
+async def control_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name='control.html'
+    )
+
+
 @endpoints.get('/', response_class=HTMLResponse)
-async def control_page(request: Request, database=Depends(get_db)):
+async def hub_page(request: Request, database=Depends(get_db)):
     last_weather: TomorrowIO = database.query(TomorrowIO).order_by(desc('utc_time')).first()
     last_gps = database.query(GPSData).order_by(desc('utc_time')).first()
 
@@ -33,12 +41,12 @@ async def control_page(request: Request, database=Depends(get_db)):
     weather_location = geolocator.reverse(f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}',
                                           zoom=10)
     weather_time = last_weather.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
-    gps_time =last_gps.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
+    gps_time = last_gps.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
 
     print(weather_location)
     return templates.TemplateResponse(
         request=request,
-        name='control.html',
+        name='hub.html',
         context={'last_weather': last_weather.as_dict(),
                  'weather_location': weather_location,
                  'weather_time': weather_time,
@@ -190,7 +198,7 @@ async def tio_page(request: Request, database: Annotated[Session, Depends(get_db
     )
 
 
-@endpoints.get('schedule.html', response_class=HTMLResponse)
+@endpoints.get('/schedule.html', response_class=HTMLResponse)
 async def schedule_page(request: Request, scheduler=Depends(get_scheduler)):
     jobs = scheduler.get_jobs()
     return templates.TemplateResponse(
