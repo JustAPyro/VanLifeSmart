@@ -1,13 +1,14 @@
 import asyncio
 import timeit
 from typing import Annotated
-
+from geopy.geocoders import Nominatim
 from fastapi import APIRouter, Form
 from fastapi import Request
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.websockets import WebSocket
 from fastapi.exceptions import HTTPException
+from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from database import get_db
 from fastapi import Depends
@@ -19,6 +20,28 @@ from van.scheduling.tools import get_scheduler, schedule_info
 endpoints = APIRouter()
 template_path = os.path.abspath(f'{os.getenv("VLS_INSTALL")}/van/static/templates')
 templates = Jinja2Templates(directory=template_path)
+
+
+@endpoints.get('/', response_class=HTMLResponse)
+async def control_page(request: Request, database=Depends(get_db)):
+    last_weather: TomorrowIO = database.query(TomorrowIO).order_by(desc('utc_time')).first()
+    weather_location = f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}'
+
+    geolocator = Nominatim(user_agent=__name__)
+    weather_location = geolocator.reverse(f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}',
+                                          zoom=10)
+    weather_time = last_weather.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
+
+
+    print(weather_location)
+    return templates.TemplateResponse(
+        request=request,
+        name='control.html',
+        context={'last_weather': last_weather.as_dict(),
+                 'weather_location': weather_location,
+                 'weather_time': weather_time,
+                 'last_gps': database.query(GPSData).order_by(desc('utc_time')).first().as_dict()}
+    )
 
 
 @endpoints.get('/logs.html', response_class=HTMLResponse)
