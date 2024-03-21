@@ -3,12 +3,9 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
-from models import Base
-
-load_dotenv()
-db = SQLAlchemy(model_class=Base)
-
+from database import db
+from models import Base, User
+from flask_login import LoginManager
 
 def create_app():
     application = Flask(__name__)
@@ -22,9 +19,16 @@ def create_app():
     with application.app_context():
         db.create_all()
 
+    login_manager = LoginManager()
+    login_manager.login_view = 'endpoints.sign_in_page'
+    login_manager.init_app(application)
+
+    @login_manager.user_loader
+    def load_user(id: int):
+        return db.session.query(User).get(id)
+
     return application
 
 
-app = create_app()
 if __name__ == '__main__':
-    app.run(debug=True)
+    create_app().run()

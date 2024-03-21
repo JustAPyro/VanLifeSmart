@@ -27,7 +27,7 @@ class User(Base, UserMixin):
     username: Mapped[str] = mapped_column(String(36))
     password: Mapped[str] = mapped_column(String(150))
     created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
-    last_activity: Mapped[datetime.datetime]
+    last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
 
 
 """
