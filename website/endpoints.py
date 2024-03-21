@@ -62,6 +62,19 @@ def sign_up_page():
     return render_template('sign-up.html')
 
 
-@endpoints.route('/user/friends.html')
+@endpoints.route('/user/friends.html', methods=['GET', 'POST'])
+@login_required
 def user_friends():
-    return render_template('friends.html')
+    if request.method == 'POST':
+        uname = request.form.get('username')
+        user = db.session.query(User).filter_by(username=uname).first()
+        if not user:
+            flash('Sorry, no users have this username.', category='error')
+        if user:
+            flash(f'Followed {uname}', category='success')
+            current_user.follows.append(user)
+            db.session.commit()
+
+        return redirect(url_for('endpoints.user_friends'))
+
+    return render_template('friends.html', following=current_user.follows)

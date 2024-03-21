@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 import time
 from sqlalchemy.types import TypeDecorator
 import datetime
-from sqlalchemy import func, create_engine, ForeignKey, String
+from sqlalchemy import func, create_engine, ForeignKey, String, Column, Table
 from sqlalchemy import DOUBLE
 from flask_login import UserMixin
 
@@ -20,6 +20,14 @@ class Base(DeclarativeBase):
         return [getattr(self, c.name) for c in self.__table__.columns]
 
 
+following = Table(
+    'following',
+    Base.metadata,
+    Column('subject', ForeignKey('user.id')),
+    Column('object', ForeignKey('user.id'))
+)
+
+
 class User(Base, UserMixin):
     __tablename__ = 'user'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -29,6 +37,11 @@ class User(Base, UserMixin):
     created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
 
+    follows = relationship('User',
+                           secondary=following,
+                           primaryjoin=(following.c.object == id),
+                           secondaryjoin=(following.c.subject == id),
+                           backref='following')
 
 """
 class DHTData(Base):
@@ -46,7 +59,6 @@ class DHTData(Base):
     humidity: Mapped[float]
 
 """
-
 
 
 class GPSData(Base):
