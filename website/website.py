@@ -1,46 +1,29 @@
-from flask.templating import render_template
-from flask import Flask, request, redirect, url_for, session, flash
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from models import Base
+import os
+from dotenv import load_dotenv
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret'
-
-
-@app.route('/')
-def hello_world():
-    return render_template("landing.html")
+load_dotenv()
+db = SQLAlchemy(model_class=Base)
 
 
-@app.route('/auth/sign-in.html', methods=['POST', 'GET'])
-def sign_in_page():
-    return render_template("sign-in.html")
+
+def create_app():
+    application = Flask(__name__)
+    application.config['SECRET_KEY'] = 'secret'
+    application.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('VLS_DATABASE_URI')
+    db.init_app(application)
+
+    from endpoints import endpoints
+    application.register_blueprint(endpoints, url_prefix='/')
+
+    with application.app_context():
+        db.create_all()
+
+    return application
 
 
-@app.route('/auth/sign-up.html', methods=['POST', 'GET'])
-def sign_up_page():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        password_confirm = request.form.get('password_confirm')
-
-        if len(name) < 2:
-            flash('Name must be greater than 1 character.', category='error')
-        elif len(email) < 4:
-            flash('Email must be greater than 3 characters.', category='error')
-        elif password != password_confirm:
-            flash('Password does not match confirmation', category='error')
-        elif len(password) < 7:
-            flash('Password must be at least 7 characters.', category='error')
-        else:
-            flash('Account created', category='success')
-    return render_template('sign-up.html')
-
-
-@app.route('/user/<user_id>/friends.html')
-def user_friends(user_id: int):
-    return render_template('friends.html')
-
-
+app = create_app()
 if __name__ == '__main__':
     app.run(debug=True)
