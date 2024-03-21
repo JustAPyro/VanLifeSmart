@@ -1,20 +1,23 @@
 import asyncio
+import os
 import timeit
 from typing import Annotated
-from geopy.geocoders import Nominatim
+
 from fastapi import APIRouter, Form
+from fastapi import Depends
 from fastapi import Request
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from fastapi.exceptions import HTTPException
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.websockets import WebSocket
-from fastapi.exceptions import HTTPException
+from geopy.exc import GeocoderUnavailable
+from geopy.geocoders import Nominatim
 from sqlalchemy import desc
 from sqlalchemy.orm import Session
-from database import get_db
-from fastapi import Depends
 from sqlalchemy.sql import text
+
+from database import get_db
 from models import GPSData, TomorrowIO
-import os
 from van.scheduling.tools import get_scheduler, schedule_info
 
 endpoints = APIRouter()
@@ -30,20 +33,25 @@ async def control_page(request: Request):
     )
 
 
-@endpoints.get('/', response_class=HTMLResponse)
+@endpoints.get('/hub.html', response_class=HTMLResponse)
 async def hub_page(request: Request, database=Depends(get_db)):
     last_weather: TomorrowIO = database.query(TomorrowIO).order_by(desc('utc_time')).first()
     last_gps = database.query(GPSData).order_by(desc('utc_time')).first()
 
     weather_location = f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}'
-
     geolocator = Nominatim(user_agent=__name__)
-    weather_location = geolocator.reverse(f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}',
-                                          zoom=10)
+
+    tio_count = database.query(TomorrowIO).count()
+    gps_count = database.query(GPSData).count()
+    try:
+        weather_location = geolocator.reverse(f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}',
+                                              zoom=10)
+    except GeocoderUnavailable:
+        pass  # Just continue and use the original weather location
+
     weather_time = last_weather.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
     gps_time = last_gps.utc_time.astimezone().strftime("%m/%d/%Y, %I:%M:%S %p")
 
-    print(weather_location)
     return templates.TemplateResponse(
         request=request,
         name='hub.html',
@@ -51,7 +59,9 @@ async def hub_page(request: Request, database=Depends(get_db)):
                  'weather_location': weather_location,
                  'weather_time': weather_time,
                  'last_gps': last_gps.as_dict(),
-                 'gps_time': gps_time}
+                 'gps_time': gps_time,
+                 'tio_count': tio_count,
+                 'gps_count': gps_count}
     )
 
 
@@ -200,6 +210,19 @@ async def tio_page(request: Request, database: Annotated[Session, Depends(get_db
 
 @endpoints.get('/schedule.html', response_class=HTMLResponse)
 async def schedule_page(request: Request, scheduler=Depends(get_scheduler)):
+    jobs = scheduler.get_jobs()
+    return templates.TemplateResponse(
+        request=request,
+        name="schedule.html",
+        context={'schedules': [schedule_info(job) for job in jobs]}
+    )
+
+
+@endpoints.post('/schedule.json', response_class=HTMLResponse)
+async def schedule_json(request: Request,
+                        scheduler=Depends(get_scheduler),
+                        scheduler_id=Annotated[str, Form()],
+                        new_interval=Annotated[str, Form()]):
     jobs = scheduler.get_jobs()
     return templates.TemplateResponse(
         request=request,

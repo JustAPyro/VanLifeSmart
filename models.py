@@ -18,7 +18,22 @@ class Base(DeclarativeBase):
     def as_list(self):
         return [getattr(self, c.name) for c in self.__table__.columns]
 
+"""
+class DHTData(Base):
+    __tablename__ = 'tio'
 
+    id: Mapped[int] = mapped_column(primary_key=True)
+    sensor_name: Mapped[str]
+
+    # The GPS location of the reading
+    gps_id: Mapped[int] = mapped_column(ForeignKey("gps.id"))
+    gps_data: Mapped["GPSData"] = relationship(back_populates="tio")
+
+    # DHT records temperature and humidity
+    temperature: Mapped[float]
+    humidity: Mapped[float]
+
+"""
 class GPSData(Base):
     __tablename__ = 'gps'
 
@@ -80,9 +95,3 @@ class TomorrowIO(Base):
     wind_direction: Mapped[Optional[float]]
     wind_gust: Mapped[Optional[float]]
     wind_speed: Mapped[Optional[float]]
-
-
-
-
-
-

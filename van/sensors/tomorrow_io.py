@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 import requests
-
+from requests.exceptions import ConnectionError
 from models import Base, GPSData, TomorrowIO
 from van.sensors.abstracts import Sensor
 
@@ -16,13 +16,16 @@ class TIO(Sensor):
         # Get the most recent GPSData from the database
         gps: GPSData = self.gps.get_data()
 
-        response = requests.get(
-            url=f'https://api.tomorrow.io/v4/weather/realtime'
-                f'?location={gps.latitude},{gps.longitude}'
-                f'&apikey={os.getenv("TOMORROW_IO_KEY")}',
-            headers={
-                "accept": "application/json"}
-        )
+        try:
+            response = requests.get(
+                url=f'https://api.tomorrow.io/v4/weather/realtime'
+                    f'?location={gps.latitude},{gps.longitude}'
+                    f'&apikey={os.getenv("TOMORROW_IO_KEY")}',
+                headers={
+                    "accept": "application/json"}
+            )
+        except ConnectionError:
+            return None
 
         # TODO: Handle case; No GPS Points
         # TODO: Handle case; GPS points are old
@@ -31,6 +34,7 @@ class TIO(Sensor):
             return None
 
         tio = response.json()['data']['values']
+        print(tio)
         return TomorrowIO(
             gps_data=gps,
             invalid=self.development,
