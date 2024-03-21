@@ -7,6 +7,7 @@ from sqlalchemy.types import TypeDecorator
 import datetime
 from sqlalchemy import func, create_engine, ForeignKey, String
 from sqlalchemy import DOUBLE
+from flask_login import UserMixin
 
 
 # I'm not sure if this is necessary, but as of 3/13/24 the sqlalchemy quickstart recommends it
@@ -17,6 +18,17 @@ class Base(DeclarativeBase):
 
     def as_list(self):
         return [getattr(self, c.name) for c in self.__table__.columns]
+
+
+class User(Base, UserMixin):
+    __tablename__ = 'user'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(String(320))
+    username: Mapped[str] = mapped_column(String(36))
+    password: Mapped[str] = mapped_column(String(150))
+    created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    last_activity: Mapped[datetime.datetime]
+
 
 """
 class DHTData(Base):
@@ -34,6 +46,9 @@ class DHTData(Base):
     humidity: Mapped[float]
 
 """
+
+
+
 class GPSData(Base):
     __tablename__ = 'gps'
 

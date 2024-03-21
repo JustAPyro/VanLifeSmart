@@ -10850,7 +10850,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin-top: 50px;
+  padding-top: 50px;
 }
 #layoutAuthentication #layoutAuthentication_content {
   min-width: 0;
