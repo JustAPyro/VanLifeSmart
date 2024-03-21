@@ -1,12 +1,13 @@
+import os
+
+from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+
 from models import Base
-import os
-from dotenv import load_dotenv
 
 load_dotenv()
 db = SQLAlchemy(model_class=Base)
-
 
 
 def create_app():

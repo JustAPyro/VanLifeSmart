@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 import time
 from sqlalchemy.types import TypeDecorator
 import datetime
-from sqlalchemy import func, create_engine, ForeignKey
+from sqlalchemy import func, create_engine, ForeignKey, String
 from sqlalchemy import DOUBLE
 
 
@@ -48,7 +48,7 @@ class GPSData(Base):
     altitude: Mapped[float]
 
     # Quality of results information
-    fix_quality: Mapped[str]
+    fix_quality: Mapped[str] = mapped_column(String(10))
     satellites_used: Mapped[int]
     hdop: Mapped[float]
 
