@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.x
+import requests
 from dotenv import load_dotenv
 
 import logging
@@ -11,12 +12,13 @@ import uvicorn
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy.orm import Session
 
-from core import heartbeat
 from sensors import activate_sensors
 from van.scheduling.tools import scheduler, schedule_sensors
 from endpoints import endpoints, not_found_exception_handler
 from database import engine
+from models import GPSData, TomorrowIO
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -31,6 +33,20 @@ logging_map = {
     'traffic.txt': 'uvicorn.access',
     'apscheduler.txt': 'apscheduler'
 }
+
+
+def heartbeat():
+    with Session(engine) as session:
+        gps_data = {'headers': GPSData.__table__.columns.keys(),
+                    'data': [data.as_list() for data in session.query(GPSData).all()]}
+        try:
+            x = requests.post('http://127.0.0.1:5000/api/heartbeat.json',
+                    json={'email': 'luke.m.hanna@gmail.com', 'gps': gps_data})
+            for gps_id in x.json()['gps']:
+                session.query(GPSData).filter_by(id=gps_id).delete()
+            session.commit()
+        except ConnectionError as e:
+            pass
 
 
 @asynccontextmanager
@@ -60,10 +76,8 @@ async def lifespan(app: FastAPI):
     sensors = activate_sensors(development=True)
     schedule_sensors(sensors, engine)
 
-    payload = {sensor: [] for sensor in sensors}
     # schedule the heartbeat call
-    heartbeat_call = partial(heartbeat, payload)
-    scheduler.add_job(heartbeat_call, trigger='interval', seconds=30,
+    scheduler.add_job(heartbeat, trigger='interval', seconds=30,
                       id='heartbeat',
                       name="Connect to the online server to upload/download data.")
 

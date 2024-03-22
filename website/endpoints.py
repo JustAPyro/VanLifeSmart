@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
-from models import User
+from models import User, GPSData
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
+from datetime import datetime
 from flask_login import login_user, login_required, logout_user, current_user
 
 endpoints = Blueprint('endpoints', __name__)
@@ -60,6 +61,34 @@ def sign_up_page():
             login_user(new_user)
             return redirect(url_for('endpoints.user_friends'))
     return render_template('sign-up.html')
+
+
+@endpoints.route('/api/heartbeat.json', methods=['POST'])
+def receive_heartbeat():
+    data = request.get_json()
+    user = db.session.query(User).filter_by(email=data['email']).first()
+    if not user:
+        return None
+    
+    received = {'gps': []}
+
+    gps_headers = data['gps']['headers']
+    all_gps_data = data['gps']['data']
+    for gps_data in all_gps_data:
+        # Create a dict with headers and values for this row
+        gps_dict = dict(zip(gps_headers, gps_data)) 
+        received['gps'].append(gps_dict['id'])
+        gps_dict.pop('id')
+        gps_dict['owner_id'] = user.id
+        gps_dict['utc_time'] = datetime.strptime(gps_dict['utc_time'], '%Y-%m-%d %H:%M:%S')
+        for key in gps_dict.keys():
+            if gps_dict[key] == 'None':
+                gps_dict[key] = None
+        gps = GPSData(**gps_dict)
+        print(gps)
+        db.session.add(gps)
+    db.session.commit()
+    return received
 
 
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])

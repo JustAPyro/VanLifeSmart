@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import Optional, List
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 import time
@@ -13,11 +13,12 @@ from flask_login import UserMixin
 # I'm not sure if this is necessary, but as of 3/13/24 the sqlalchemy quickstart recommends it
 # https://docs.sqlalchemy.org/en/20/orm/quickstart.html
 class Base(DeclarativeBase):
+
     def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 
     def as_list(self):
-        return [getattr(self, c.name) for c in self.__table__.columns]
+        return [str(getattr(self, c.name)) for c in self.__table__.columns]
 
 
 following = Table(
@@ -36,7 +37,7 @@ class User(Base, UserMixin):
     password: Mapped[str] = mapped_column(String(150))
     created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
-
+    gps_data: Mapped[List['GPSData']] = relationship(back_populates='owner')
     follows = relationship('User',
                            secondary=following,
                            primaryjoin=(following.c.object == id),
@@ -68,6 +69,9 @@ class GPSData(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     # Time of recording
     utc_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    # Owner
+    owner_id: Mapped[Optional[int]] = mapped_column(ForeignKey('user.id'))
+    owner: Mapped[Optional["User"]] = relationship(back_populates="gps_data")
 
     # Location information
     latitude: Mapped[float]
