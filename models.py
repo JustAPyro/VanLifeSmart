@@ -33,7 +33,7 @@ class Vehicle(Base):
     __tablename__ = 'vehicle'
     id: Mapped[int] = mapped_column(primary_key=True)
     last_heartbeat: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(String(36))
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     owner: Mapped['User'] = relationship(back_populates='vehicles') 
 
