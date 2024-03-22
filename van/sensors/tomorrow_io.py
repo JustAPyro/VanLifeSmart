@@ -34,7 +34,6 @@ class TIO(Sensor):
             return None
 
         tio = response.json()['data']['values']
-        print(tio)
         return TomorrowIO(
             gps_data=gps,
             invalid=self.development,

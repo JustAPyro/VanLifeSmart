@@ -15,6 +15,7 @@ def landing_page():
 
 @endpoints.route('/auth/sign-in.html', methods=['POST', 'GET'])
 def sign_in_page():
+    form = request.form
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -28,11 +29,12 @@ def sign_in_page():
                 flash('Incorrect email or password.', category='error')
         else:
             flash('Email does not exist.', category='error')
-    return render_template("sign-in.html")
+    return render_template("sign-in.html", form=form)
 
 
 @endpoints.route('/auth/sign-up.html', methods=['POST', 'GET'])
 def sign_up_page():
+    form = request.form
     if request.method == 'POST':
         name = request.form.get('name')
         username = request.form.get('username')
@@ -60,7 +62,7 @@ def sign_up_page():
             flash('Account created', category='success')
             login_user(new_user)
             return redirect(url_for('endpoints.user_friends'))
-    return render_template('sign-up.html')
+    return render_template('sign-up.html', form=form)
 
 
 @endpoints.route('/api/heartbeat.json', methods=['POST'])
@@ -85,10 +87,15 @@ def receive_heartbeat():
             if gps_dict[key] == 'None':
                 gps_dict[key] = None
         gps = GPSData(**gps_dict)
-        print(gps)
         db.session.add(gps)
     db.session.commit()
     return received
+
+
+@endpoints.route('/van/funmobile.html', methods=['GET'])
+@login_required
+def van_page():
+    return 'hi'
 
 
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])
