@@ -92,10 +92,10 @@ def receive_heartbeat():
     return received
 
 
-@endpoints.route('/van/funmobile.html', methods=['GET'])
+@endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
-def van_page():
-    return 'hi'
+def vehicle_page(vehicle_name: str):
+    return f'Hello! Welcome to {vehicle_name}\'s official page!'
 
 
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])
