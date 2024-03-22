@@ -29,6 +29,14 @@ following = Table(
 )
 
 
+class Vehicle(Base):
+    __tablename__ = 'vehicle'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    last_heartbeat: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    name: Mapped[str]
+    owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    owner: Mapped['User'] = relationship(back_populates='vehicles') 
+
 class User(Base, UserMixin):
     __tablename__ = 'user'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -36,6 +44,7 @@ class User(Base, UserMixin):
     username: Mapped[str] = mapped_column(String(36))
     password: Mapped[str] = mapped_column(String(150))
     created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    vehicles: Mapped[List['Vehicle']] = relationship(back_populates='owner')
     last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     gps_data: Mapped[List['GPSData']] = relationship(back_populates='owner')
     follows = relationship('User',
