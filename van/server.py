@@ -14,6 +14,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
+from urllib3.exceptions import MaxRetryError, NewConnectionError
 
 from sensors import activate_sensors
 from van.scheduling.tools import scheduler, schedule_sensors
@@ -26,6 +27,8 @@ required_environment = (
     'VLS_INSTALL',  # Install location
     'VLS_DATA_PATH',  # Location of logs and local database
     'TOMORROW_IO_KEY',  # API Key for weather information
+    'VLS_VEHICLE_NAME',
+    'VLS_VEHICLE_EMAIL',
 )
 
 # This maps loggers to output files
@@ -37,21 +40,66 @@ logging_map = {
 
 
 def heartbeat():
+    # Get the time of the next heartbeat
     heartbeat_job = scheduler.get_job('heartbeat')
     next_heartbeat = heartbeat_job.next_run_time.astimezone(pytz.utc).isoformat()
-    vehicle_name = 'Funmobile'  # TODO: Move this to environment
+
+    # Get the name of the vehicle and user data
+    vehicle_name = os.getenv('VLS_VEHICLE_NAME')
+    email = os.getenv('VLS_VEHICLE_EMAIL')
+
+    # Generate the data structure we send to the server
+    data = {
+        'email': email,
+        'vehicle_name': vehicle_name,
+        'next_heartbeat': next_heartbeat,
+        'database': {
+            # Here we also find and insert the column names for each dataset
+            'gps': {'headers': GPSData.__table__.columns.keys(), 'data': []},
+            'tio': {'headers': TomorrowIO.__table__.columns.keys()}
+        }
+    }
+
+    # This list provides names and model data tables
+    # For any tables we want to upload to the server
+    # TODO Autogenerate this list
+    upload = [
+        ('gps', GPSData),
+        ('tio', TomorrowIO)
+    ]
+
+    # TODO abort beforehand if no connection
+    # This packs the data from the table and names provided in the list
     with Session(engine) as session:
-        gps_data = {'headers': GPSData.__table__.columns.keys(),
-                    'data': [data.as_list() for data in session.query(GPSData).all()]}
-        try:
-            x = requests.post('http://127.0.0.1:5000/api/heartbeat.json',
-                              json={'email': 'luke.m.hanna@gmail.com', 'vehicle_name': vehicle_name, 'next_heartbeat': next_heartbeat, 'gps': gps_data})
-            if x.json():
-                for gps_id in x.json()['gps']:
-                    session.query(GPSData).filter_by(id=gps_id).delete()
-                session.commit()
-        except ConnectionError as e:
-            pass
+        for data_name, table in upload:
+            data['database'][data_name]['data'] = [
+                line.as_list() for line in session.query(table).all()
+            ]
+
+    # Now we try to send this all to the server
+    try:
+        response = requests.post(
+            url='http://127.0.0.1:5000/api/heartbeat.json',
+            json=data)
+
+        # Filter for responses that aren't 200
+        # TODO: We should differentiate between requests
+        if response.status_code != 200:
+            return
+
+        # Delete from local tables based
+        # the json we received back
+        json_back = response.json()
+        for data_name, table in upload:
+            for received_id in json_back['received'][data_name]:
+                session.query(table).filter_by(id=received_id).delete()
+
+        # Commit all the changes we made from the database
+        session.commit()
+
+        # TODO: We may want to do another handshake before we commit this delete
+    except requests.exceptions.ConnectionError as e:
+        return
 
 
 @asynccontextmanager

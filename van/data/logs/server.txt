@@ -1,5 +1,0 @@
-Application startup complete.
-Shutting down
-Waiting for application shutdown.
-Application shutdown complete.
-Finished server process [31248]

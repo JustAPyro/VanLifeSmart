@@ -36,7 +36,8 @@ class Vehicle(Base):
     next_expected_heartbeat: Mapped[Optional[datetime.datetime]]
     name: Mapped[str] = mapped_column(String(36))
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
-    owner: Mapped['User'] = relationship(back_populates='vehicles') 
+    owner: Mapped['User'] = relationship(back_populates='vehicles')
+
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
@@ -48,11 +49,13 @@ class User(Base, UserMixin):
     vehicles: Mapped[List['Vehicle']] = relationship(back_populates='owner')
     last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     gps_data: Mapped[List['GPSData']] = relationship(back_populates='owner')
+    tio_data: Mapped[List['TomorrowIO']] = relationship(back_populates='owner')
     follows = relationship('User',
                            secondary=following,
                            primaryjoin=(following.c.object == id),
                            secondaryjoin=(following.c.subject == id),
                            backref='following')
+
 
 """
 class DHTData(Base):
@@ -109,7 +112,10 @@ class TomorrowIO(Base):
 
     # id
     id: Mapped[int] = mapped_column(primary_key=True)
-    # owner
+    # Owner
+    owner_id: Mapped[Optional[int]] = mapped_column(ForeignKey('user.id'))
+    owner: Mapped[Optional["User"]] = relationship(back_populates="tio_data")
+
     utc_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
 
     invalid: Mapped[bool]
