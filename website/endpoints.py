@@ -67,17 +67,22 @@ def sign_up_page():
 
 @endpoints.route('/api/heartbeat.json', methods=['POST'])
 def receive_heartbeat():
+    # Get the data from the heartbeat
     data = request.get_json()
 
+    # Attempt to find a user with email provided, if none found issue malformed 400
     user = db.session.query(User).filter_by(email=data['email']).first()
     if not user:
         return Response(f'No user found under email provided ({data["email"]})', status=400)
 
+    # Attempt to find a vehicle with the name provided, if none found issue malformed 400
     vehicle = db.session.query(Vehicle).filter_by(name=data['vehicle_name']).first()
     if not vehicle:
         return Response(f'No vehicle found with name provided ({data["vehicle_name"]})', status=400)
     
+    # Update the vehicle heartbeat
     vehicle.last_heartbeat = datetime.now(timezone.utc)
+    vehicle.next_expected_heartbeat = datetime.fromisoformat(data['next_heartbeat'])
 
     received = {'gps': []}
 

@@ -7,6 +7,7 @@ import os
 from contextlib import asynccontextmanager
 from functools import partial
 from pathlib import Path
+import pytz
 
 import uvicorn
 
@@ -37,13 +38,14 @@ logging_map = {
 
 def heartbeat():
     heartbeat_job = scheduler.get_job('heartbeat')
+    next_heartbeat = heartbeat_job.next_run_time.astimezone(pytz.utc).isoformat()
     vehicle_name = 'Funmobile'  # TODO: Move this to environment
     with Session(engine) as session:
         gps_data = {'headers': GPSData.__table__.columns.keys(),
                     'data': [data.as_list() for data in session.query(GPSData).all()]}
         try:
             x = requests.post('http://127.0.0.1:5000/api/heartbeat.json',
-                              json={'email': 'luke.m.hanna@gmail.com', 'vehicle_name': vehicle_name, 'next_heartbeat': str(heartbeat_job.next_run_time), 'gps': gps_data})
+                              json={'email': 'luke.m.hanna@gmail.com', 'vehicle_name': vehicle_name, 'next_heartbeat': next_heartbeat, 'gps': gps_data})
             if x.json():
                 for gps_id in x.json()['gps']:
                     session.query(GPSData).filter_by(id=gps_id).delete()
