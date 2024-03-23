@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, flash, request, redirect, url_for
-from models import User, GPSData
+from flask import Blueprint, render_template, flash, request, redirect, url_for, Response
+from models import User, GPSData, Vehicle
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_login import login_user, login_required, logout_user, current_user
 
 endpoints = Blueprint('endpoints', __name__)
@@ -68,10 +68,17 @@ def sign_up_page():
 @endpoints.route('/api/heartbeat.json', methods=['POST'])
 def receive_heartbeat():
     data = request.get_json()
+
     user = db.session.query(User).filter_by(email=data['email']).first()
     if not user:
-        return 'Error: No user provided':
+        return Response(f'No user found under email provided ({data["email"]})', status=400)
+
+    vehicle = db.session.query(Vehicle).filter_by(name=data['vehicle_name']).first()
+    if not vehicle:
+        return Response(f'No vehicle found with name provided ({data["vehicle_name"]})', status=400)
     
+    vehicle.last_heartbeat = datetime.now(timezone.utc)
+
     received = {'gps': []}
 
     gps_headers = data['gps']['headers']

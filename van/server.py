@@ -18,7 +18,7 @@ from sensors import activate_sensors
 from van.scheduling.tools import scheduler, schedule_sensors
 from endpoints import endpoints, not_found_exception_handler
 from database import engine
-from models import GPSData, TomorrowIO
+from models import GPSData, TomorrowIO, Vehicle
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -37,12 +37,13 @@ logging_map = {
 
 def heartbeat():
     heartbeat_job = scheduler.get_job('heartbeat')
+    vehicle_name = 'Funmobile'  # TODO: Move this to environment
     with Session(engine) as session:
         gps_data = {'headers': GPSData.__table__.columns.keys(),
                     'data': [data.as_list() for data in session.query(GPSData).all()]}
         try:
             x = requests.post('http://127.0.0.1:5000/api/heartbeat.json',
-                              json={'email': 'luke.m.hanna@gmail.com', 'next_heartbeat': str(heartbeat_job.next_run_time), 'gps': gps_data})
+                              json={'email': 'luke.m.hanna@gmail.com', 'vehicle_name': vehicle_name, 'next_heartbeat': str(heartbeat_job.next_run_time), 'gps': gps_data})
             if x.json():
                 for gps_id in x.json()['gps']:
                     session.query(GPSData).filter_by(id=gps_id).delete()
