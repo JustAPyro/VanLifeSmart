@@ -70,7 +70,7 @@ def receive_heartbeat():
     data = request.get_json()
     user = db.session.query(User).filter_by(email=data['email']).first()
     if not user:
-        return None
+        return 'Error: No user provided':
     
     received = {'gps': []}
 

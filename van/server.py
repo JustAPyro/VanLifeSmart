@@ -36,15 +36,17 @@ logging_map = {
 
 
 def heartbeat():
+    heartbeat_job = scheduler.get_job('heartbeat')
     with Session(engine) as session:
         gps_data = {'headers': GPSData.__table__.columns.keys(),
                     'data': [data.as_list() for data in session.query(GPSData).all()]}
         try:
             x = requests.post('http://127.0.0.1:5000/api/heartbeat.json',
-                    json={'email': 'luke.m.hanna@gmail.com', 'gps': gps_data})
-            for gps_id in x.json()['gps']:
-                session.query(GPSData).filter_by(id=gps_id).delete()
-            session.commit()
+                              json={'email': 'luke.m.hanna@gmail.com', 'next_heartbeat': str(heartbeat_job.next_run_time), 'gps': gps_data})
+            if x.json():
+                for gps_id in x.json()['gps']:
+                    session.query(GPSData).filter_by(id=gps_id).delete()
+                session.commit()
         except ConnectionError as e:
             pass
 
