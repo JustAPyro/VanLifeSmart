@@ -141,9 +141,9 @@ def receive_heartbeat():
 @login_required
 def vehicle_page(vehicle_name: str):
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
-    return (f'Hello! Welcome to {vehicle_name}\'s official page!'
-            f'Last connected at: {vehicle.last_heartbeat}')
-
+    return render_template(
+        'root_sidebar.html'
+    )
 
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])
 @login_required

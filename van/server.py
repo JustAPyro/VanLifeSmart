@@ -79,13 +79,14 @@ def heartbeat():
     # Now we try to send this all to the server
     try:
         response = requests.post(
-            url='http://127.0.0.1:5000/api/heartbeat.json',
+            url='http://justapyr0.pythonanywhere.com/api/heartbeat.json',
             json=data)
 
         # Filter for responses that aren't 200
         # TODO: We should differentiate between requests
         if response.status_code != 200:
-            return
+            print(response.status_code)
+            print(response.content)
 
         # Delete from local tables based
         # the json we received back
