@@ -140,9 +140,33 @@ def receive_heartbeat():
 @endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
 def vehicle_page(vehicle_name: str):
+    permissions = {
+        'view_connected': True,
+        'view_heartbeat': True
+    }
+
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+    context = {}
+
+    # If permission
+    if permissions['view_connected']:
+        if vehicle.next_expected_heartbeat <= datetime.utcnow():
+            context['connected'] = False
+        else:
+            context['connected'] = True
+
+    if permissions['view_heartbeat']:
+        context['heartbeat'] = {
+            'last': vehicle.last_heartbeat,
+            'expected': vehicle.next_expected_heartbeat,
+            'now': datetime.utcnow()
+        }
+
+
     return render_template(
-        'root_sidebar.html'
+        'vehicle/home.html',
+        vehicle=vehicle,
+        **context
     )
 
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])

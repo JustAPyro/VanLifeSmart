@@ -1,0 +1,29 @@
+{% extends "root_sidebar.html" %}
+
+{% block title %}{{vehicle.name}}{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">{{vehicle.name}}
+    {% if connected == true %}
+        <span class="badge bg-success">Connected</span>
+    {% elif connected == false %}
+        <span class="badge bg-danger">Disconnected</span>
+    {% endif %}
+    </h1>
+    <div class="row">
+        {% if heartbeat %}
+        <div class="col-xl-3 col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-heart me-1"></i>
+                    Heartbeat
+                </div>
+                <div class="card-body">Primary Card</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

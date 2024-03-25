@@ -79,7 +79,8 @@ def heartbeat():
     # Now we try to send this all to the server
     try:
         response = requests.post(
-            url='http://justapyr0.pythonanywhere.com/api/heartbeat.json',
+            #url='http://justapyr0.pythonanywhere.com/api/heartbeat.json',
+            url='http://127.0.0.1:5000/api/heartbeat.json',
             json=data)
 
         # Filter for responses that aren't 200
