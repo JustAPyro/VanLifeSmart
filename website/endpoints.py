@@ -150,15 +150,14 @@ def vehicle_page(vehicle_name: str):
 
     # If permission
     if permissions['view_connected']:
-        if vehicle.next_expected_heartbeat <= datetime.utcnow():
-            context['connected'] = False
-        else:
-            context['connected'] = True
+        # If now is sooner than the next heartbeat, we assumed connection is valid
+        context['connected'] = vehicle.next_expected_heartbeat > datetime.utcnow()
 
     if permissions['view_heartbeat']:
         context['heartbeat'] = {
+            'period': vehicle.next_expected_heartbeat - vehicle.last_heartbeat,
             'last': vehicle.last_heartbeat,
-            'expected': vehicle.next_expected_heartbeat,
+            'next': vehicle.next_expected_heartbeat,
             'now': datetime.utcnow()
         }
 

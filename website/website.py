@@ -25,7 +25,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id: int):
-        return db.session.query(User).get(id)
+        return db.session.get(User, id)
 
     return application
 
