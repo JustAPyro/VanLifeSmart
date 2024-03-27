@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from database import db
+from website.database import db
 from models import Base, User
 from flask_login import LoginManager
 
@@ -13,7 +13,7 @@ def create_app():
     application.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('VLS_DATABASE_URI')
     db.init_app(application)
 
-    from endpoints import endpoints
+    from website.endpoints import endpoints
     application.register_blueprint(endpoints, url_prefix='/')
 
     with application.app_context():

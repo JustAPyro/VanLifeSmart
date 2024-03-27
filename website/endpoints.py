@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, Response
 from models import User, GPSData, Vehicle, TomorrowIO
 from werkzeug.security import generate_password_hash, check_password_hash
-from database import db
+from website.database import db
 from datetime import datetime, timezone
 from flask_login import login_user, login_required, logout_user, current_user
 
@@ -149,13 +149,15 @@ def vehicle_page(vehicle_name: str):
     context = {}
 
     # If permission
-    if permissions['view_connected']:
+    if permissions['view_connected'] and vehicle.next_expected_heartbeat:
         # If now is sooner than the next heartbeat, we assumed connection is valid
         context['connected'] = vehicle.next_expected_heartbeat > datetime.utcnow()
+    # TODO: If the database is new this can crash
+    if vehicle.last_heartbeat and vehicle.next_expected_heartbeat:
+        context['period'] = vehicle.next_expected_heartbeat - vehicle.last_heartbeat
 
     if permissions['view_heartbeat']:
         context['heartbeat'] = {
-            'period': vehicle.next_expected_heartbeat - vehicle.last_heartbeat,
             'last': vehicle.last_heartbeat,
             'next': vehicle.next_expected_heartbeat,
             'now': datetime.utcnow()

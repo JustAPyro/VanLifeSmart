@@ -16,10 +16,10 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from urllib3.exceptions import MaxRetryError, NewConnectionError
 
-from sensors import activate_sensors
+from van.sensors import activate_sensors
 from van.scheduling.tools import scheduler, schedule_sensors
-from endpoints import endpoints, not_found_exception_handler
-from database import engine
+from van.endpoints import endpoints, not_found_exception_handler
+from van.database import engine
 from models import GPSData, TomorrowIO, Vehicle
 
 # Refuse to start if these environment variables aren't set

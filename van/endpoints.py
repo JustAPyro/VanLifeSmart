@@ -16,7 +16,7 @@ from sqlalchemy import desc
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 
-from database import get_db
+from van.database import get_db
 from models import GPSData, TomorrowIO
 from van.scheduling.tools import get_scheduler, schedule_info
 

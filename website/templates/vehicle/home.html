@@ -39,8 +39,10 @@
                     {% endif %}
                     <hr/>
                     <p>
+                        {% if last in heartbeat %}
                         <b>Last: </b> {{heartbeat.last.strftime('%I:%M:%S %p') }}<br/>
                         <b>Next: </b> {{heartbeat.next.strftime('%I:%M:%S %p') }}
+                        {% endif %}
                     </p>
                 </div>
                 <div class="card-footer">

@@ -1,11 +1,11 @@
-{% extends "old_header.html" %}
+{% extends "root_header.html" %}
 {% block title %}Home{% endblock %}
 
 {% block css %}
 <link href="{{ url_for('static', filename='css/landing.css') }}" rel="stylesheet" />
 {% endblock %}
 
-{% block content %}
+{% block inner_content %}
   <!-- Header-->
 <body id="page-top">
         <header class="masthead text-center text-black">
