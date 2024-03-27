@@ -3,3 +3,6 @@ Funmobile.iml
 /.env
 vanhub
 /playground.py
+__pycache__
+venv
+instance/
