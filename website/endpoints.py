@@ -168,6 +168,16 @@ def vehicle_page(vehicle_name: str):
         **context
     )
 
+@endpoints.route('/vehicle/<vehicle_name>/heartbeat.html')
+@login_required
+def vehicle_heartbeat_page(vehicle_name: str):
+    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+    return render_template(
+        'vehicle/heartbeat.html',
+        vehicle=vehicle,
+    )
+
+
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])
 @login_required
 def user_friends():

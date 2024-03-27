@@ -32,16 +32,19 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     {% if connected %}
                     <p><b>Interval:</b> {{heartbeat.period}}</p>
                     {% else %}
                     <p><b>Missing for: </b>{{heartbeat.now - heartbeat.last }}</p>
                     {% endif %}
                     <hr/>
-                    <p><b>Last: </b> {{heartbeat.last.strftime('%I:%M:%S %p') }}</p>
-                    <p><b>Next: </b> {{heartbeat.next.strftime('%I:%M:%S %p') }}</p>
-
+                    <p>
+                        <b>Last: </b> {{heartbeat.last.strftime('%I:%M:%S %p') }}<br/>
+                        <b>Next: </b> {{heartbeat.next.strftime('%I:%M:%S %p') }}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a class="text-center" style="text-align:center;" href="/vehicle/{{vehicle.name}}/heartbeat.html">Details</a>
                 </div>
             </div>
         </div>
