@@ -179,7 +179,7 @@ def vehicle_page(vehicle_name: str):
         context['location']['location'] = geolocator.reverse((gps.latitude, gps.longitude))
 
 
-    if permissions['view_weather']:
+    if permissions['view_weather'] and current_user.tio_data:
         # Add the weather data to the context
         weather = current_user.tio_data[-1]
         context['weather'] = weather.as_dict()
