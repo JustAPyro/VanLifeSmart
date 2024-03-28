@@ -167,7 +167,8 @@ def vehicle_page(vehicle_name: str):
         }
 
     geolocator = Nominatim(user_agent=__name__)
-    if permissions['view_location']:
+    if permissions['view_location'] and current_user.gps_data:
+
         # Get the last gps data this user has logged
         gps = current_user.gps_data[-1]
 
