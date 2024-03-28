@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, Response
+from geopy.geocoders import Nominatim
 from models import User, GPSData, Vehicle, TomorrowIO
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
@@ -142,7 +143,9 @@ def receive_heartbeat():
 def vehicle_page(vehicle_name: str):
     permissions = {
         'view_connected': True,
-        'view_heartbeat': True
+        'view_heartbeat': True,
+        'view_location': True,
+        'view_weather': True,
     }
 
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
@@ -163,11 +166,35 @@ def vehicle_page(vehicle_name: str):
             'now': datetime.utcnow()
         }
 
+    geolocator = Nominatim(user_agent=__name__)
+    if permissions['view_location']:
+        # Get the last gps data this user has logged
+        gps = current_user.gps_data[-1]
+
+        context['location'] = gps.as_dict()
+
+        # Try to parse the location name information
+        geolocator = Nominatim(user_agent=__name__)
+        context['location']['location'] = geolocator.reverse((gps.latitude, gps.longitude))
+
+
+    if permissions['view_weather']:
+        # Add the weather data to the context
+        weather = current_user.tio_data[-1]
+        context['weather'] = weather.as_dict()
+
+        # Try to add the nice name of location
+        loc = weather.gps_data
+        context['weather']['location'] = (
+            geolocator.reverse((loc.latitude, loc.longitude), zoom=10)
+        )
+
 
     return render_template(
         'vehicle/home.html',
         vehicle=vehicle,
-        **context
+        permissions=permissions,
+        **context,
     )
 
 @endpoints.route('/vehicle/<vehicle_name>/heartbeat.html')

@@ -1854,3 +1854,757 @@ Running job "Automatically scheduled for recording gps sensor data. (trigger: in
 Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 16:52:20 EDT)" executed successfully
 Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 16:52:20 EDT)" (scheduled at 2024-03-27 16:52:10.206024-04:00)
 Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 16:52:20 EDT)" executed successfully
+Scheduler started
+Added job "Automatically scheduled for recording gps sensor data." to job store "default"
+Added job "Automatically scheduled for recording TomorrowIO sensor data." to job store "default"
+Added job "Connect to the online server to upload/download data." to job store "default"
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:49 EDT)" (scheduled at 2024-03-27 18:28:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:49 EDT)" (scheduled at 2024-03-27 18:28:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:59 EDT)" (scheduled at 2024-03-27 18:28:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:59 EDT)" (scheduled at 2024-03-27 18:28:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:28:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:09 EDT)" (scheduled at 2024-03-27 18:28:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:29:29 EDT)" (scheduled at 2024-03-27 18:28:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:09 EDT)" (scheduled at 2024-03-27 18:28:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:29:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:19 EDT)" (scheduled at 2024-03-27 18:29:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:19 EDT)" (scheduled at 2024-03-27 18:29:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:29 EDT)" (scheduled at 2024-03-27 18:29:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:29 EDT)" (scheduled at 2024-03-27 18:29:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:39 EDT)" (scheduled at 2024-03-27 18:29:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:29:59 EDT)" (scheduled at 2024-03-27 18:29:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:39 EDT)" (scheduled at 2024-03-27 18:29:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:29:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:49 EDT)" (scheduled at 2024-03-27 18:29:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:49 EDT)" (scheduled at 2024-03-27 18:29:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:59 EDT)" (scheduled at 2024-03-27 18:29:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:59 EDT)" (scheduled at 2024-03-27 18:29:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:29:59 EDT)" executed successfully
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:30:29 EDT)" (scheduled at 2024-03-27 18:29:59.969390-04:00)
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:09 EDT)" (scheduled at 2024-03-27 18:29:59.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:09 EDT)" (scheduled at 2024-03-27 18:29:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:30:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:19 EDT)" (scheduled at 2024-03-27 18:30:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:19 EDT)" (scheduled at 2024-03-27 18:30:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:29 EDT)" (scheduled at 2024-03-27 18:30:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:29 EDT)" (scheduled at 2024-03-27 18:30:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:39 EDT)" (scheduled at 2024-03-27 18:30:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:30:59 EDT)" (scheduled at 2024-03-27 18:30:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:39 EDT)" (scheduled at 2024-03-27 18:30:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:30:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:49 EDT)" (scheduled at 2024-03-27 18:30:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:49 EDT)" (scheduled at 2024-03-27 18:30:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:59 EDT)" (scheduled at 2024-03-27 18:30:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:59 EDT)" (scheduled at 2024-03-27 18:30:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:30:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:09 EDT)" (scheduled at 2024-03-27 18:30:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:31:29 EDT)" (scheduled at 2024-03-27 18:30:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:09 EDT)" (scheduled at 2024-03-27 18:30:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:31:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:19 EDT)" (scheduled at 2024-03-27 18:31:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:19 EDT)" (scheduled at 2024-03-27 18:31:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:29 EDT)" (scheduled at 2024-03-27 18:31:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:29 EDT)" (scheduled at 2024-03-27 18:31:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:39 EDT)" (scheduled at 2024-03-27 18:31:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:31:59 EDT)" (scheduled at 2024-03-27 18:31:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:39 EDT)" (scheduled at 2024-03-27 18:31:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:31:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:49 EDT)" (scheduled at 2024-03-27 18:31:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:49 EDT)" (scheduled at 2024-03-27 18:31:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:59 EDT)" (scheduled at 2024-03-27 18:31:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:59 EDT)" (scheduled at 2024-03-27 18:31:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:31:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:09 EDT)" (scheduled at 2024-03-27 18:31:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:32:29 EDT)" (scheduled at 2024-03-27 18:31:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:09 EDT)" (scheduled at 2024-03-27 18:31:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:32:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:19 EDT)" (scheduled at 2024-03-27 18:32:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:19 EDT)" (scheduled at 2024-03-27 18:32:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:29 EDT)" (scheduled at 2024-03-27 18:32:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:29 EDT)" (scheduled at 2024-03-27 18:32:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:39 EDT)" (scheduled at 2024-03-27 18:32:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:32:59 EDT)" (scheduled at 2024-03-27 18:32:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:39 EDT)" (scheduled at 2024-03-27 18:32:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:32:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:49 EDT)" (scheduled at 2024-03-27 18:32:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:49 EDT)" (scheduled at 2024-03-27 18:32:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:59 EDT)" (scheduled at 2024-03-27 18:32:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:59 EDT)" (scheduled at 2024-03-27 18:32:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:32:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:09 EDT)" (scheduled at 2024-03-27 18:32:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:33:29 EDT)" (scheduled at 2024-03-27 18:32:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:09 EDT)" (scheduled at 2024-03-27 18:32:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:33:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:19 EDT)" (scheduled at 2024-03-27 18:33:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:19 EDT)" (scheduled at 2024-03-27 18:33:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:29 EDT)" (scheduled at 2024-03-27 18:33:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:29 EDT)" (scheduled at 2024-03-27 18:33:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:39 EDT)" (scheduled at 2024-03-27 18:33:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:33:59 EDT)" (scheduled at 2024-03-27 18:33:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:39 EDT)" (scheduled at 2024-03-27 18:33:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:33:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:49 EDT)" (scheduled at 2024-03-27 18:33:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:49 EDT)" (scheduled at 2024-03-27 18:33:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:59 EDT)" (scheduled at 2024-03-27 18:33:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:59 EDT)" (scheduled at 2024-03-27 18:33:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:33:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:09 EDT)" (scheduled at 2024-03-27 18:33:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:34:29 EDT)" (scheduled at 2024-03-27 18:33:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:09 EDT)" (scheduled at 2024-03-27 18:33:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:34:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:09 EDT)" executed successfully
+Run time of job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:19 EDT)" was missed by 0:00:05.344511
+Run time of job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:19 EDT)" was missed by 0:00:05.344433
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:29 EDT)" (scheduled at 2024-03-27 18:34:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:29 EDT)" (scheduled at 2024-03-27 18:34:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:39 EDT)" (scheduled at 2024-03-27 18:34:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:34:59 EDT)" (scheduled at 2024-03-27 18:34:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:39 EDT)" (scheduled at 2024-03-27 18:34:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:34:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:49 EDT)" (scheduled at 2024-03-27 18:34:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:49 EDT)" (scheduled at 2024-03-27 18:34:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:59 EDT)" (scheduled at 2024-03-27 18:34:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:59 EDT)" (scheduled at 2024-03-27 18:34:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:34:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:09 EDT)" (scheduled at 2024-03-27 18:34:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:35:29 EDT)" (scheduled at 2024-03-27 18:34:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:09 EDT)" (scheduled at 2024-03-27 18:34:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:35:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:19 EDT)" (scheduled at 2024-03-27 18:35:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:19 EDT)" (scheduled at 2024-03-27 18:35:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:29 EDT)" (scheduled at 2024-03-27 18:35:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:29 EDT)" (scheduled at 2024-03-27 18:35:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:39 EDT)" (scheduled at 2024-03-27 18:35:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:35:59 EDT)" (scheduled at 2024-03-27 18:35:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:39 EDT)" (scheduled at 2024-03-27 18:35:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:35:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:49 EDT)" (scheduled at 2024-03-27 18:35:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:49 EDT)" (scheduled at 2024-03-27 18:35:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:59 EDT)" (scheduled at 2024-03-27 18:35:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:59 EDT)" (scheduled at 2024-03-27 18:35:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:35:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:09 EDT)" (scheduled at 2024-03-27 18:35:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:36:29 EDT)" (scheduled at 2024-03-27 18:35:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:09 EDT)" (scheduled at 2024-03-27 18:35:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:36:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:19 EDT)" (scheduled at 2024-03-27 18:36:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:19 EDT)" (scheduled at 2024-03-27 18:36:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:29 EDT)" (scheduled at 2024-03-27 18:36:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:29 EDT)" (scheduled at 2024-03-27 18:36:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:39 EDT)" (scheduled at 2024-03-27 18:36:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:36:59 EDT)" (scheduled at 2024-03-27 18:36:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:39 EDT)" (scheduled at 2024-03-27 18:36:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:36:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:49 EDT)" (scheduled at 2024-03-27 18:36:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:49 EDT)" (scheduled at 2024-03-27 18:36:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:59 EDT)" (scheduled at 2024-03-27 18:36:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:59 EDT)" (scheduled at 2024-03-27 18:36:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:36:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:09 EDT)" (scheduled at 2024-03-27 18:36:59.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:09 EDT)" (scheduled at 2024-03-27 18:36:59.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:09 EDT)" executed successfully
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:37:29 EDT)" (scheduled at 2024-03-27 18:36:59.969390-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:37:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:19 EDT)" (scheduled at 2024-03-27 18:37:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:19 EDT)" (scheduled at 2024-03-27 18:37:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:29 EDT)" (scheduled at 2024-03-27 18:37:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:29 EDT)" (scheduled at 2024-03-27 18:37:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:39 EDT)" (scheduled at 2024-03-27 18:37:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:37:59 EDT)" (scheduled at 2024-03-27 18:37:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:39 EDT)" (scheduled at 2024-03-27 18:37:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:37:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:49 EDT)" (scheduled at 2024-03-27 18:37:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:49 EDT)" (scheduled at 2024-03-27 18:37:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:59 EDT)" (scheduled at 2024-03-27 18:37:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:59 EDT)" (scheduled at 2024-03-27 18:37:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:37:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:09 EDT)" (scheduled at 2024-03-27 18:37:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:38:29 EDT)" (scheduled at 2024-03-27 18:37:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:09 EDT)" (scheduled at 2024-03-27 18:37:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:38:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:19 EDT)" (scheduled at 2024-03-27 18:38:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:19 EDT)" (scheduled at 2024-03-27 18:38:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:29 EDT)" (scheduled at 2024-03-27 18:38:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:29 EDT)" (scheduled at 2024-03-27 18:38:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:39 EDT)" (scheduled at 2024-03-27 18:38:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:38:59 EDT)" (scheduled at 2024-03-27 18:38:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:39 EDT)" (scheduled at 2024-03-27 18:38:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:38:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:49 EDT)" (scheduled at 2024-03-27 18:38:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:49 EDT)" (scheduled at 2024-03-27 18:38:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:59 EDT)" (scheduled at 2024-03-27 18:38:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:59 EDT)" (scheduled at 2024-03-27 18:38:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:38:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:09 EDT)" (scheduled at 2024-03-27 18:38:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:39:29 EDT)" (scheduled at 2024-03-27 18:38:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:09 EDT)" (scheduled at 2024-03-27 18:38:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:39:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:19 EDT)" (scheduled at 2024-03-27 18:39:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:19 EDT)" (scheduled at 2024-03-27 18:39:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:29 EDT)" (scheduled at 2024-03-27 18:39:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:29 EDT)" (scheduled at 2024-03-27 18:39:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:39 EDT)" (scheduled at 2024-03-27 18:39:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:39:59 EDT)" (scheduled at 2024-03-27 18:39:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:39 EDT)" (scheduled at 2024-03-27 18:39:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:39:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:49 EDT)" (scheduled at 2024-03-27 18:39:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:49 EDT)" (scheduled at 2024-03-27 18:39:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:59 EDT)" (scheduled at 2024-03-27 18:39:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:59 EDT)" (scheduled at 2024-03-27 18:39:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:39:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:09 EDT)" (scheduled at 2024-03-27 18:39:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:40:29 EDT)" (scheduled at 2024-03-27 18:39:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:09 EDT)" (scheduled at 2024-03-27 18:39:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:40:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:19 EDT)" (scheduled at 2024-03-27 18:40:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:19 EDT)" (scheduled at 2024-03-27 18:40:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:29 EDT)" (scheduled at 2024-03-27 18:40:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:29 EDT)" (scheduled at 2024-03-27 18:40:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:39 EDT)" (scheduled at 2024-03-27 18:40:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:40:59 EDT)" (scheduled at 2024-03-27 18:40:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:39 EDT)" (scheduled at 2024-03-27 18:40:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:40:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:49 EDT)" (scheduled at 2024-03-27 18:40:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:49 EDT)" (scheduled at 2024-03-27 18:40:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:59 EDT)" (scheduled at 2024-03-27 18:40:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:59 EDT)" (scheduled at 2024-03-27 18:40:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:40:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:09 EDT)" (scheduled at 2024-03-27 18:40:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:41:29 EDT)" (scheduled at 2024-03-27 18:40:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:09 EDT)" (scheduled at 2024-03-27 18:40:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:41:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:19 EDT)" (scheduled at 2024-03-27 18:41:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:19 EDT)" (scheduled at 2024-03-27 18:41:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:29 EDT)" (scheduled at 2024-03-27 18:41:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:29 EDT)" (scheduled at 2024-03-27 18:41:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:39 EDT)" (scheduled at 2024-03-27 18:41:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:41:59 EDT)" (scheduled at 2024-03-27 18:41:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:39 EDT)" (scheduled at 2024-03-27 18:41:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:41:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:49 EDT)" (scheduled at 2024-03-27 18:41:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:49 EDT)" (scheduled at 2024-03-27 18:41:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:59 EDT)" (scheduled at 2024-03-27 18:41:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:59 EDT)" (scheduled at 2024-03-27 18:41:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:41:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:09 EDT)" (scheduled at 2024-03-27 18:41:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:42:29 EDT)" (scheduled at 2024-03-27 18:41:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:09 EDT)" (scheduled at 2024-03-27 18:41:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:42:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:19 EDT)" (scheduled at 2024-03-27 18:42:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:19 EDT)" (scheduled at 2024-03-27 18:42:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:29 EDT)" (scheduled at 2024-03-27 18:42:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:29 EDT)" (scheduled at 2024-03-27 18:42:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:39 EDT)" (scheduled at 2024-03-27 18:42:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:42:59 EDT)" (scheduled at 2024-03-27 18:42:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:39 EDT)" (scheduled at 2024-03-27 18:42:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:42:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:49 EDT)" (scheduled at 2024-03-27 18:42:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:49 EDT)" (scheduled at 2024-03-27 18:42:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:59 EDT)" (scheduled at 2024-03-27 18:42:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:59 EDT)" (scheduled at 2024-03-27 18:42:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:42:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:09 EDT)" (scheduled at 2024-03-27 18:42:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:43:29 EDT)" (scheduled at 2024-03-27 18:42:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:09 EDT)" (scheduled at 2024-03-27 18:42:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:43:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:19 EDT)" (scheduled at 2024-03-27 18:43:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:19 EDT)" (scheduled at 2024-03-27 18:43:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:29 EDT)" (scheduled at 2024-03-27 18:43:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:29 EDT)" (scheduled at 2024-03-27 18:43:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:39 EDT)" (scheduled at 2024-03-27 18:43:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:43:59 EDT)" (scheduled at 2024-03-27 18:43:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:39 EDT)" (scheduled at 2024-03-27 18:43:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:43:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:49 EDT)" (scheduled at 2024-03-27 18:43:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:49 EDT)" (scheduled at 2024-03-27 18:43:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:59 EDT)" (scheduled at 2024-03-27 18:43:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:59 EDT)" (scheduled at 2024-03-27 18:43:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:43:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:09 EDT)" (scheduled at 2024-03-27 18:43:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:44:29 EDT)" (scheduled at 2024-03-27 18:43:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:09 EDT)" (scheduled at 2024-03-27 18:43:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:44:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:19 EDT)" (scheduled at 2024-03-27 18:44:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:19 EDT)" (scheduled at 2024-03-27 18:44:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:29 EDT)" (scheduled at 2024-03-27 18:44:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:29 EDT)" (scheduled at 2024-03-27 18:44:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:39 EDT)" (scheduled at 2024-03-27 18:44:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:44:59 EDT)" (scheduled at 2024-03-27 18:44:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:39 EDT)" (scheduled at 2024-03-27 18:44:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:44:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:49 EDT)" (scheduled at 2024-03-27 18:44:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:49 EDT)" (scheduled at 2024-03-27 18:44:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:59 EDT)" (scheduled at 2024-03-27 18:44:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:59 EDT)" (scheduled at 2024-03-27 18:44:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:44:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:09 EDT)" (scheduled at 2024-03-27 18:44:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:45:29 EDT)" (scheduled at 2024-03-27 18:44:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:09 EDT)" (scheduled at 2024-03-27 18:44:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:45:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:19 EDT)" (scheduled at 2024-03-27 18:45:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:19 EDT)" (scheduled at 2024-03-27 18:45:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:29 EDT)" (scheduled at 2024-03-27 18:45:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:29 EDT)" (scheduled at 2024-03-27 18:45:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:39 EDT)" (scheduled at 2024-03-27 18:45:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:45:59 EDT)" (scheduled at 2024-03-27 18:45:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:39 EDT)" (scheduled at 2024-03-27 18:45:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:45:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:49 EDT)" (scheduled at 2024-03-27 18:45:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:49 EDT)" (scheduled at 2024-03-27 18:45:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:59 EDT)" (scheduled at 2024-03-27 18:45:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:59 EDT)" (scheduled at 2024-03-27 18:45:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:45:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:09 EDT)" (scheduled at 2024-03-27 18:45:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:46:29 EDT)" (scheduled at 2024-03-27 18:45:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:09 EDT)" (scheduled at 2024-03-27 18:45:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:46:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:19 EDT)" (scheduled at 2024-03-27 18:46:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:19 EDT)" (scheduled at 2024-03-27 18:46:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:29 EDT)" (scheduled at 2024-03-27 18:46:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:29 EDT)" (scheduled at 2024-03-27 18:46:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:39 EDT)" (scheduled at 2024-03-27 18:46:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:46:59 EDT)" (scheduled at 2024-03-27 18:46:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:39 EDT)" (scheduled at 2024-03-27 18:46:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:46:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:49 EDT)" (scheduled at 2024-03-27 18:46:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:49 EDT)" (scheduled at 2024-03-27 18:46:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:59 EDT)" (scheduled at 2024-03-27 18:46:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:59 EDT)" (scheduled at 2024-03-27 18:46:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:46:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:09 EDT)" (scheduled at 2024-03-27 18:46:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:47:29 EDT)" (scheduled at 2024-03-27 18:46:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:09 EDT)" (scheduled at 2024-03-27 18:46:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:47:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:19 EDT)" (scheduled at 2024-03-27 18:47:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:19 EDT)" (scheduled at 2024-03-27 18:47:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:29 EDT)" (scheduled at 2024-03-27 18:47:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:29 EDT)" (scheduled at 2024-03-27 18:47:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:39 EDT)" (scheduled at 2024-03-27 18:47:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:47:59 EDT)" (scheduled at 2024-03-27 18:47:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:39 EDT)" (scheduled at 2024-03-27 18:47:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:47:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:49 EDT)" (scheduled at 2024-03-27 18:47:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:49 EDT)" (scheduled at 2024-03-27 18:47:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:59 EDT)" (scheduled at 2024-03-27 18:47:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:59 EDT)" (scheduled at 2024-03-27 18:47:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:47:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:09 EDT)" (scheduled at 2024-03-27 18:47:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:48:29 EDT)" (scheduled at 2024-03-27 18:47:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:09 EDT)" (scheduled at 2024-03-27 18:47:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:48:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:19 EDT)" (scheduled at 2024-03-27 18:48:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:19 EDT)" (scheduled at 2024-03-27 18:48:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:29 EDT)" (scheduled at 2024-03-27 18:48:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:29 EDT)" (scheduled at 2024-03-27 18:48:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:39 EDT)" (scheduled at 2024-03-27 18:48:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:48:59 EDT)" (scheduled at 2024-03-27 18:48:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:39 EDT)" (scheduled at 2024-03-27 18:48:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:48:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:49 EDT)" (scheduled at 2024-03-27 18:48:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:49 EDT)" (scheduled at 2024-03-27 18:48:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:59 EDT)" (scheduled at 2024-03-27 18:48:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:59 EDT)" (scheduled at 2024-03-27 18:48:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:48:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:09 EDT)" (scheduled at 2024-03-27 18:48:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:49:29 EDT)" (scheduled at 2024-03-27 18:48:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:09 EDT)" (scheduled at 2024-03-27 18:48:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:49:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:19 EDT)" (scheduled at 2024-03-27 18:49:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:19 EDT)" (scheduled at 2024-03-27 18:49:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:29 EDT)" (scheduled at 2024-03-27 18:49:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:29 EDT)" (scheduled at 2024-03-27 18:49:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:39 EDT)" (scheduled at 2024-03-27 18:49:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:49:59 EDT)" (scheduled at 2024-03-27 18:49:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:39 EDT)" (scheduled at 2024-03-27 18:49:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:49:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:49 EDT)" (scheduled at 2024-03-27 18:49:39.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:49 EDT)" (scheduled at 2024-03-27 18:49:39.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:49 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:59 EDT)" (scheduled at 2024-03-27 18:49:49.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:59 EDT)" (scheduled at 2024-03-27 18:49:49.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:49:59 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:09 EDT)" (scheduled at 2024-03-27 18:49:59.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:50:29 EDT)" (scheduled at 2024-03-27 18:49:59.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:09 EDT)" (scheduled at 2024-03-27 18:49:59.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:50:29 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:09 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:19 EDT)" (scheduled at 2024-03-27 18:50:09.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:19 EDT)" (scheduled at 2024-03-27 18:50:09.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:19 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:29 EDT)" (scheduled at 2024-03-27 18:50:19.968619-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:29 EDT)" (scheduled at 2024-03-27 18:50:19.969184-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:29 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:39 EDT)" (scheduled at 2024-03-27 18:50:29.968619-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:50:59 EDT)" (scheduled at 2024-03-27 18:50:29.969390-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:39 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:39 EDT)" (scheduled at 2024-03-27 18:50:29.969184-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:50:59 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:39 EDT)" executed successfully
+Scheduler started
+Added job "Automatically scheduled for recording gps sensor data." to job store "default"
+Added job "Automatically scheduled for recording TomorrowIO sensor data." to job store "default"
+Added job "Connect to the online server to upload/download data." to job store "default"
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:56 EDT)" (scheduled at 2024-03-27 18:50:46.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:56 EDT)" (scheduled at 2024-03-27 18:50:46.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:50:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:06 EDT)" (scheduled at 2024-03-27 18:50:56.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:06 EDT)" (scheduled at 2024-03-27 18:50:56.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:16 EDT)" (scheduled at 2024-03-27 18:51:06.839992-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:51:36 EDT)" (scheduled at 2024-03-27 18:51:06.840774-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:16 EDT)" (scheduled at 2024-03-27 18:51:06.840586-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:51:36 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:26 EDT)" (scheduled at 2024-03-27 18:51:16.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:26 EDT)" (scheduled at 2024-03-27 18:51:16.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:36 EDT)" (scheduled at 2024-03-27 18:51:26.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:36 EDT)" (scheduled at 2024-03-27 18:51:26.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:46 EDT)" (scheduled at 2024-03-27 18:51:36.839992-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:52:06 EDT)" (scheduled at 2024-03-27 18:51:36.840774-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:46 EDT)" (scheduled at 2024-03-27 18:51:36.840586-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:52:06 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:56 EDT)" (scheduled at 2024-03-27 18:51:46.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:56 EDT)" (scheduled at 2024-03-27 18:51:46.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:51:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:06 EDT)" (scheduled at 2024-03-27 18:51:56.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:06 EDT)" (scheduled at 2024-03-27 18:51:56.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:06 EDT)" executed successfully
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:52:36 EDT)" (scheduled at 2024-03-27 18:52:06.840774-04:00)
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:16 EDT)" (scheduled at 2024-03-27 18:52:06.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:16 EDT)" (scheduled at 2024-03-27 18:52:06.840586-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:52:36 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:26 EDT)" (scheduled at 2024-03-27 18:52:16.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:26 EDT)" (scheduled at 2024-03-27 18:52:16.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:36 EDT)" (scheduled at 2024-03-27 18:52:26.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:36 EDT)" (scheduled at 2024-03-27 18:52:26.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:46 EDT)" (scheduled at 2024-03-27 18:52:36.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:46 EDT)" (scheduled at 2024-03-27 18:52:36.840586-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:53:06 EDT)" (scheduled at 2024-03-27 18:52:36.840774-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:53:06 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:56 EDT)" (scheduled at 2024-03-27 18:52:46.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:56 EDT)" (scheduled at 2024-03-27 18:52:46.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:52:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:06 EDT)" (scheduled at 2024-03-27 18:52:56.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:06 EDT)" (scheduled at 2024-03-27 18:52:56.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:16 EDT)" (scheduled at 2024-03-27 18:53:06.839992-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:53:36 EDT)" (scheduled at 2024-03-27 18:53:06.840774-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:16 EDT)" (scheduled at 2024-03-27 18:53:06.840586-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:53:36 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:26 EDT)" (scheduled at 2024-03-27 18:53:16.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:26 EDT)" (scheduled at 2024-03-27 18:53:16.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:36 EDT)" (scheduled at 2024-03-27 18:53:26.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:36 EDT)" (scheduled at 2024-03-27 18:53:26.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:46 EDT)" (scheduled at 2024-03-27 18:53:36.839992-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:54:06 EDT)" (scheduled at 2024-03-27 18:53:36.840774-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:46 EDT)" (scheduled at 2024-03-27 18:53:36.840586-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:54:06 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:56 EDT)" (scheduled at 2024-03-27 18:53:46.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:56 EDT)" (scheduled at 2024-03-27 18:53:46.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:53:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:06 EDT)" (scheduled at 2024-03-27 18:53:56.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:06 EDT)" (scheduled at 2024-03-27 18:53:56.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:16 EDT)" (scheduled at 2024-03-27 18:54:06.839992-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:54:36 EDT)" (scheduled at 2024-03-27 18:54:06.840774-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:16 EDT)" (scheduled at 2024-03-27 18:54:06.840586-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:54:36 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:26 EDT)" (scheduled at 2024-03-27 18:54:16.839992-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:26 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:26 EDT)" (scheduled at 2024-03-27 18:54:16.840586-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:26 EDT)" executed successfully
+Scheduler started
+Added job "Automatically scheduled for recording gps sensor data." to job store "default"
+Added job "Automatically scheduled for recording TomorrowIO sensor data." to job store "default"
+Added job "Connect to the online server to upload/download data." to job store "default"
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:46 EDT)" (scheduled at 2024-03-27 18:54:36.421810-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:46 EDT)" (scheduled at 2024-03-27 18:54:36.422246-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:46 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:56 EDT)" (scheduled at 2024-03-27 18:54:46.421810-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:56 EDT)" (scheduled at 2024-03-27 18:54:46.422246-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:54:56 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:06 EDT)" (scheduled at 2024-03-27 18:54:56.421810-04:00)
+Running job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:55:26 EDT)" (scheduled at 2024-03-27 18:54:56.422613-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:06 EDT)" (scheduled at 2024-03-27 18:54:56.422246-04:00)
+Job "Connect to the online server to upload/download data. (trigger: interval[0:00:30], next run at: 2024-03-27 18:55:26 EDT)" executed successfully
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:06 EDT)" executed successfully
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:16 EDT)" (scheduled at 2024-03-27 18:55:06.421810-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:16 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:16 EDT)" (scheduled at 2024-03-27 18:55:06.422246-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:16 EDT)" executed successfully
+Scheduler started
+Added job "Automatically scheduled for recording gps sensor data." to job store "default"
+Added job "Automatically scheduled for recording TomorrowIO sensor data." to job store "default"
+Added job "Connect to the online server to upload/download data." to job store "default"
+Running job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:36 EDT)" (scheduled at 2024-03-27 18:55:26.612876-04:00)
+Job "Automatically scheduled for recording gps sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:36 EDT)" executed successfully
+Running job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:36 EDT)" (scheduled at 2024-03-27 18:55:26.614074-04:00)
+Job "Automatically scheduled for recording TomorrowIO sensor data. (trigger: interval[0:00:10], next run at: 2024-03-27 18:55:36 EDT)" executed successfully

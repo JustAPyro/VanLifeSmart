@@ -4,54 +4,94 @@
 
 {% block content %}
 <div class="container-fluid px-4">
-    <h1 class="mt-4">{{vehicle.name}}
+  <h1 class="mt-4">{{vehicle.name}}
     {% if connected == true %}
-        <span class="badge bg-success">Connected</span>
+    <span class="badge bg-success">Connected</span>
     {% elif connected == false %}
-        <span class="badge bg-danger">Disconnected</span>
+    <span class="badge bg-danger">Disconnected</span>
     {% endif %}
-    </h1>
-    <hr/>
-    <div class="row">
-        {% if heartbeat %}
-        <div class="col-xl-3 col-md-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <div class="row justify-content-between">
-                        <div class="col">
-                            <i class="fas fa-heart me-1"></i>
-                            Heartbeat
-                        </div>
-                        <div class="col-4">
-                            {% if connected %}
-                            <span class="badge rounded-pill bg-success">Found</span>
-                            {% else %}
-                            <span class="badge rounded-pill bg-warning">Missing</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    {% if connected %}
-                    <p><b>Interval:</b> {{heartbeat.period}}</p>
-                    {% else %}
-                    <p><b>Missing for: </b>{{heartbeat.now - heartbeat.last }}</p>
-                    {% endif %}
-                    <hr/>
-                    <p>
-                        {% if last in heartbeat %}
-                        <b>Last: </b> {{heartbeat.last.strftime('%I:%M:%S %p') }}<br/>
-                        <b>Next: </b> {{heartbeat.next.strftime('%I:%M:%S %p') }}
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a class="text-center" style="text-align:center;" href="/vehicle/{{vehicle.name}}/heartbeat.html">Details</a>
-                </div>
+  </h1>
+  <hr/>
+  <div class="row">
+    <!--
+    {% if heartbeat %}
+    <div class="col-xl-3 col-md-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="row justify-content-between">
+            <div class="col">
+              <i class="fas fa-heart me-1"></i>
+              Heartbeat
             </div>
+            <div class="col-4">
+              {% if connected %}
+              <span class="badge rounded-pill bg-success">Found</span>
+              {% else %}
+              <span class="badge rounded-pill bg-warning">Missing</span>
+              {% endif %}
+            </div>
+          </div>
         </div>
-        {% endif %}
+        <div class="card-body">
+          {% if connected %}
+          <p><b>Interval:</b> {{heartbeat.period}}</p>
+          {% else %}
+          <p><b>Missing for: </b>{{heartbeat.now - heartbeat.last }}</p>
+          {% endif %}
+          <hr/>
+          <p>
+          <b>Last: </b> {{heartbeat.last.strftime('%I:%M:%S %p') }}<br/>
+          <b>Next: </b> {{heartbeat.next.strftime('%I:%M:%S %p') }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <a class="text-center" style="text-align:center;" href="/vehicle/{{vehicle.name}}/heartbeat.html">Details</a>
+        </div>
+      </div>
     </div>
+    {% endif %}
+    {% if permissions.view_location %}
+    <div class="col-xl-3 col-md-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="row justify-content-between">
+            <div class="col">
+              <i class="fas fa-location-dot me-1"></i>
+              Location
+            </div>
+            <div class="col-4">
+              $Time
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>
+            {{location.location}}
+            <hr/>
+            <b>Latitude:</b> {{location.latitude}} <br/>
+            <b>Longitude:</b> {{location.longitude}} <br/>
+            <b>Altitude:</b> {{location.altitude}}
+        </div>
+        <div class="card-footer">
+          <a class="text-center" style="text-align:center;" href="/vehicle/{{vehicle.name}}/heartbeat.html">Details</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    -->
+  </div>
+  <div class="row">
+    <div class="col-xl-6">
+      {% if permissions.view_weather %}
+      {% include "cards/weather_card.html" %}
+      {% endif %}
+    </div>
+    <div class="col-xl-6">
+      {% if permissions.view_location %}
+      {% include "cards/location_card.html" %}
+      {% endif %}
+    </div>
+  </div>
 </div>
 
 {% endblock %}

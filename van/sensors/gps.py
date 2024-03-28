@@ -50,8 +50,8 @@ class GPS(Sensor):
 
         # Otherwise we need to return a fake data point
         return GPSData(
-            latitude=-33.865143,
-            longitude=151.209900,
+            latitude=41.618950,
+            longitude=-85.826400,
             altitude=3,
             fix_quality='FAKE',
             satellites_used=0,

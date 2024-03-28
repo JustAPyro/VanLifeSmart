@@ -1,0 +1,30 @@
+<div class="card mb-4">
+  <div class="card-header">
+    <div class="row justify-content-between">
+      <div class="col">
+        <i class="fas fa-location-dot me-1"></i>
+        Last GPS Data
+      </div>
+      <div class="col-5">
+        {{ location.utc_time }}
+      </div>
+    </div>
+  </div>
+  <div style="height: 287px;" class="card-body" id="mapdiv">
+  </div>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script>
+  map = new OpenLayers.Map("mapdiv");
+  map.addLayer(new OpenLayers.Layer.OSM());
+  var lonLat = new OpenLayers.LonLat({{location.longitude}},{{location.latitude}}).transform(
+    new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+    map.getProjectionObject() // to Spherical Mercator Projection
+  );
+  var zoom=16;
+  var markers = new OpenLayers.Layer.Markers( "Markers" );
+  map.addLayer(markers);
+  markers.addMarker(new OpenLayers.Marker(lonLat));
+  map.setCenter (lonLat, zoom);
+</script>
+
+</div>

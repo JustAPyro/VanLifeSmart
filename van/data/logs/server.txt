@@ -4,3 +4,278 @@ Shutting down
 Waiting for application shutdown.
 Application shutdown complete.
 Finished server process [7209]
+Application startup complete.
+Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+('127.0.0.1', 41922) - "WebSocket /ws/logs" [accepted]
+connection open
+connection closed
+Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 349, in asgi_send
+    await self.send(data)  # type: ignore[arg-type]
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/websockets/legacy/protocol.py", line 635, in send
+    await self.ensure_open()
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/websockets/legacy/protocol.py", line 939, in ensure_open
+    raise self.connection_closed_exc()
+websockets.exceptions.ConnectionClosedOK: received 1001 (going away); then sent 1001 (going away)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/websockets.py", line 88, in send
+    await self._send(message)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 50, in sender
+    await send(message)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 365, in asgi_send
+    raise ClientDisconnected from exc
+uvicorn.protocols.utils.ClientDisconnected
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 140, in websocket_endpoint_log
+    raise e
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 138, in websocket_endpoint_log
+    await websocket.send_json(logs)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/websockets.py", line 179, in send_json
+    await self.send({"type": "websocket.send", "text": text})
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/websockets.py", line 91, in send
+    raise WebSocketDisconnect(code=1006)
+starlette.websockets.WebSocketDisconnect
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/websockets/websockets_impl.py", line 255, in run_asgi
+    result = await self.app(self.scope, self.asgi_receive, self.asgi_send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 375, in handle
+    await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 98, in app
+    await wrap_app_handling_exceptions(app, session)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 96, in app
+    await func(session)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 360, in app
+    await dependant.call(**values)
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 142, in websocket_endpoint_log
+    await websocket.close()
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/websockets.py", line 184, in close
+    await self.send(
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/websockets.py", line 93, in send
+    raise RuntimeError('Cannot call "send" once a close message has been sent.')
+RuntimeError: Cannot call "send" once a close message has been sent.
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [9248]
+Application startup complete.
+Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [9332]
+Application startup complete.
+Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 299, in app
+    raise e
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 47, in hub_page
+    weather_location = geolocator.reverse(f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}',
+AttributeError: 'NoneType' object has no attribute 'gps_data'
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [9478]
+Application startup complete.
+Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 299, in app
+    raise e
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 41, in hub_page
+    weather_location = f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}'
+AttributeError: 'NoneType' object has no attribute 'gps_data'
+Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 299, in app
+    raise e
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 41, in hub_page
+    weather_location = f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}'
+AttributeError: 'NoneType' object has no attribute 'gps_data'
+Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 419, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 84, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 299, in app
+    raise e
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 294, in app
+    raw_response = await run_endpoint_function(
+  File "/home/Programming/VanLifeSmart/venv/lib/python3.10/site-packages/fastapi/routing.py", line 191, in run_endpoint_function
+    return await dependant.call(**values)
+  File "/home/Programming/VanLifeSmart/van/endpoints.py", line 41, in hub_page
+    weather_location = f'{last_weather.gps_data.latitude}, {last_weather.gps_data.longitude}'
+AttributeError: 'NoneType' object has no attribute 'gps_data'
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [9483]
