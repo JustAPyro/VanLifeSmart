@@ -140,7 +140,10 @@ def receive_heartbeat():
 
 def get_location_string(latitude, longitude):
     geolocator = Nominatim(user_agent=__name__)
-    name = geolocator.reverse((latitude, longitude))
+    try:
+        name = geolocator.reverse((latitude, longitude))
+    except GeocoderTimedOut as e:
+        pass
 
     return name if name else f'{latitude}, {longitude}'
 
