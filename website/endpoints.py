@@ -138,6 +138,14 @@ def receive_heartbeat():
     return response
 
 
+def get_location_string(latitude, longitude):
+    geolocator = Nominatim(user_agent=__name__)
+    name = geolocator.reverse((latitude, longitude))
+
+    return name if name else f'{latitude}, {longitude}'
+
+
+
 @endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
 def vehicle_page(vehicle_name: str):
@@ -176,7 +184,7 @@ def vehicle_page(vehicle_name: str):
 
         # Try to parse the location name information
         geolocator = Nominatim(user_agent=__name__)
-        context['location']['location'] = geolocator.reverse((gps.latitude, gps.longitude))
+        context['location']['location'] = get_location_string(gps.latitude, gps.longitude)
 
 
     if permissions['view_weather'] and current_user.tio_data:
@@ -186,14 +194,7 @@ def vehicle_page(vehicle_name: str):
 
         # Try to add the nice name of location
         loc = weather.gps_data
-        context['weather']['location'] = (
-            geolocator.reverse((loc.latitude, loc.longitude), zoom=10)
-        )
-
-        # If that failed fill the location position with raw lat/long
-        if not context['weather']['location']:
-            context['weather']['location'] = f'{loc.latitude}, {loc.longitude}'
-
+        context['weather']['location'] = get_location_string(loc.latitude, loc.longitude)
 
     return render_template(
         'vehicle/home.html',
@@ -201,6 +202,8 @@ def vehicle_page(vehicle_name: str):
         permissions=permissions,
         **context,
     )
+
+
 
 @endpoints.route('/vehicle/<vehicle_name>/heartbeat.html')
 @login_required
