@@ -190,6 +190,10 @@ def vehicle_page(vehicle_name: str):
             geolocator.reverse((loc.latitude, loc.longitude), zoom=10)
         )
 
+        # If that failed fill the location position with raw lat/long
+        if not context['weather']['location']:
+            context['weather']['location'] = f'{loc.latitude}, {loc.longitude}'
+
 
     return render_template(
         'vehicle/home.html',
