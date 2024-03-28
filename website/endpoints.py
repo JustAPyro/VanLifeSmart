@@ -4,6 +4,7 @@ from models import User, GPSData, Vehicle, TomorrowIO
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
 from datetime import datetime, timezone
+from geopy.exc import GeocoderTimedOut
 from flask_login import login_user, login_required, logout_user, current_user
 
 endpoints = Blueprint('endpoints', __name__)
@@ -177,7 +178,6 @@ def vehicle_page(vehicle_name: str):
             'now': datetime.utcnow()
         }
 
-    geolocator = Nominatim(user_agent=__name__)
     if permissions['view_location'] and vehicle.owner.gps_data:
 
         # Get the last gps data this user has logged
@@ -186,7 +186,6 @@ def vehicle_page(vehicle_name: str):
         context['location'] = gps.as_dict()
 
         # Try to parse the location name information
-        geolocator = Nominatim(user_agent=__name__)
         context['location']['location'] = get_location_string(gps.latitude, gps.longitude)
 
 
