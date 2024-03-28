@@ -175,10 +175,10 @@ def vehicle_page(vehicle_name: str):
         }
 
     geolocator = Nominatim(user_agent=__name__)
-    if permissions['view_location'] and current_user.gps_data:
+    if permissions['view_location'] and vehicle.owner.gps_data:
 
         # Get the last gps data this user has logged
-        gps = current_user.gps_data[-1]
+        gps = vehicle.owner.gps_data[-1]
 
         context['location'] = gps.as_dict()
 
@@ -187,9 +187,9 @@ def vehicle_page(vehicle_name: str):
         context['location']['location'] = get_location_string(gps.latitude, gps.longitude)
 
 
-    if permissions['view_weather'] and current_user.tio_data:
+    if permissions['view_weather'] and vehicle.owner.tio_data:
         # Add the weather data to the context
-        weather = current_user.tio_data[-1]
+        weather = vehicle.owner.tio_data[-1]
         context['weather'] = weather.as_dict()
 
         # Try to add the nice name of location
