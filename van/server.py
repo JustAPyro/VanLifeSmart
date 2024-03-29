@@ -119,7 +119,7 @@ async def lifespan(app: FastAPI):
     # Map library logs to output log files
     logging.basicConfig(level=logging.INFO)
     for log_file, logger_name in logging_map.items():
-        path = os.path.abspath(f'{os.getenv("VLS_DATA_PATH")}/logs/{log_file}')
+        path = os.path.abspath(f'{os.getenv("VLS_DATA_PATH")}/logs/{log_file}.log')
         file_handler = logging.FileHandler(path)
         logger = logging.getLogger(logger_name)
         logger.addHandler(file_handler)
