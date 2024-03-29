@@ -158,10 +158,10 @@ class GPSManager:
 
             # Process N/S/E/W into decimal lat / long
             latitude = float(words[1][0:2]) + (float(words[1][2:]) / 60)
-            if words[2] == 'E':
+            if words[2] == 'S':
                 latitude = latitude * -1
             longitude = float(words[3][0:3]) + (float(words[3][3:]) / 60)
-            if words[4] == 'S':
+            if words[4] == 'W':
                 longitude = longitude * -1
             self.data['latitude'] = (latitude, now, source)
             self.data['longitude'] = (longitude, now, source)
