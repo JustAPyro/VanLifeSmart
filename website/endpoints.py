@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
 from datetime import datetime, timezone
 from geopy.exc import GeocoderTimedOut
-from flask_login import login_user, login_required, logout_user, current_user
+from flask_login import login_user, logout_user, login_required, logout_user, current_user
 from flask import abort
 
 endpoints = Blueprint('endpoints', __name__)
@@ -69,6 +69,11 @@ def sign_up_page():
                            user=current_user,
                            form=form)
 
+@endpoints.route('/auth/sign-out.html')
+@login_required
+def log_out_page():
+    logout_user()
+    return redirect(url_for('endpoints.sign_in_page'))
 
 @endpoints.route('/api/heartbeat.json', methods=['POST'])
 def receive_heartbeat():
