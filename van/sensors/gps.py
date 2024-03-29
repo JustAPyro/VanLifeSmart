@@ -179,7 +179,7 @@ class GPSManager:
             source = 'GPVTG'
             self.data['true_track'] = (None if words[0] == '' else float(words[0]), now, source)
             self.data['magnetic_track'] = (None if words[2] == '' else float(words[2]), now, source)
-            self.data['ground_speed'] = (float(words[6]), now, source)
+            self.data['ground_speed'] = (None if words[6] == '' else float(words[6]), now, source)
         elif formatting in GPSManager.unimplemented_formats:
             pass
         else:
