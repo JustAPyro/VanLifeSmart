@@ -6,6 +6,7 @@ from website.database import db
 from datetime import datetime, timezone
 from geopy.exc import GeocoderTimedOut
 from flask_login import login_user, login_required, logout_user, current_user
+from flask import abort
 
 endpoints = Blueprint('endpoints', __name__)
 
@@ -221,6 +222,20 @@ def vehicle_heartbeat_page(vehicle_name: str):
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
     return render_template(
         'vehicle/heartbeat.html',
+        user=current_user,
+        vehicle=vehicle,
+    )
+
+
+@endpoints.route('/vehicle/<vehicle_name>/location.html')
+@login_required
+def vehicle_location_page(vehicle_name: str):
+    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+    if not vehicle:
+       abort(404) 
+
+    return render_template(
+        'vehicle/location.html',
         user=current_user,
         vehicle=vehicle,
     )
