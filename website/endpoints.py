@@ -20,7 +20,7 @@ def landing_page():
 def sign_in_page():
     form = request.form
     if request.method == 'POST':
-        email = request.form.get('email')
+        email = request.form.get('email').strip().lower()
         password = request.form.get('password')
         user = db.session.query(User).filter_by(email=email).first()
         if user:
@@ -41,7 +41,7 @@ def sign_up_page():
     if request.method == 'POST':
         name = request.form.get('name')
         username = request.form.get('username')
-        email = request.form.get('email')
+        email = request.form.get('email').strip().lower()
         password = request.form.get('password')
         password_confirm = request.form.get('password_confirm')
 
