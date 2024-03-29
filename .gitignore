@@ -6,3 +6,4 @@ vanhub
 __pycache__
 venv
 instance/
+van/data/
