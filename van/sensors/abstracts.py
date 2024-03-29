@@ -21,7 +21,7 @@ class Sensor(ABC):
     def get_data(self) -> Optional[Base]:
         pass
 
-    def shutdown():
+    def shutdown(self):
         pass
 
 

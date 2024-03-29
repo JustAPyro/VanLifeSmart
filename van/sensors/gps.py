@@ -61,7 +61,7 @@ class GPS(Sensor):
             ground_speed=None,
         )
 
-    def shutdown():
+    def shutdown(self):
         if self.manager:
             self.manager.shutdown()
 
