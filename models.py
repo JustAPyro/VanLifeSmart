@@ -15,7 +15,14 @@ from flask_login import UserMixin
 class Base(DeclarativeBase):
 
     def as_dict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+        response = {}
+        for col in self.__table__.columns:
+            if type(getattr(self, col.name) == datetime):
+                response[col.name] = getattr(self, col.name)
+            else:
+                reponse[col.name] = str(getattr(self, col.name))
+        #return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+        return response
 
     def as_list(self):
         return [str(getattr(self, c.name)) for c in self.__table__.columns]

@@ -41,8 +41,8 @@
           {% endif %}
           <hr/>
           <p>
-          <b>Last: </b> {{heartbeat.last.strftime('%I:%M:%S %p') }}<br/>
-          <b>Next: </b> {{heartbeat.next.strftime('%I:%M:%S %p') }}
+          <b>Last: </b> {{heartbeat.last | datetimefilter }}<br/>
+          <b>Next: </b> {{heartbeat.next | datetimefilter }}
           </p>
         </div>
         <div class="card-footer">

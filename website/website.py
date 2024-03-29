@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from website.database import db
 from models import Base, User
 from flask_login import LoginManager
+from website.filters import datetimefilter 
 
 def create_app():
     application = Flask(__name__)
@@ -15,6 +16,8 @@ def create_app():
 
     from website.endpoints import endpoints
     application.register_blueprint(endpoints, url_prefix='/')
+
+    application.jinja_env.filters['datetimefilter'] = datetimefilter
 
     with application.app_context():
         db.create_all()
