@@ -120,9 +120,9 @@ async def lifespan(app: FastAPI):
     logging.basicConfig(level=logging.INFO)
     for log_file, logger_name in logging_map.items():
         path = os.path.abspath(f'{os.getenv("VLS_DATA_PATH")}/logs/{log_file}.log')
-        file_handler = logging.FileHandler(path)
+        #file_handler = logging.FileHandler(path)
         logger = logging.getLogger(logger_name)
-        logger.addHandler(file_handler)
+        #logger.addHandler(file_handler)
 
     # Get and start the scheduler
     scheduler.start()
@@ -144,6 +144,13 @@ async def lifespan(app: FastAPI):
 
     # Launch the server
     yield
+
+    # Shutdown the scheduler
+    scheduler.shutdown()
+
+    # After the server runs shut down all the sensors
+    for sensor in sensors:
+        sensor.shutdown()
 
 
 load_dotenv()

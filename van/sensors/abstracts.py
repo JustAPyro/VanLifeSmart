@@ -21,6 +21,9 @@ class Sensor(ABC):
     def get_data(self) -> Optional[Base]:
         pass
 
+    def shutdown():
+        pass
+
 
 class MalformedDataPointException(Exception):
     def __init__(self, msg):
