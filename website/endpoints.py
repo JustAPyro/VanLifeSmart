@@ -12,7 +12,7 @@ endpoints = Blueprint('endpoints', __name__)
 
 @endpoints.route('/')
 def landing_page():
-    return render_template("landing.html")
+    return render_template("landing.html", user=current_user)
 
 
 @endpoints.route('/auth/sign-in.html', methods=['POST', 'GET'])
@@ -31,7 +31,7 @@ def sign_in_page():
                 flash('Incorrect email or password.', category='error')
         else:
             flash('Email does not exist.', category='error')
-    return render_template("sign-in.html", form=form)
+    return render_template("sign-in.html", user=current_user, form=form)
 
 
 @endpoints.route('/auth/sign-up.html', methods=['POST', 'GET'])
@@ -64,7 +64,9 @@ def sign_up_page():
             flash('Account created', category='success')
             login_user(new_user)
             return redirect(url_for('endpoints.user_friends'))
-    return render_template('sign-up.html', form=form)
+    return render_template('sign-up.html', 
+                           user=current_user,
+                           form=form)
 
 
 @endpoints.route('/api/heartbeat.json', methods=['POST'])
@@ -205,6 +207,7 @@ def vehicle_page(vehicle_name: str):
 
     return render_template(
         'vehicle/home.html',
+        user=current_user,
         vehicle=vehicle,
         permissions=permissions,
         **context,
@@ -218,6 +221,7 @@ def vehicle_heartbeat_page(vehicle_name: str):
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
     return render_template(
         'vehicle/heartbeat.html',
+        user=current_user,
         vehicle=vehicle,
     )
 
@@ -237,4 +241,6 @@ def user_friends():
 
         return redirect(url_for('endpoints.user_friends'))
 
-    return render_template('friends.html', following=current_user.follows)
+    return render_template('friends.html', 
+                           user=current_user,
+                           following=current_user.follows)
