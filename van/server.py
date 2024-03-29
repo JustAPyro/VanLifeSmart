@@ -22,6 +22,8 @@ from van.endpoints import endpoints, not_found_exception_handler
 from van.database import engine
 from models import GPSData, TomorrowIO, Vehicle
 
+dev_env = True
+
 # Refuse to start if these environment variables aren't set
 required_environment = (
     'VLS_INSTALL',  # Install location
@@ -78,9 +80,10 @@ def heartbeat():
 
     # Now we try to send this all to the server
     try:
+        url = ('http://127.0.0.1:5000/api/heartbeat.json' if dev_env else 
+            'http://justapyr0.pythonanywhere.com/api/heartbeat.json')
         response = requests.post(
-            #url='http://justapyr0.pythonanywhere.com/api/heartbeat.json',
-            url='http://127.0.0.1:5000/api/heartbeat.json',
+            url=url,
             json=data)
 
         # Filter for responses that aren't 200
@@ -128,7 +131,7 @@ async def lifespan(app: FastAPI):
     scheduler.start()
 
     # Activate the sensors, create a payload for them, then schedule them
-    sensors = activate_sensors(development=True)
+    sensors = activate_sensors(development=dev_env)
     schedule_sensors(sensors, engine)
 
     # schedule the heartbeat call
