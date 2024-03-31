@@ -11,6 +11,7 @@ class Sensor(ABC):
             'id': f'record_{self.data_type}',
             'description': f'Automatically scheduled for recording {self.data_type} sensor data.'
         }
+        self.default_schedule = {'minutes': 1}
 
     @property
     @abstractmethod

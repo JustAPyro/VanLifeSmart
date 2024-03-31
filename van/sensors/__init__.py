@@ -8,8 +8,15 @@ from van.sensors.tomorrow_io import TIO
 # Every sensor running on the server should be initialized here
 # If development is true, it will pass that to sensors and generate false data
 def activate_sensors(development: bool = False) -> list[Sensor]:
-    gps_sensor = GPS(location='/dev/ttyACM0', baud=9600, development=development)
-    tio_sensor = TIO(gps_sensor, development=development)
+    # GPS Sensor
+
+    gps_sensor = GPS(location='/dev/ttyACM0', baud=9600, development=development,
+                     default_schedule={'seconds': 10})
+
+    # TIO is a weather API sensor
+    tio_sensor = TIO(gps_sensor, development=development,
+                     default_schedule={'minutes': 3})
+
     return [
         gps_sensor,
         tio_sensor

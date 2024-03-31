@@ -44,9 +44,6 @@ def schedule_sensors(sensors: list[Sensor], database: Engine):
             logger.info(f'Failed to record {s.data_type} sensor data in {sensor_time}')
 
 
-
-
-
     # Now that we've defined the method that logs the data,
     # We create a partial function by binding the above method to the database and each sensor
     # And then schedule the sensor to run on a set interval
@@ -54,8 +51,9 @@ def schedule_sensors(sensors: list[Sensor], database: Engine):
         sensor: Sensor
         report_sensor = partial(schedule_sensor, sensor, database)
         scheduler.add_job(report_sensor, 'interval',
-                          id=sensor.schedule_config['id'], seconds=10,
+                          id=sensor.schedule_config['id'],
                           name=sensor.schedule_config['description'],
+                          **sensor.default_schedule
                           )
     # ** sensor.default_schedule,
     # name = sensor.sensor_description)
