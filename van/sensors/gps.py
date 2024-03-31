@@ -111,12 +111,8 @@ class GPSManager:
     }
 
     def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600):
-        super().__init__(development=development)
         self._running = True
-        self.data = {}
-        
-        if default_schedule:
-            self.default_schedule = default_schedule
+        self.data = {} 
 
         # Create the gps serial connection and flush/clear buffer
         self._gps = serial.Serial(location, baud)

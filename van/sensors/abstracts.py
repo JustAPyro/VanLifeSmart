@@ -5,13 +5,14 @@ from models import Base
 
 
 class Sensor(ABC):
-    def __init__(self, development: bool = False):
+    def __init__(self, development: bool = False, default_schedule = None):
         self.development = development
         self.schedule_config = {
             'id': f'record_{self.data_type}',
             'description': f'Automatically scheduled for recording {self.data_type} sensor data.'
         }
-        self.default_schedule = {'minutes': 1}
+
+        self.default_schedule = default_schedule if default_schedule else {'minutes': 1}
 
     @property
     @abstractmethod
