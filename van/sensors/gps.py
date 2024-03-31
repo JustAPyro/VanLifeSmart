@@ -63,7 +63,7 @@ class GPS(Sensor):
 
     def shutdown(self):
         if self.manager:
-            self.manager.shutdown()
+            self.manager.stop()
 
 class GPSManager:
     unimplemented_formats = ('GPGSA', 'GPGSV', 'GPGLL', 'GPTXT', 'GPRMC')
