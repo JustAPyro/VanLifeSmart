@@ -8,8 +8,8 @@ from van.sensors.abstracts import Sensor
 
 
 class TIO(Sensor):
-    def __init__(self, gps, development):
-        super().__init__(development=development)
+    def __init__(self, gps, development, **kwargs):
+        super().__init__(development=development, **kwargs)
         self.gps = gps
 
     def get_data(self) -> Optional[Base]:
