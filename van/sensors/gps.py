@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 class GPS(Sensor):
-    def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, development: bool = False):
-        super().__init__(development=development)
+    def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, development: bool = False, **kwargs):
+        super().__init__(development=development, **kwargs)
 
         # The following code tries to launch the GPSManager using specified location and baud
         # If it can not it will either switch to fake data is development is true, otherwise raise an exception
@@ -110,8 +110,8 @@ class GPSManager:
         }
     }
 
-    def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600, **kwargs):
-        super().__init__(development=development, **kwargs)
+    def __init__(self, location: str = '/dev/ttyACM0', baud: int = 9600):
+        super().__init__(development=development)
         self._running = True
         self.data = {}
         
