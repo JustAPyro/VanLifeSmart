@@ -3,7 +3,7 @@ from van.sensors.gps import GPS
 from van.sensors.tomorrow_io import TIO
 
 
-# This method will return data factories based
+# This method will return sensor objects based
 # on active sensors for the server to listen to.
 # Every sensor running on the server should be initialized here
 # If development is true, it will pass that to sensors and generate false data

@@ -45,6 +45,7 @@ class Vehicle(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     owner: Mapped['User'] = relationship(back_populates='vehicles')
 
+    heartbeats: Mapped[List['Heartbeat']] = relationship(back_populates='vehicle')
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
@@ -64,6 +65,22 @@ class User(Base, UserMixin):
                            backref='following')
 
 
+
+class Heartbeat(Base):
+    """
+    This class tracks the vehicle's uptime and connectivity to server
+    by tracking the server connection attempts.
+    """
+    __tablename__ = 'heartbeat'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    
+    vehicle_id = Mapped[int] = mapped_column(ForeignKey('vehicle.id'))
+    vehicle = Mapped['Vehicle'] = relationship(back_populates='heartbeats')
+    
+    connected: Mapped[bool]
+    time_utc: Mapped[datetime.datetime]
+    next_time: Mapped[datetime.datetime]
+    
 
 """
 class DHTData(Base):
