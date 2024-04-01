@@ -71,13 +71,22 @@ class Heartbeat(Base):
     This class tracks the vehicle's uptime and connectivity to server
     by tracking the server connection attempts.
     """
+    # ID identifier and table name
     __tablename__ = 'heartbeat'
     id: Mapped[int] = mapped_column(primary_key=True)
     
-    vehicle_id = Mapped[int] = mapped_column(ForeignKey('vehicle.id'))
-    vehicle = Mapped['Vehicle'] = relationship(back_populates='heartbeats')
-    
-    connected: Mapped[bool]
+    # Vehicle this heartbeat belongs to
+    vehicle_id: Mapped[Optional[int]] = mapped_column(ForeignKey('vehicle.id'))
+    vehicle: Mapped[Optional['Vehicle']] = relationship(back_populates='heartbeats')
+
+    # If this was expected/on schedule or late
+    on_schedule: Mapped[bool]
+
+    # Successfulness of connection to server and internet
+    server: Mapped[bool]
+    internet: Mapped[bool]
+
+    # Time of connection and next expected
     time_utc: Mapped[datetime.datetime]
     next_time: Mapped[datetime.datetime]
     

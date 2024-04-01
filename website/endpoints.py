@@ -75,8 +75,10 @@ def log_out_page():
     logout_user()
     return redirect(url_for('endpoints.sign_in_page'))
 
-@endpoints.route('/api/heartbeat.json', methods=['POST'])
+@endpoints.route('/api/heartbeat.json', methods=['GET', 'POST'])
 def receive_heartbeat():
+    if request.method == 'GET':
+        return ('', 204)
     # Get the data from the heartbeat
     data = request.get_json()
 
@@ -238,9 +240,11 @@ def vehicle_location_page(vehicle_name: str):
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
     if not vehicle:
        abort(404) 
-
+    
+    path = [[gps.latitude, gps.longitude] for gps in vehicle.owner.gps_data]
     return render_template(
         'vehicle/location.html',
+        locations=path,
         user=current_user,
         vehicle=vehicle,
     )

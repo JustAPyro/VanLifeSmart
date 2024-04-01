@@ -8,21 +8,24 @@ from contextlib import asynccontextmanager
 from functools import partial
 from pathlib import Path
 import pytz
-
+from sqlalchemy import desc
 import uvicorn
-
+from datetime import datetime, timedelta
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from urllib3.exceptions import MaxRetryError, NewConnectionError
+from urllib import request
 
 from van.sensors import activate_sensors
 from van.scheduling.tools import scheduler, schedule_sensors
 from van.endpoints import endpoints, not_found_exception_handler
 from van.database import engine
-from models import GPSData, TomorrowIO, Vehicle
+from models import GPSData, TomorrowIO, Vehicle, Heartbeat
 
 dev_env = True
+
+logger = logging.getLogger(__name__)
 
 # Refuse to start if these environment variables aren't set
 required_environment = (
@@ -40,11 +43,48 @@ logging_map = {
     'apscheduler.txt': 'apscheduler'
 }
 
+def can_connect(url_string: str) -> bool:
+    try:
+        request.urlopen(url_string, timeout=1)
+        return True
+    except request.URLError:
+        return False
+
+def record_heartbeat():
+    # Starting point for the heartbeat object
+    heartbeat_dict = {
+        'time_utc': datetime.now(),
+        'next_time': scheduler.get_job('heartbeat').next_run_time
+    }
+
+    # Get the last heartbeat
+    last = None
+    with Session(engine) as session:
+        last = session.query(Heartbeat).order_by(desc('time_utc')).first()
+
+    # Check if this heartbeat was expected or if it's late 
+    if last == None or datetime.now() - last.next_time > timedelta(seconds=1):
+        heartbeat_dict['on_schedule'] = True
+    else:
+        heartbeat_dict['on_schedule'] = False
+
+    # Check for connectivity to server and internet
+    google_url = 'http://142.250.190.142'
+    server_url = ('http://127.0.0.1:5000/api/heartbeat.json' if dev_env else 
+        'http://justapyr0.pythonanywhere.com/api/heartbeat.json')
+
+    heartbeat_dict['server'] = can_connect(server_url)
+    heartbeat_dict['internet'] = True if heartbeat_dict['server'] else can_connect(google_url)
+
+    with Session(engine) as session:
+        session.add(Heartbeat(**heartbeat_dict))
+        session.commit()
+    
 
 def heartbeat():
-    # Get the time of the next heartbeat
-    heartbeat_job = scheduler.get_job('heartbeat')
-    next_heartbeat = heartbeat_job.next_run_time.astimezone(pytz.utc).isoformat()
+
+    # Log the heartbeat
+    record_heartbeat()
 
     # Get the name of the vehicle and user data
     vehicle_name = os.getenv('VLS_VEHICLE_NAME')
@@ -56,6 +96,7 @@ def heartbeat():
         'vehicle_name': vehicle_name,
         'next_heartbeat': next_heartbeat,
         'database': {
+            'heartbeat': {'headers': Heartbeat.__table__.columns.keys(), 'data': []},
             # Here we also find and insert the column names for each dataset
             'gps': {'headers': GPSData.__table__.columns.keys(), 'data': []},
             'tio': {'headers': TomorrowIO.__table__.columns.keys()}
@@ -77,6 +118,10 @@ def heartbeat():
             data['database'][data_name]['data'] = [
                 line.as_list() for line in session.query(table).all()
             ]
+        heartbeats = session.query(Heartbeat).order_by(Asc('time_utc')).all()
+        for heartbeat in heartbeats[:-1]:
+            data['database']['heartbeat'] = heartbeat.as_list()
+
 
     # Now we try to send this all to the server
     try:
@@ -144,6 +189,9 @@ async def lifespan(app: FastAPI):
 
     # Mount static files (html, css, js, etc)
     app.mount('/static', StaticFiles(directory=f'{os.getenv("VLS_INSTALL")}/van/static'), name="static")
+
+    # Call a start-up heartbeat
+    heartbeat()
 
     # Launch the server
     yield

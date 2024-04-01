@@ -18,6 +18,6 @@ def activate_sensors(development: bool = False) -> list[Sensor]:
                      default_schedule={'minutes': 3})
 
     return [
-        gps_sensor,
-        tio_sensor
+        #gps_sensor,
+        #tio_sensor
     ]
