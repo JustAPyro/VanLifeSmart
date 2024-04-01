@@ -1,6 +1,5 @@
 import pytz
 from pytz import timezone
-import tzlocal 
 
 def datetimefilter(value, format='%I:%M:%S %p'):
     tz = pytz.timezone('US/Eastern') # timezone you want to convert to from UTC
