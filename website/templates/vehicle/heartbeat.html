@@ -2,10 +2,41 @@
 
 {% block content %}
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Heartbeat</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="/vehicle/{{vehicle.name}}.html">{{vehicle.name}}</a></li>
-            <li class="breadcrumb-item active">Heartbeat</li>
-        </ol>
-</div>
-{% endblock %}
+  <h1 class="mt-4">Heartbeat</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/vehicle/{{vehicle.name}}.html">{{vehicle.name}}</a></li>
+    <li class="breadcrumb-item active">Heartbeat</li>
+  </ol>
+  <div class="card">
+    <div class="card-body py-0">
+      <div class="row flex-nowrap" id='chart' style="height: 100px;"></div>
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block js %}
+  <script>
+    // 30 seconds
+    // 24 hours
+
+    // Get the parent
+    var chart = document.getElementById('chart');
+
+    for (let i = 0; i < 24; i++) {
+      var bar = document.createElement('div');
+      bar.className = 'col m-1';
+      bar.style.background = 'lightGrey';
+      bar.id = 'bar_'+i;
+      chart.appendChild(bar);
+    }
+
+
+    // get the parent
+    var chart = document.createElement('div');
+    my_div.className = 'col m-1';
+    my_div.style.background = 'red';
+    var bar = document.getElementById('bar')
+
+    bar.appendChild(my_div)
+  </script>
+  {% endblock %}

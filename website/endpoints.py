@@ -1,13 +1,16 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for, Response
+import json
+import math
+from datetime import timedelta
 from geopy.geocoders import Nominatim
-from models import User, GPSData, Vehicle, TomorrowIO
+from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
 from datetime import datetime, timezone
 from geopy.exc import GeocoderTimedOut
 from flask_login import login_user, logout_user, login_required, logout_user, current_user
 from flask import abort
-
+from sqlalchemy import desc
 endpoints = Blueprint('endpoints', __name__)
 
 
@@ -98,7 +101,7 @@ def receive_heartbeat():
 
     # Process the gps points first, since other points may refer to these
     gps_mappings = {}
-    response = {'received': {'gps': [], 'tio': []}}
+    response = {'received': {'gps': [], 'tio': [], 'heartbeat': []}}
     for gps_data in data['database']['gps']['data']:
         # Create a dictionary so that we can mutate it for the new database
         gps_dict = dict(zip(data['database']['gps']['headers'], gps_data))
@@ -144,6 +147,21 @@ def receive_heartbeat():
         # Create object and add to db
         tio = TomorrowIO(**tio_dict)
         db.session.add(tio)
+
+    for heartbeat_data in data['database']['heartbeat']['data']:
+        heartbeat_dict = dict(zip(data['database']['heartbeat']['headers'], heartbeat_data))
+        response['received']['heartbeat'].append(heartbeat_dict.pop('id'))
+        heartbeat_dict['vehicle_id'] = vehicle.id
+        heartbeat_dict['time_utc'] = datetime.fromisoformat(heartbeat_dict['time_utc'])
+        heartbeat_dict['next_time'] = datetime.fromisoformat(heartbeat_dict['next_time'])
+        
+        heartbeat_dict['server'] = True if heartbeat_dict['server'] == 'True' else False
+        heartbeat_dict['internet'] = True if heartbeat_dict['internet'] =='True' else False
+        heartbeat_dict['on_schedule'] = True if heartbeat_dict['on_schedule'] == 'True' else False
+        
+        heartbeat = Heartbeat(**heartbeat_dict)
+        db.session.add(heartbeat)
+        
 
     db.session.commit()
     return response
@@ -227,6 +245,59 @@ def vehicle_page(vehicle_name: str):
 @login_required
 def vehicle_heartbeat_page(vehicle_name: str):
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+
+    heartbeats = db.session.query(Heartbeat).order_by(desc('time_utc')).all()
+    connection_health = []
+        
+    hours_back = 12
+
+    for i, hb in enumerate(heartbeats):
+        if hb.on_schedule == False:
+            if i == len(heartbeats)-1:
+                continue
+
+            missing_entries = (hb.time_utc - heartbeats[i+1].time_utc) / timedelta(seconds=30)
+            for _ in range(math.floor(missing_entries)):
+                connection_health.append((hb.time_utc, False, False, False, 'ADDED'))
+
+        connection_health.append((hb.time_utc, True, hb.internet, hb.server))
+    health = {0: {'offline': 0, 'no_server': 0, 'no_internet': 0, 'online': 0}}
+    hour = 0
+    now = datetime.now()
+    while hour < 12:
+        print(hour)
+        for hb in connection_health:
+            if not hb[0]-timedelta(hours=hour+1) < now:
+                hour += 1
+                health[hour] = {'offline': 0, 'no_server': 0, 'no_internet': 0, 'online': 0}
+
+            if hb[1] == False:
+                health[hour]['offline'] += 1
+            elif hb[2] == False:
+                health[hour]['no_internet'] += 1
+            elif hb[3] == False:
+                health[hour]['no_server'] += 1
+            elif hb[1] and hb[2] and hb[3]:
+                health[hour]['online'] += 1
+            else:
+                raise Exception
+        break
+
+    for hour, status in health.items():
+        total = status['offline'] + status['no_server'] + status['no_internet'] + status['online']
+        status['online'] = status['online']/total
+        status['offline'] = status['offline']/total
+        status['no_server'] = status['no_server']/total
+        status['no_internet'] = status['no_internet']/total
+
+    print(json.dumps(health, indent=4))
+
+        
+
+            
+
+
+
     return render_template(
         'vehicle/heartbeat.html',
         user=current_user,

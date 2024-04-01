@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from functools import partial
 from pathlib import Path
 import pytz
-from sqlalchemy import desc
+from sqlalchemy import desc, asc
 import uvicorn
 from datetime import datetime, timedelta
 from fastapi import FastAPI
@@ -63,7 +63,7 @@ def record_heartbeat():
         last = session.query(Heartbeat).order_by(desc('time_utc')).first()
 
     # Check if this heartbeat was expected or if it's late 
-    if last == None or datetime.now() - last.next_time > timedelta(seconds=1):
+    if last == None or datetime.now() - last.next_time < timedelta(seconds=1):
         heartbeat_dict['on_schedule'] = True
     else:
         heartbeat_dict['on_schedule'] = False
@@ -94,7 +94,7 @@ def heartbeat():
     data = {
         'email': email,
         'vehicle_name': vehicle_name,
-        'next_heartbeat': next_heartbeat,
+        'next_heartbeat': datetime.now().isoformat(),
         'database': {
             'heartbeat': {'headers': Heartbeat.__table__.columns.keys(), 'data': []},
             # Here we also find and insert the column names for each dataset
@@ -118,9 +118,9 @@ def heartbeat():
             data['database'][data_name]['data'] = [
                 line.as_list() for line in session.query(table).all()
             ]
-        heartbeats = session.query(Heartbeat).order_by(Asc('time_utc')).all()
+        heartbeats = session.query(Heartbeat).order_by(asc('time_utc')).all()
         for heartbeat in heartbeats[:-1]:
-            data['database']['heartbeat'] = heartbeat.as_list()
+            data['database']['heartbeat']['data'].append(heartbeat.as_list())
 
 
     # Now we try to send this all to the server
@@ -143,6 +143,9 @@ def heartbeat():
         for data_name, table in upload:
             for received_id in json_back['received'][data_name]:
                 session.query(table).filter_by(id=received_id).delete()
+
+        for item in json_back['received']['heartbeat']:
+            session.query(Heartbeat).filter_by(id=item).delete()
 
         # Commit all the changes we made from the database
         session.commit()
