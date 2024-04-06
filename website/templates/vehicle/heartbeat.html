@@ -9,34 +9,55 @@
   </ol>
   <div class="card">
     <div class="card-body py-0">
-      <div class="row flex-nowrap" id='chart' style="height: 100px;"></div>
+      <div style='height:100%;'>
+        <canvas id="myChart"></canvas>
+      </div>
     </div>
   </div>
   {% endblock %}
 
   {% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // 30 seconds
-    // 24 hours
+    const ctx = document.getElementById('myChart');
 
-    // Get the parent
-    var chart = document.getElementById('chart');
-
-    for (let i = 0; i < 24; i++) {
-      var bar = document.createElement('div');
-      bar.className = 'col m-1';
-      bar.style.background = 'lightGrey';
-      bar.id = 'bar_'+i;
-      chart.appendChild(bar);
-    }
-
-
-    // get the parent
-    var chart = document.createElement('div');
-    my_div.className = 'col m-1';
-    my_div.style.background = 'red';
-    var bar = document.getElementById('bar')
-
-    bar.appendChild(my_div)
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['T-5h', 'T-4h', 'T-3h', 'T-2h', 'T-1h', 'T+0h'],
+        datasets: [{
+          label: 'Off',
+          data: {{chart_health.offline}},
+          borderWidth: 1,
+          backgroundColor: 'rgba(0, 0, 0, 0.1)', 
+        }, {
+          label: 'No Server',
+          data: {{chart_health.no_server}},
+          borderWidth: 1,
+          backgroundColor: 'rgba(255, 100, 54, 0.5)'
+        }, {
+          label: 'No Internet',
+          data: {{chart_health.no_internet}},
+          borderWidth: 1,
+          backgroundColor: 'rgba(255, 252, 187, 0.5)'
+        }, {
+          label: 'Online',
+          data: {{chart_health.online}},
+          borderWidth: 1,
+          backgroundColor: 'rgb(144, 238, 144, 0.5)'
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            stacked: true,
+            beginAtZero: true
+          },
+          x: {
+            stacked: true,
+          }
+        }
+      }
+    });
   </script>
   {% endblock %}

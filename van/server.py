@@ -75,7 +75,6 @@ def record_heartbeat():
 
     heartbeat_dict['server'] = can_connect(server_url)
     heartbeat_dict['internet'] = True if heartbeat_dict['server'] else can_connect(google_url)
-
     with Session(engine) as session:
         session.add(Heartbeat(**heartbeat_dict))
         session.commit()

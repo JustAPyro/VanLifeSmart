@@ -264,10 +264,9 @@ def vehicle_heartbeat_page(vehicle_name: str):
     health = {0: {'offline': 0, 'no_server': 0, 'no_internet': 0, 'online': 0}}
     hour = 0
     now = datetime.now()
-    while hour < 12:
-        print(hour)
+    while hour < 6:
         for hb in connection_health:
-            if not hb[0]-timedelta(hours=hour+1) < now:
+            if hb[0] < now - timedelta(hours=hour):
                 hour += 1
                 health[hour] = {'offline': 0, 'no_server': 0, 'no_internet': 0, 'online': 0}
 
@@ -283,23 +282,34 @@ def vehicle_heartbeat_page(vehicle_name: str):
                 raise Exception
         break
 
-    for hour, status in health.items():
-        total = status['offline'] + status['no_server'] + status['no_internet'] + status['online']
-        status['online'] = status['online']/total
-        status['offline'] = status['offline']/total
-        status['no_server'] = status['no_server']/total
-        status['no_internet'] = status['no_internet']/total
-
     print(json.dumps(health, indent=4))
 
-        
+    for hour, status in health.items():
+        total = status['offline'] + status['no_server'] + status['no_internet'] + status['online']
+        if total == 0:
+            continue
+        status['online'] = (status['online']/total) * 100
+        status['offline'] = (status['offline']/total) * 100
+        status['no_server'] = (status['no_server']/total) * 100
+        status['no_internet'] = (status['no_internet']/total) * 100
 
-            
+    chart_health = {
+        'offline': [],
+        'no_server': [],
+        'no_internet': [],
+        'online': []
+    }
+    # This goes 5, 4, 3, 2, 1, 0
+    for i in range(6, 0, -1):
+        for state in ('offline', 'no_server', 'no_internet', 'online'):
+            chart_health[state].append(health[i][state] if i in health else 0)
 
-
+    print(json.dumps(chart_health, indent=4))
 
     return render_template(
         'vehicle/heartbeat.html',
+        health=health,
+        chart_health=chart_health,
         user=current_user,
         vehicle=vehicle,
     )
