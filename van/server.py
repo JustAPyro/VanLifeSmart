@@ -132,7 +132,7 @@ def heartbeat():
         }
 
         url = ('http://127.0.0.1:5000/api/heartbeat.json' if dev_env else 
-            'http://justapyr0.pythonanywhere.com/api/heartbeat.json')
+            'https://justapyr0.pythonanywhere.com/api/heartbeat.json')
         response = requests.post(
             url=url,
             json=data,

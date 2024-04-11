@@ -16,7 +16,7 @@ Path(f'{os.getenv("VLS_DATA_PATH")}').mkdir(parents=True, exist_ok=True)
 # Create the database
 engine = create_engine(
     f'sqlite:///{os.getenv("VLS_DATA_PATH")}/database.db',
-    connect_args={"check_same_thread": False})
+    connect_args={'check_same_thread': False, 'timeout': 1000})
 
 # Instantiate all database tables
 Base.metadata.create_all(engine)
