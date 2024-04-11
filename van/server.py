@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.x
 import requests
 from dotenv import load_dotenv
-
+import base64
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -34,6 +34,7 @@ required_environment = (
     'TOMORROW_IO_KEY',  # API Key for weather information
     'VLS_VEHICLE_NAME',
     'VLS_VEHICLE_EMAIL',
+    'VLS_V_USER_PASSWORD',
 )
 
 # This maps loggers to output files
@@ -71,7 +72,7 @@ def record_heartbeat():
     # Check for connectivity to server and internet
     google_url = 'http://142.250.190.142'
     server_url = ('http://127.0.0.1:5000/api/heartbeat.json' if dev_env else 
-        'http://justapyr0.pythonanywhere.com/api/heartbeat.json')
+        'https://justapyr0.pythonanywhere.com/api/heartbeat.json')
 
     heartbeat_dict['server'] = can_connect(server_url)
     heartbeat_dict['internet'] = True if heartbeat_dict['server'] else can_connect(google_url)
@@ -124,11 +125,18 @@ def heartbeat():
 
     # Now we try to send this all to the server
     try:
+        basic_auth_string = f'{os.getenv("VLS_VEHICLE_EMAIL")}:{os.getenv("VLS_V_USER_PASSWORD")}'
+        basic_auth_encoded = base64.b64encode(basic_auth_string.encode('ascii'))
+        request_headers = {
+            'Authorization': f'Basic {basic_auth_encoded}'
+        }
+
         url = ('http://127.0.0.1:5000/api/heartbeat.json' if dev_env else 
             'http://justapyr0.pythonanywhere.com/api/heartbeat.json')
         response = requests.post(
             url=url,
-            json=data)
+            json=data,
+            headers=request_headers)
 
         # Filter for responses that aren't 200
         # TODO: We should differentiate between requests

@@ -1,4 +1,6 @@
 import os
+import base64
+from werkzeug.security import check_password_hash
 
 from dotenv import load_dotenv
 from flask import Flask
@@ -29,6 +31,32 @@ def create_app():
     @login_manager.user_loader
     def load_user(id: int):
         return db.session.get(User, id)
+
+    # This allows for basic auth
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        auth = request.headers.get('Authorization')
+        if not auth:
+            return None
+
+        if auth[:6] == 'Basic ':
+            # Note that here we slice off the b'' symbol
+            basic_auth = base64.b64decode(auth[8:-1]).decode('ascii')
+            print(f'=>{basic_auth}')
+            email, password = basic_auth.split(':')
+            
+            user = db.session.query(User).filter_by(email=email).first()
+            
+            if user == None:
+                return None
+
+            if check_password_hash(user.password, password) == False:
+                return None
+
+            return user
+
+        return None
+
 
     return application
 

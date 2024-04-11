@@ -3,7 +3,7 @@ from typing import Optional, List
 
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 import time
-from sqlalchemy.types import TypeDecorator
+from sqlalchemy.types import TypeDecorator, DECIMAL
 import datetime
 from sqlalchemy import func, create_engine, ForeignKey, String, Column, Table
 from sqlalchemy import DOUBLE
@@ -46,6 +46,7 @@ class Vehicle(Base):
     owner: Mapped['User'] = relationship(back_populates='vehicles')
 
     heartbeats: Mapped[List['Heartbeat']] = relationship(back_populates='vehicle')
+    pitstops: Mapped[List['Pitstop']] = relationship(back_populates='vehicle')
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
@@ -64,6 +65,17 @@ class User(Base, UserMixin):
                            secondaryjoin=(following.c.subject == id),
                            backref='following')
 
+class Pitstop(Base):
+    __tablename__ = 'pitstop'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    date: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    vehicle_id: Mapped[Optional[int]] = mapped_column(ForeignKey('vehicle.id'))
+    vehicle: Mapped[Optional['Vehicle']] = relationship(back_populates='pitstops')
+
+    gallons_filled: Mapped[float]
+    total_cost: Mapped[float]
+    mileage: Mapped[int]
+    filled: Mapped[bool]
 
 
 class Heartbeat(Base):

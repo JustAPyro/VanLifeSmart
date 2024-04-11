@@ -1,0 +1,54 @@
+{% extends "root_sidebar.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="card my-3">
+    <div class="card-body">
+      <form method="POST">
+        <div class="form-group">
+          <label for="gallons_filled">Gallons filled:</label>
+          <input type="number" class="form-control" id="gallons_filled" name="gallons_filled" step="any" aria-describedby="emailHelp">
+        </div>
+        <div class="form-group">
+          <label for="total_cost">Total Cost:</label>
+          <input type="number" class="form-control" id="total_cost" name="total_cost" step="any">
+        </div>
+        <div class="form-group">
+          <label for="mileage">Mileage:</label>
+          <input type="number" class="form-control" id="mileage" name="mileage" step="any">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="filled" name="filled">
+          <label class="form-check-label" for="filled">Tank Filled</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Gallons</th>
+            <th scope="col">Mileage</th>
+            <th scope="col">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pitstop in vehicle.pitstops %}
+          <tr>
+            <td>{{ pitstop.date | datetimefilter }}</td>
+            <td>{{ pitstop.gallons_filled }} Gal.</td>
+            <td>{{ pitstop.mileage }} mi.</td>
+            <td>${{ pitstop.total_cost }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

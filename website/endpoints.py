@@ -3,9 +3,10 @@ import json
 import math
 from datetime import timedelta
 from geopy.geocoders import Nominatim
-from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat
+from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat, Pitstop
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
+from website.notifications import send_gas_email
 from datetime import datetime, timezone
 from geopy.exc import GeocoderTimedOut
 from flask_login import login_user, logout_user, login_required, logout_user, current_user
@@ -79,6 +80,7 @@ def log_out_page():
     return redirect(url_for('endpoints.sign_in_page'))
 
 @endpoints.route('/api/heartbeat.json', methods=['GET', 'POST'])
+@login_required
 def receive_heartbeat():
     if request.method == 'GET':
         return ('', 204)
@@ -239,7 +241,31 @@ def vehicle_page(vehicle_name: str):
         **context,
     )
 
+@endpoints.route('/vehicle/<vehicle_name>/pitstop.html', methods=['GET', 'POST'])
+@login_required
+def vehicle_pitstop_page(vehicle_name: str):
+    # TODO: Error handling here
+    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
 
+    if request.method == 'POST':
+        # TODO: Validate
+        ps = Pitstop(
+            vehicle_id=vehicle.id,
+            gallons_filled=request.form.get('gallons_filled'),
+            total_cost=request.form.get('total_cost'),
+            mileage=request.form.get('mileage'),
+            filled=bool('filled' in request.form)
+                        
+        )
+        db.session.add(ps)
+        db.session.commit()
+        send_gas_email('Luke', ps)
+
+
+
+    return render_template('vehicle/pitstop.html',
+                           user=current_user,
+                           vehicle=vehicle)
 
 @endpoints.route('/vehicle/<vehicle_name>/heartbeat.html')
 @login_required

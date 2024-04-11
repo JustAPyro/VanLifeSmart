@@ -5,53 +5,62 @@
 {% endblock %}
 
 {% block root_content %}
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">
-                                Dashboard
-                            </div>
-                            <a class="nav-link" href="/vehicle/{{vehicle.name}}.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Home
-                            </a>
-                            <a class="nav-link" href="/vehicle/{{vehicle.name}}/heartbeat.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-heart"></i></div>
-                                Heartbeat
-                            </a>
-                            <a class="nav-link" href="/vehicle/{{vehicle.name}}/location.html">
-                              <div class="sb-nav-link-icon"><i class="fas fa-location-dot"></i></div>
-                              Location
-                            </a>
+<div id="layoutSidenav">
+  <div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+      <div class="sb-sidenav-menu">
+        <div class="nav">
+          <div class="sb-sidenav-menu-heading">
+            Dashboard
+          </div>
+          <a class="nav-link" href="/vehicle/{{vehicle.name}}.html">
+            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+            Home
+          </a>
+          <a class="nav-link" href="/vehicle/{{vehicle.name}}/heartbeat.html">
+            <div class="sb-nav-link-icon"><i class="fas fa-heart"></i></div>
+            Heartbeat
+          </a>
+          <a class="nav-link" href="/vehicle/{{vehicle.name}}/location.html">
+            <div class="sb-nav-link-icon"><i class="fas fa-location-dot"></i></div>
+            Location
+          </a>
+          {% if user == vehicle.owner %}
+          <div class="sb-sidenav-menu-heading">
+            Owner Utilities
+          </div>
+          <a class="nav-link" href="/vehicle/{{vehicle.name}}/pitstop.html">
+            <div class="sb-nav-link-icon"><i class="fas fa-gas-pump"></i></div>
+            Pit Stop
+          </a>
+          {% endif %}
 
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Role:</div>
-                        Sudo-R
-                    </div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    {% block content %}
-                    {% endblock %}
-
-                    {% block js %}
-                    {% endblock %}
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Van Life Smart 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">Role:</div>
+            Sudo-R
+          </div>
+    </nav>
         </div>
-{% endblock %}
+        <div id="layoutSidenav_content">
+          <main>
+            {% block content %}
+            {% endblock %}
+
+            {% block js %}
+            {% endblock %}
+          </main>
+          <footer class="py-4 bg-light mt-auto">
+            <div class="container-fluid px-4">
+              <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; Van Life Smart 2023</div>
+                <div>
+                  <a href="#">Privacy Policy</a>
+                  &middot;
+                  <a href="#">Terms &amp; Conditions</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+      {% endblock %}
