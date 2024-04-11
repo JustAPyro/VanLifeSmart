@@ -348,7 +348,7 @@ def vehicle_location_page(vehicle_name: str):
     if not vehicle:
        abort(404) 
     
-    path = [[gps.latitude, gps.longitude] for gps in vehicle.owner.gps_data]
+    path = [[gps.latitude, gps.longitude] for gps in vehicle.gps_data]
     return render_template(
         'vehicle/location.html',
         locations=path,
