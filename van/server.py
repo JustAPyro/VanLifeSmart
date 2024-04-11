@@ -151,7 +151,7 @@ def heartbeat():
             for received_id in json_back['received'][data_name]:
                 session.query(table).filter_by(id=received_id).delete()
 
-        if 'heartbeat' in json_back['recieved']:
+        if 'heartbeat' in json_back['received']:
             for item in json_back['received']['heartbeat']:
                 session.query(Heartbeat).filter_by(id=item).delete()
 
