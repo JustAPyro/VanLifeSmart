@@ -84,7 +84,7 @@ def record_heartbeat():
 def heartbeat():
 
     # Log the heartbeat
-    record_heartbeat()
+    # record_heartbeat()
 
     # Get the name of the vehicle and user data
     vehicle_name = os.getenv('VLS_VEHICLE_NAME')
@@ -143,7 +143,7 @@ def heartbeat():
         if response.status_code != 200:
             print(response.status_code)
             print(response.content)
-
+        print(response)
         # Delete from local tables based
         # the json we received back
         json_back = response.json()

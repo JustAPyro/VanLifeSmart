@@ -112,7 +112,7 @@ def receive_heartbeat():
         old_id = gps_dict.pop('id')
 
         # Assign a user id, parse the datetime, and check for any None values
-        gps_dict['owner_id'] = user.id
+        gps_dict['vehicle_id'] = vehicle.id
         gps_dict['utc_time'] = datetime.strptime(gps_dict['utc_time'], '%Y-%m-%d %H:%M:%S')
         for key in gps_dict.keys():
             if gps_dict[key] == 'None':
