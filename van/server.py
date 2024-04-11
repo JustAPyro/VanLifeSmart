@@ -32,7 +32,7 @@ required_environment = (
     'VLS_INSTALL',  # Install location
     'VLS_DATA_PATH',  # Location of logs and local database
     'TOMORROW_IO_KEY',  # API Key for weather information
-    'VLS_VEHICLE_NAME',
+    'VLS_V_NAME',
     'VLS_VEHICLE_EMAIL',
     'VLS_V_USER_PASSWORD',
 )
@@ -83,23 +83,10 @@ def record_heartbeat():
 
 def heartbeat():
 
-    # Log the heartbeat
-    # record_heartbeat()
-
-    # Get the name of the vehicle and user data
-    vehicle_name = os.getenv('VLS_VEHICLE_NAME')
-    email = os.getenv('VLS_VEHICLE_EMAIL')
-
     # Generate the data structure we send to the server
     data = {
-        'email': email,
-        'vehicle_name': vehicle_name,
-        'next_heartbeat': datetime.now().isoformat(),
         'database': {
-            'heartbeat': {'headers': Heartbeat.__table__.columns.keys(), 'data': []},
-            # Here we also find and insert the column names for each dataset
             'gps': {'headers': GPSData.__table__.columns.keys(), 'data': []},
-            'tio': {'headers': TomorrowIO.__table__.columns.keys()}
         }
     }
 
@@ -108,7 +95,6 @@ def heartbeat():
     # TODO Autogenerate this list
     upload = [
         ('gps', GPSData),
-        ('tio', TomorrowIO)
     ]
 
     # TODO abort beforehand if no connection
@@ -118,21 +104,22 @@ def heartbeat():
             data['database'][data_name]['data'] = [
                 line.as_list() for line in session.query(table).all()
             ]
-        heartbeats = session.query(Heartbeat).order_by(asc('time_utc')).all()
-        for heartbeat in heartbeats[:-1]:
-            data['database']['heartbeat']['data'].append(heartbeat.as_list())
-
 
     # Now we try to send this all to the server
     try:
+        # Create an authorization header by encoding email/password (Basic-Auth)
         basic_auth_string = f'{os.getenv("VLS_VEHICLE_EMAIL")}:{os.getenv("VLS_V_USER_PASSWORD")}'
         basic_auth_encoded = base64.b64encode(basic_auth_string.encode('ascii'))
         request_headers = {
-            'Authorization': f'Basic {basic_auth_encoded}'
+            'Authorization': f'Basic {basic_auth_encoded}',
+            'Content-Type': 'application/json'
         }
 
+        # Construct the URL
         url = ('http://127.0.0.1:5000/api/heartbeat.json' if dev_env else 
-            'https://justapyr0.pythonanywhere.com/api/heartbeat.json')
+            f'https://justapyr0.pythonanywhere.com/api/heartbeat/{os.getenv("VLS_V_NAME")}.json')
+
+        # And post to server
         response = requests.post(
             url=url,
             json=data,
@@ -151,14 +138,10 @@ def heartbeat():
             for received_id in json_back['received'][data_name]:
                 session.query(table).filter_by(id=received_id).delete()
 
-        if 'heartbeat' in json_back['received']:
-            for item in json_back['received']['heartbeat']:
-                session.query(Heartbeat).filter_by(id=item).delete()
-
-        # Commit all the changes we made from the database
+        # Commit all the changes that we made
+        # TODO: Consider another handshake before commiting this delete
         session.commit()
 
-        # TODO: We may want to do another handshake before we commit this delete
     except requests.exceptions.ConnectionError as e:
         return
 

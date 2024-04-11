@@ -79,31 +79,22 @@ def log_out_page():
     logout_user()
     return redirect(url_for('endpoints.sign_in_page'))
 
-@endpoints.route('/api/heartbeat.json', methods=['GET', 'POST'])
+
+@endpoints.route('/api/heartbeat/<vehicle_name>.json', methods=['POST'])
 @login_required
-def receive_heartbeat():
-    if request.method == 'GET':
-        return ('', 204)
+def receive_heartbeat(vehicle_name: str):
+
+    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+    if not vehicle:
+        return Response(f'No vehicle found with name {vehicle_name}', status=400)
+
     # Get the data from the heartbeat
     data = request.get_json()
 
-    # Attempt to find a user with email provided, if none found issue malformed 400
-    user = db.session.query(User).filter_by(email=data['email']).first()
-    if not user:
-        return Response(f'No user found under email provided ({data["email"]})', status=400)
-
-    # Attempt to find a vehicle with the name provided, if none found issue malformed 400
-    vehicle = db.session.query(Vehicle).filter_by(name=data['vehicle_name']).first()
-    if not vehicle:
-        return Response(f'No vehicle found with name provided ({data["vehicle_name"]})', status=400)
-
-    # Update the vehicle heartbeat
-    vehicle.last_heartbeat = datetime.now(timezone.utc)
-    vehicle.next_expected_heartbeat = datetime.fromisoformat(data['next_heartbeat'])
 
     # Process the gps points first, since other points may refer to these
     gps_mappings = {}
-    response = {'received': {'gps': [], 'tio': [], 'heartbeat': []}}
+    response = {'received': {'gps': []}}
     for gps_data in data['database']['gps']['data']:
         # Create a dictionary so that we can mutate it for the new database
         gps_dict = dict(zip(data['database']['gps']['headers'], gps_data))
@@ -126,44 +117,6 @@ def receive_heartbeat():
         # Map the new id to the old id and update the received response
         gps_mappings[old_id] = gps.id
         response['received']['gps'].append(old_id)
-    # Load tio updates
-    for tio_data in data['database']['tio']['data']:
-        # Create dict to make mutating easier
-        tio_dict = dict(zip(data['database']['tio']['headers'], tio_data))
-
-        # Remove the id and add it to the received response
-        response['received']['tio'].append(tio_dict.pop('id'))
-
-        # Update the owner id and the new gps id as well as parsing the time
-        tio_dict['owner_id'] = user.id
-        tio_dict['gps_id'] = gps_mappings[tio_dict['gps_id']]
-        tio_dict['utc_time'] = datetime.strptime(tio_dict['utc_time'], '%Y-%m-%d %H:%M:%S')
-        for key in tio_dict.keys():
-            if tio_dict[key] == 'None':
-                tio_dict[key] = None
-            if tio_dict[key] == 'True':
-                tio_dict[key] = True
-            if tio_dict[key] == 'False':
-                tio_dict[key] = False
-
-        # Create object and add to db
-        tio = TomorrowIO(**tio_dict)
-        db.session.add(tio)
-
-    for heartbeat_data in data['database']['heartbeat']['data']:
-        heartbeat_dict = dict(zip(data['database']['heartbeat']['headers'], heartbeat_data))
-        response['received']['heartbeat'].append(heartbeat_dict.pop('id'))
-        heartbeat_dict['vehicle_id'] = vehicle.id
-        heartbeat_dict['time_utc'] = datetime.fromisoformat(heartbeat_dict['time_utc'])
-        heartbeat_dict['next_time'] = datetime.fromisoformat(heartbeat_dict['next_time'])
-        
-        heartbeat_dict['server'] = True if heartbeat_dict['server'] == 'True' else False
-        heartbeat_dict['internet'] = True if heartbeat_dict['internet'] =='True' else False
-        heartbeat_dict['on_schedule'] = True if heartbeat_dict['on_schedule'] == 'True' else False
-        
-        heartbeat = Heartbeat(**heartbeat_dict)
-        db.session.add(heartbeat)
-        
 
     db.session.commit()
     return response
