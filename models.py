@@ -45,6 +45,8 @@ class Vehicle(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     owner: Mapped['User'] = relationship(back_populates='vehicles')
 
+    gps_data: Mapped[List['GPSData']] = relationship(back_populates='vehicle')
+
     heartbeats: Mapped[List['Heartbeat']] = relationship(back_populates='vehicle')
     pitstops: Mapped[List['Pitstop']] = relationship(back_populates='vehicle')
 
@@ -57,7 +59,6 @@ class User(Base, UserMixin):
     created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     vehicles: Mapped[List['Vehicle']] = relationship(back_populates='owner')
     last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
-    gps_data: Mapped[List['GPSData']] = relationship(back_populates='owner')
     tio_data: Mapped[List['TomorrowIO']] = relationship(back_populates='owner')
     follows = relationship('User',
                            secondary=following,
@@ -129,8 +130,8 @@ class GPSData(Base):
     # Time of recording
     utc_time: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     # Owner
-    owner_id: Mapped[Optional[int]] = mapped_column(ForeignKey('user.id'))
-    owner: Mapped[Optional["User"]] = relationship(back_populates="gps_data")
+    vehicle_id: Mapped[Optional[int]] = mapped_column(ForeignKey('vehicle.id'))
+    vehicle: Mapped[Optional["Vehicle"]] = relationship(back_populates="gps_data")
 
     # Location information
     latitude: Mapped[float]
