@@ -4,15 +4,15 @@
 
 {% block content %}
 <div class="container-fluid px-4">
-  <h3 class="mt-4 mb-0">{{vehicle.owner.username}}'s</h3>
-  <h1 class="mt-0">{{vehicle.name}}
-    {% if connected == true %}
-    <span class="badge bg-success">Connected</span>
-    {% elif connected == false %}
-    <span class="badge bg-danger">Disconnected</span>
-    {% endif %}
-  </h1>
-  <hr/>
+  <div class="row mt-3 justify-content-between">
+    <div class="col">
+      <h1>{{vehicle.name}}</h1>
+    </div>
+    <div class="col-4">
+      <h2 class="mt-1">Owned by: {{vehicle.owner.username}}</h2>
+    </div>
+  </div>
+  <hr class="my-1"/>
   <div class="row">
     <!--
     {% if heartbeat %}
@@ -84,12 +84,12 @@
   <div class="row">
     <div class="col-xl-6">
       {% if permissions.view_weather and (weather is defined) %}
-      {% include "cards/weather_card.html" %}
+      <!--{% include "cards/weather_card.html" %}-->
       {% endif %}
     </div>
     <div class="col-xl-6">
       {% if permissions.view_location and (location is defined) %}
-      {% include "cards/location_card.html" %}
+      <!-- {% include "cards/location_card.html" %} -->
       {% endif %}
     </div>
   </div>
