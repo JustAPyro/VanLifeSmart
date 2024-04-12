@@ -136,7 +136,31 @@ def get_location_string(latitude, longitude):
 
     return name
 
+@endpoints.route('/vehicle.html', methods=['GET', 'POST'])
+@login_required
+def create_vehicle_page():
 
+    if request.method == 'POST':
+        
+        name = request.form.get('vehicle_name')
+        print(name)
+        if name == None or len(name) < 2:
+            flash('Please fill in a vehicle name greater than one character!', category='error')
+        elif db.session.query(Vehicle).filter_by(name=name).first() != None:
+            flash('There is already a vehicle registered under that name!', category='error')
+        else:
+            db.session.add(Vehicle(
+                name=name,
+                owner_id=current_user.id
+            ))
+            db.session.commit()
+            flash(f'Vehicle "{name}" registered!')
+
+
+    return render_template(
+        'vehicle/create.html',
+        user=current_user
+    )
 
 @endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
@@ -150,6 +174,10 @@ def vehicle_page(vehicle_name: str):
 
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
     context = {}
+
+    if not vehicle:
+        # TODO: Offer to register here
+        return f'"{vehicle_name}" is not a registered vehicle.'
 
     # If permission
     if permissions['view_connected'] and vehicle.next_expected_heartbeat:
@@ -166,10 +194,10 @@ def vehicle_page(vehicle_name: str):
             'now': datetime.utcnow()
         }
 
-    if permissions['view_location'] and vehicle.owner.gps_data:
+    if permissions['view_location'] and vehicle.gps_data:
 
         # Get the last gps data this user has logged
-        gps = vehicle.owner.gps_data[-1]
+        gps = vehicle.gps_data[-1]
 
         context['location'] = gps.as_dict()
 
