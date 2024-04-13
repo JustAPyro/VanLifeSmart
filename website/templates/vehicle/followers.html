@@ -1,0 +1,102 @@
+{% extends "root_sidebar.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="card my-3">
+    <div class="card-header">
+      Roles<span class="badge text-bg-secondary rounded-4 py-1 px-2 ms-2">{{vehicle.roles|length}}</span> 
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Role Name</th>
+            <th scope="col">View Location</th>
+            <th scope="col">View Weather</th>
+            <th scope="col">View Heartbeat</th>
+            <th scope="col">Write Heartbeat</th>
+          </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+          <form method="POST">
+              <td><input type="text" id="role_name" name="role_name"></input></td>
+              <td><input type="checkbox" name='view_location'></input></td>
+              <td><input type="checkbox" name='view_weather'></input></td>
+              <td><input type="checkbox" name='view_heartbeat'></input></td>
+              <td><input type="checkbox" name='write_heartbeat'></input></td>
+              <td><button class="btn btn-primary btn-block" type="submit">Create Role</button></td>
+          </form>
+            </tr>
+          {% for role in vehicle.roles %}
+          <tr>
+            <td>{{ role.name }}</td>
+            <td>
+              {% if role.view_location == false %}
+              <i class="fa-solid fa-x"></i>
+              {% elif role.view_location == true %}
+              <i class="fa-solid fa-check"></i>
+              {% endif %}
+            </td>
+            <td>
+              {% if role.view_weather == false %}
+              <i class="fa-solid fa-x"></i>
+              {% elif role.view_weather == true %}
+              <i class="fa-solid fa-check"></i>
+              {% endif %}
+            </td>
+            <td>
+              {% if role.view_heartbeat == false %}
+              <i class="fa-solid fa-x"></i>
+              {% elif role.view_heartbeat == true %}
+              <i class="fa-solid fa-check"></i>
+              {% endif %}
+            </td>
+            <td>
+              {% if role.write_heartbeat == false %}
+              <i class="fa-solid fa-x"></i>
+              {% elif role.write_heartbeat == true %}
+              <i class="fa-solid fa-check"></i>
+              {% endif %}
+            </td>
+            <td>
+              <form method="POST">
+                <input type="hidden" id="delete_form" name="delete_form" value={{role.id}}>
+                <button class="btn btn-primary btn-block" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Follower<span class="badge text-bg-secondary rounded-4 py-1 px-2 ms-2">{{vehicle.follows|length}}</span>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for follow in vehicle.follows %}
+          <tr>
+            <td>{{ follow.user.username }}</td>
+            <td>{{ follow.user.email }}</td>
+            <td>{{ follow.role }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

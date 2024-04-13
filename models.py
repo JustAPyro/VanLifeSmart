@@ -32,6 +32,14 @@ class Base(DeclarativeBase):
 class Role(Base):
     __tablename__ = 'role'
     id: Mapped[int] = mapped_column(primary_key=True)
+    vehicle_id: Mapped[int] = mapped_column(ForeignKey('vehicle.id'))
+    name: Mapped[str] = mapped_column(String(40))
+
+    view_location: Mapped[bool]
+    view_weather: Mapped[bool]
+    view_heartbeat: Mapped[bool]
+    write_heartbeat: Mapped[bool]
+    
 
 class Follow(Base):
     __tablename__ = 'follow'
@@ -53,6 +61,7 @@ class Vehicle(Base):
     owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     owner: Mapped['User'] = relationship(back_populates='vehicles')
 
+    roles: Mapped[List['Role']] = relationship()
     gps_data: Mapped[List['GPSData']] = relationship(back_populates='vehicle')
     follows: Mapped[List['Follow']] = relationship(back_populates='vehicle')
 

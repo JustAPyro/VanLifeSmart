@@ -3,7 +3,7 @@ import json
 import math
 from datetime import timedelta
 from geopy.geocoders import Nominatim
-from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat, Pitstop, Follow
+from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat, Pitstop, Follow, Role
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
 from website.notifications import send_gas_email
@@ -362,6 +362,51 @@ def vehicle_heartbeat_page(vehicle_name: str):
         vehicle=vehicle,
     )
 
+@endpoints.route('/vehicle/<vehicle_name>/followers.html', methods=['GET', 'POST'])
+@login_required
+def vehicle_follower_page(vehicle_name: str):
+    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+    
+    if not vehicle:
+        abort(404)
+
+    if vehicle.owner.id != current_user.id:
+        return ('You must own the vehicle to access this page', 403)
+
+    if request.method == 'POST':
+
+        if 'delete_form' in request.form:
+            # TODO: ADD SOME CHECKS here
+            db.session.query(Role).filter(Role.id == request.form.get('delete_form')).delete()
+            db.session.commit()
+            return redirect(url_for('endpoints.vehicle_follower_page', vehicle_name=vehicle.name))
+
+
+        r_name = request.form.get('role_name')
+   
+        print(request.form)
+        
+
+        if r_name == None or len(r_name) < 2:
+            flash('Role name is required and must be greater than one character.', category='error')
+        elif db.session.query(Role).filter(Role.name == r_name).first() is not None:
+            flash('You\'ve arlready created a role with that name!', category='error')
+        else:
+            db.session.add(Role(
+                name=r_name,
+                vehicle_id=vehicle.id,
+                view_location='view_location' in request.form,
+                view_weather='view_weather' in request.form,
+                view_heartbeat='view_heartbeat' in request.form,
+                write_heartbeat='write_heartbeat' in request.form,
+            ))
+            db.session.commit()
+
+    return render_template(
+        'vehicle/followers.html',
+        user=current_user,
+        vehicle=vehicle,
+    )
 
 @endpoints.route('/vehicle/<vehicle_name>/location.html')
 @login_required
