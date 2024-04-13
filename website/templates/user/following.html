@@ -46,15 +46,12 @@
           {% for follow in user.follows %}
         <div class="col-sm-6 col-lg-4">
           <div class="card hover-img">
+            <img src="/static/assets/img/van.jpg" alt="" class="card-img-top">
             <div class="card-body p-4 text-center border-bottom">
-              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" class="rounded-circle mb-3" width="80" height="80">
-              <h5 class="fw-semibold mb-0">{{ follow.vehicle.name }}</h5>
-              {% if follow.role == None %}
-              <span class="text-dark fs-2"><b>Follow Pending</b></span>
-              {% else %}
-              <span class="text-dark fs-2"><a href="/vehicle/{{follow.vehicle.name}}.html">Van Link</a></span>
+              <h4><b>{{follow.vehicle.name}}</b></h4>
+              {% if follow.role == None and follow.vehicle.owner.id != user.id %}
+              <p>Follow Pending</p>
               {% endif %}
-
             </div>
             <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
               <li class="position-relative">

@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from geopy.exc import GeocoderTimedOut
 from flask_login import login_user, logout_user, login_required, logout_user, current_user
 from flask import abort
-from sqlalchemy import desc
+from sqlalchemy import desc, and_
 endpoints = Blueprint('endpoints', __name__)
 
 
@@ -31,7 +31,7 @@ def sign_in_page():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=('remember' in request.form))
-                return redirect(url_for('endpoints.user_friends'))
+                return redirect(url_for('endpoints.user_following'))
             else:
                 flash('Incorrect email or password.', category='error')
         else:
@@ -68,7 +68,7 @@ def sign_up_page():
 
             flash('Account created', category='success')
             login_user(new_user)
-            return redirect(url_for('endpoints.user_friends'))
+            return redirect(url_for('endpoints.user_following'))
     return render_template('sign-up.html', 
                            user=current_user,
                            form=form)
@@ -182,11 +182,34 @@ def get_location_string(latitude, longitude):
 
     return name
 
+def can_access(user: User, vehicle: Vehicle):
+    if vehicle.owner == user:
+        return True
 
+    follow = db.session.query(Follow).filter(
+        and_(
+            Follow.user_id == current_user.id,
+            Follow.vehicle_id == vehicle.id
+        )
+    ).first()
+
+    if follow == None or follow.role == None:
+        return False
+    else:
+        return True
 
 @endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
 def vehicle_page(vehicle_name: str):
+    
+    # First try to find the vehicle
+    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
+
+    if not vehicle: # TODO: Better 404
+        return ('Could not find vehicle', 404)
+    if not can_access(current_user, vehicle):
+        return ('Unauthorized', 403)
+
     permissions = {
         'view_connected': True,
         'view_heartbeat': True,
