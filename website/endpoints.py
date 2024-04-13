@@ -3,7 +3,7 @@ import json
 import math
 from datetime import timedelta
 from geopy.geocoders import Nominatim
-from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat, Pitstop
+from models import User, GPSData, Vehicle, TomorrowIO, Heartbeat, Pitstop, Follow
 from werkzeug.security import generate_password_hash, check_password_hash
 from website.database import db
 from website.notifications import send_gas_email
@@ -79,22 +79,30 @@ def log_out_page():
     logout_user()
     return redirect(url_for('endpoints.sign_in_page'))
 
-
-@endpoints.route('/api/heartbeat/<vehicle_name>.json', methods=['POST'])
-@login_required
-def receive_heartbeat(vehicle_name: str):
-
-    vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
-    if not vehicle:
-        return Response(f'No vehicle found with name {vehicle_name}', status=400)
-
+@endpoints.route('/api/heartbeat.json', methods=['GET', 'POST'])
+def receive_heartbeat():
+    if request.method == 'GET':
+        return ('', 204)
     # Get the data from the heartbeat
     data = request.get_json()
 
+    # Attempt to find a user with email provided, if none found issue malformed 400
+    user = db.session.query(User).filter_by(email=data['email']).first()
+    if not user:
+        return Response(f'No user found under email provided ({data["email"]})', status=400)
+
+    # Attempt to find a vehicle with the name provided, if none found issue malformed 400
+    vehicle = db.session.query(Vehicle).filter_by(name=data['vehicle_name']).first()
+    if not vehicle:
+        return Response(f'No vehicle found with name provided ({data["vehicle_name"]})', status=400)
+
+    # Update the vehicle heartbeat
+    vehicle.last_heartbeat = datetime.now(timezone.utc)
+    vehicle.next_expected_heartbeat = datetime.fromisoformat(data['next_heartbeat'])
 
     # Process the gps points first, since other points may refer to these
     gps_mappings = {}
-    response = {'received': {'gps': []}}
+    response = {'received': {'gps': [], 'tio': [], 'heartbeat': []}}
     for gps_data in data['database']['gps']['data']:
         # Create a dictionary so that we can mutate it for the new database
         gps_dict = dict(zip(data['database']['gps']['headers'], gps_data))
@@ -103,7 +111,7 @@ def receive_heartbeat(vehicle_name: str):
         old_id = gps_dict.pop('id')
 
         # Assign a user id, parse the datetime, and check for any None values
-        gps_dict['vehicle_id'] = vehicle.id
+        gps_dict['owner_id'] = user.id
         gps_dict['utc_time'] = datetime.strptime(gps_dict['utc_time'], '%Y-%m-%d %H:%M:%S')
         for key in gps_dict.keys():
             if gps_dict[key] == 'None':
@@ -117,6 +125,44 @@ def receive_heartbeat(vehicle_name: str):
         # Map the new id to the old id and update the received response
         gps_mappings[old_id] = gps.id
         response['received']['gps'].append(old_id)
+    # Load tio updates
+    for tio_data in data['database']['tio']['data']:
+        # Create dict to make mutating easier
+        tio_dict = dict(zip(data['database']['tio']['headers'], tio_data))
+
+        # Remove the id and add it to the received response
+        response['received']['tio'].append(tio_dict.pop('id'))
+
+        # Update the owner id and the new gps id as well as parsing the time
+        tio_dict['owner_id'] = user.id
+        tio_dict['gps_id'] = gps_mappings[tio_dict['gps_id']]
+        tio_dict['utc_time'] = datetime.strptime(tio_dict['utc_time'], '%Y-%m-%d %H:%M:%S')
+        for key in tio_dict.keys():
+            if tio_dict[key] == 'None':
+                tio_dict[key] = None
+            if tio_dict[key] == 'True':
+                tio_dict[key] = True
+            if tio_dict[key] == 'False':
+                tio_dict[key] = False
+
+        # Create object and add to db
+        tio = TomorrowIO(**tio_dict)
+        db.session.add(tio)
+
+    for heartbeat_data in data['database']['heartbeat']['data']:
+        heartbeat_dict = dict(zip(data['database']['heartbeat']['headers'], heartbeat_data))
+        response['received']['heartbeat'].append(heartbeat_dict.pop('id'))
+        heartbeat_dict['vehicle_id'] = vehicle.id
+        heartbeat_dict['time_utc'] = datetime.fromisoformat(heartbeat_dict['time_utc'])
+        heartbeat_dict['next_time'] = datetime.fromisoformat(heartbeat_dict['next_time'])
+        
+        heartbeat_dict['server'] = True if heartbeat_dict['server'] == 'True' else False
+        heartbeat_dict['internet'] = True if heartbeat_dict['internet'] =='True' else False
+        heartbeat_dict['on_schedule'] = True if heartbeat_dict['on_schedule'] == 'True' else False
+        
+        heartbeat = Heartbeat(**heartbeat_dict)
+        db.session.add(heartbeat)
+        
 
     db.session.commit()
     return response
@@ -136,31 +182,7 @@ def get_location_string(latitude, longitude):
 
     return name
 
-@endpoints.route('/vehicle.html', methods=['GET', 'POST'])
-@login_required
-def create_vehicle_page():
 
-    if request.method == 'POST':
-        
-        name = request.form.get('vehicle_name')
-        print(name)
-        if name == None or len(name) < 2:
-            flash('Please fill in a vehicle name greater than one character!', category='error')
-        elif db.session.query(Vehicle).filter_by(name=name).first() != None:
-            flash('There is already a vehicle registered under that name!', category='error')
-        else:
-            db.session.add(Vehicle(
-                name=name,
-                owner_id=current_user.id
-            ))
-            db.session.commit()
-            flash(f'Vehicle "{name}" registered!')
-
-
-    return render_template(
-        'vehicle/create.html',
-        user=current_user
-    )
 
 @endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
@@ -174,10 +196,6 @@ def vehicle_page(vehicle_name: str):
 
     vehicle = db.session.query(Vehicle).filter_by(name=vehicle_name).first()
     context = {}
-
-    if not vehicle:
-        # TODO: Offer to register here
-        return f'"{vehicle_name}" is not a registered vehicle.'
 
     # If permission
     if permissions['view_connected'] and vehicle.next_expected_heartbeat:
@@ -329,7 +347,7 @@ def vehicle_location_page(vehicle_name: str):
     if not vehicle:
        abort(404) 
     
-    path = [[gps.latitude, gps.longitude] for gps in vehicle.gps_data]
+    path = [[gps.latitude, gps.longitude] for gps in vehicle.owner.gps_data]
     return render_template(
         'vehicle/location.html',
         locations=path,
@@ -337,6 +355,35 @@ def vehicle_location_page(vehicle_name: str):
         vehicle=vehicle,
     )
 
+
+@endpoints.route('/settings.html', methods=['GET', 'POST'])
+@login_required
+def settings_page():
+    
+    return render_template(
+        'user/settings.html',
+        user=current_user,
+    )
+
+@endpoints.route('/user/following.html', methods=['GET', 'POST'])
+@login_required
+def user_following():
+    if request.method == 'POST':
+        vname = request.form.get('vehicle_name')
+        vehicle = db.session.query(Vehicle).filter_by(name=vname).first()
+        if not vehicle:
+            flash(f'Sorry, no vehicles are registered as "{vname}"', category='error')
+        elif current_user.follows is not None and vehicle.id in [v.vehicle_id for v in current_user.follows]:
+            flash(f'You are already following "{vname}"', category='error')
+        else:
+            db.session.add(Follow(
+                user_id=current_user.id,
+                vehicle_id=vehicle.id
+            ))
+            db.session.commit()
+            flash(f'Followed {vname}!')
+
+    return render_template('user/following.html', user=current_user)
 
 @endpoints.route('/user/friends.html', methods=['GET', 'POST'])
 @login_required
@@ -353,6 +400,24 @@ def user_friends():
 
         return redirect(url_for('endpoints.user_friends'))
 
+    vehicle_permission_ids = {}
+    if current_user.vehicle_permissions:
+        vehicle_permission_ids = [permission.owner.id for permission in current_user.vehicle_permissions]
+    
+    following = {}
+    for friend in current_user.follows:
+        vehicles = []
+
+        for vehicle in friend.vehicles:
+            if vehicle.id in vehicle_permission_ids:
+
+                vehicles.append(vehicle)
+
+        following[friend] = vehicles
+        
+
+
+
     return render_template('friends.html', 
                            user=current_user,
-                           following=current_user.follows)
+                           following=following)

@@ -18,27 +18,26 @@
       <!-- Navbar Brand-->
       <a class="navbar-brand ps-3" href="/">Van Life Smart</a>
 
+
       {% block header_nav %}
       {% endblock %}
-
       <!-- Navbar-->
-      <div>
-        Hello
-        </div>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
             {% if user.is_authenticated %}
-            <li><a class="dropdown-item" href="/user/friends.html">Friends</a></li>
-            <li><a class="dropdown-item" href="">Settings</a></li>
+            <li><a class="dropdown-item" href="/user/following.html">Following</a></li>
             <li><a class="dropdown-item" href="/vehicle.html">New Vehicle</a></li>
+            {% if user.vehicles %}
             <li><hr class="dropdown-divider"/></li>
             <li><div class="dropdown-item-text"><b>Your Vehicles:</b></div></li>
             {% for vehicle in user.vehicles %}
             <li><a class="dropdown-item" href="/vehicle/{{vehicle.name}}.html">{{vehicle.name}}</a></li>
             {% endfor %}
-    
+            {% endif %}
+            <li><hr class="dropdown-divier"/></li>
+            <li><a class="dropdown-item" href="/settings.html">Settings</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li><a class="dropdown-item" href="/auth/sign-out.html">Log out</a></li>
             {% else %}

@@ -28,12 +28,20 @@ class Base(DeclarativeBase):
         return [str(getattr(self, c.name)) for c in self.__table__.columns]
 
 
-following = Table(
-    'following',
-    Base.metadata,
-    Column('subject', ForeignKey('user.id')),
-    Column('object', ForeignKey('user.id'))
-)
+
+class Role(Base):
+    __tablename__ = 'role'
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+class Follow(Base):
+    __tablename__ = 'follow'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    user: Mapped[List['User']] = relationship(back_populates='follows')
+    vehicle_id: Mapped[int] = mapped_column(ForeignKey('vehicle.id'))
+    vehicle: Mapped['Vehicle'] = relationship(back_populates='follows')
+    role_id: Mapped[Optional['Role']] = mapped_column(ForeignKey('role.id'))
+    role: Mapped['Role'] = relationship()
 
 
 class Vehicle(Base):
@@ -46,7 +54,9 @@ class Vehicle(Base):
     owner: Mapped['User'] = relationship(back_populates='vehicles')
 
     gps_data: Mapped[List['GPSData']] = relationship(back_populates='vehicle')
+    follows: Mapped[List['Follow']] = relationship(back_populates='vehicle')
 
+    permissions: Mapped[List['VehiclePermission']] = relationship(back_populates='vehicle')
     heartbeats: Mapped[List['Heartbeat']] = relationship(back_populates='vehicle')
     pitstops: Mapped[List['Pitstop']] = relationship(back_populates='vehicle')
 
@@ -56,15 +66,15 @@ class User(Base, UserMixin):
     email: Mapped[str] = mapped_column(String(320))
     username: Mapped[str] = mapped_column(String(36))
     password: Mapped[str] = mapped_column(String(150))
+    vehicle_permissions: Mapped['VehiclePermission'] = relationship(back_populates='owner')
     created_on: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     vehicles: Mapped[List['Vehicle']] = relationship(back_populates='owner')
     last_activity: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
     tio_data: Mapped[List['TomorrowIO']] = relationship(back_populates='owner')
-    follows = relationship('User',
-                           secondary=following,
-                           primaryjoin=(following.c.object == id),
-                           secondaryjoin=(following.c.subject == id),
-                           backref='following')
+
+    follows: Mapped[List['Follow']] = relationship(back_populates='user')
+
+
 
 class Pitstop(Base):
     __tablename__ = 'pitstop'
@@ -78,7 +88,20 @@ class Pitstop(Base):
     mileage: Mapped[int]
     filled: Mapped[bool]
 
+class VehiclePermission(Base):
+    __tablename__ = 'vehicle_permission'
+    id: Mapped[int] = mapped_column(primary_key=True)
 
+    owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    owner: Mapped['User'] = relationship(back_populates='vehicle_permissions')
+
+    vehicle_id: Mapped[int] = mapped_column(ForeignKey('vehicle.id'))
+    vehicle: Mapped['Vehicle'] = relationship(back_populates='permissions')
+
+
+
+
+            
 class Heartbeat(Base):
     """
     This class tracks the vehicle's uptime and connectivity to server

@@ -1,5 +1,5 @@
 {% extends "root_header.html" %}
-{% block title %}Friends{% endblock %}
+{% block title %}Following{% endblock %}
 
 {% block css %}
 <link href="{{ url_for('static', filename='css/friends.css') }}" rel="stylesheet" />
@@ -34,25 +34,26 @@
 
     <div class="tab-pane fade show active" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
       <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
-        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Friends <span class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">{{following|length}}</span></h3>
+        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Following <span class="badge text-bg-secondary fs-2 rounded-4 py-1 px-2 ms-2">{{user.follows|length}}</span></h3>
         <form class="position-relative" method="POST">
           <div class="input-group mb-3 py-2 ps-5">
-            <input type="text" class="form-control" placeholder="Username" name="username" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add Friend</button>
+            <input type="text" class="form-control" placeholder="Vehicle Name" name="vehicle_name" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Follow Vehicle</button>
           </div>
         </form>
       </div>
       <div class="row">
-          {% for user in following %}
+          {% for follow in user.follows %}
         <div class="col-sm-6 col-lg-4">
           <div class="card hover-img">
             <div class="card-body p-4 text-center border-bottom">
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" class="rounded-circle mb-3" width="80" height="80">
-              <h5 class="fw-semibold mb-0">{{ user.username }}</h5>
-              {% if following[user]|length == 0 %}
-              <span class="text-dark fs-2">Waiting for comfirm</span>
+              <h5 class="fw-semibold mb-0">{{ follow.vehicle.name }}</h5>
+              {% if follow.role == None %}
+              <span class="text-dark fs-2"><b>Follow Pending</b></span>
+              {% else %}
+              <span class="text-dark fs-2"><a href="/vehicle/{{follow.vehicle.name}}.html">Van Link</a></span>
               {% endif %}
-              <span class="text-dark fs-2"><a href="/vehicle/{{user.vehicles[0].name}}.html">Van Link</a></span>
 
             </div>
             <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
@@ -86,3 +87,4 @@
   </div>
 </div>
 {% endblock %}
+
