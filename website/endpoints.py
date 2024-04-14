@@ -215,6 +215,7 @@ def create_vehicle_page():
             ))
             db.session.commit()
             flash('Created new vehicle!', category='success')
+            return redirect(url_for('endpoints.create_vehicle_page'))
 
     return render_template(
         'vehicle/create.html',
@@ -305,6 +306,7 @@ def vehicle_pitstop_page(vehicle_name: str):
         db.session.add(ps)
         db.session.commit()
         send_gas_email('Luke', ps)
+        return redirect(url_for('endpoints.vehicle_pistop_page'))
 
 
 
@@ -406,9 +408,6 @@ def vehicle_follower_page(vehicle_name: str):
 
 
         r_name = request.form.get('role_name')
-   
-        print(request.form)
-        
 
         if r_name == None or len(r_name) < 2:
             flash('Role name is required and must be greater than one character.', category='error')
@@ -424,6 +423,7 @@ def vehicle_follower_page(vehicle_name: str):
                 write_heartbeat='write_heartbeat' in request.form,
             ))
             db.session.commit()
+            return redirect(url_for('endpoints.vehicle_follower_page', vehicle_name=vehicle.name))
 
     return render_template(
         'vehicle/followers.html',
@@ -473,6 +473,7 @@ def user_following():
             ))
             db.session.commit()
             flash(f'Followed {vname}!')
+            return redirect(url_for('endpoints.user_following'))
 
     return render_template('user/following.html', user=current_user)
 
@@ -488,6 +489,7 @@ def user_friends():
             flash(f'Followed {uname}', category='success')
             current_user.follows.append(user)
             db.session.commit()
+            return redirect(url_for('endpoints.user_friends'))
 
         return redirect(url_for('endpoints.user_friends'))
 
