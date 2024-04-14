@@ -63,7 +63,7 @@
             <td>
               <form method="POST">
                 <input type="hidden" id="delete_form" name="delete_form" value={{role.id}}>
-                <button class="btn btn-primary btn-block" type="submit">Delete</button>
+                <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>
               </form>
             </td>
           </tr>
@@ -90,7 +90,11 @@
           <tr>
             <td>{{ follow.user.username }}</td>
             <td>{{ follow.user.email }}</td>
-            <td>{{ follow.role }}</td>
+            <td>
+              <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink">{{follow.role.name if follow.role.name else "None"}}</a>
+              </div>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
