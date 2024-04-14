@@ -39,6 +39,8 @@ class Role(Base):
     view_weather: Mapped[bool]
     view_heartbeat: Mapped[bool]
     write_heartbeat: Mapped[bool]
+    view_gas: Mapped[bool]
+    email_gas: Mapped[bool]
     
 
 class Follow(Base):

@@ -355,7 +355,6 @@ def vehicle_heartbeat_page(vehicle_name: str):
                 raise Exception
         break
 
-    print(json.dumps(health, indent=4))
 
     for hour, status in health.items():
         total = status['offline'] + status['no_server'] + status['no_internet'] + status['online']
@@ -377,7 +376,6 @@ def vehicle_heartbeat_page(vehicle_name: str):
         for state in ('offline', 'no_server', 'no_internet', 'online'):
             chart_health[state].append(health[i][state] if i in health else 0)
 
-    print(json.dumps(chart_health, indent=4))
 
     return render_template(
         'vehicle/heartbeat.html',
@@ -421,6 +419,8 @@ def vehicle_follower_page(vehicle_name: str):
                 view_weather='view_weather' in request.form,
                 view_heartbeat='view_heartbeat' in request.form,
                 write_heartbeat='write_heartbeat' in request.form,
+                view_gas='view_gas' in request.form,
+                email_gas='email_gas' in request.form,
             ))
             db.session.commit()
             return redirect(url_for('endpoints.vehicle_follower_page', vehicle_name=vehicle.name))

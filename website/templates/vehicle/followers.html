@@ -26,6 +26,8 @@
               <td><input type="checkbox" name='view_weather'></input></td>
               <td><input type="checkbox" name='view_heartbeat'></input></td>
               <td><input type="checkbox" name='write_heartbeat'></input></td>
+              <td><input type="checkbox" name="view_gas"></input></td>
+              <td><input type="checkbox" name="email_gas"></input></td>
               <td><button class="btn btn-primary btn-block" type="submit">Create Role</button></td>
           </form>
             </tr>
@@ -57,6 +59,20 @@
               {% if role.write_heartbeat == false %}
               <i class="fa-solid fa-x"></i>
               {% elif role.write_heartbeat == true %}
+              <i class="fa-solid fa-check"></i>
+              {% endif %}
+            </td>
+            <td>
+              {% if role.view_gas == false %}
+              <i class="fa-solid fa-x"></i>
+              {% elif role.view_gas == true %}
+              <i class="fa-solid fa-check"></i>
+              {% endif %}
+            </td>
+            <td>
+              {% if role.email_gas == false %}
+              <i class="fa-solid fa-x"></i>
+              {% elif role.email_gas == true %}
               <i class="fa-solid fa-check"></i>
               {% endif %}
             </td>
