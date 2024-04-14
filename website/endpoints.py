@@ -198,6 +198,29 @@ def can_access(user: User, vehicle: Vehicle):
     else:
         return True
 
+@endpoints.route('/vehicle.html', methods=['GET', 'POST'])
+@login_required
+def create_vehicle_page():
+
+    if request.method == 'POST': 
+        vehicle_name = request.form.get('vehicle_name')
+        if not vehicle_name or len(vehicle_name) < 2:
+            flash('Please enter a vehicle name greater than 1 character.', category='error')
+        elif db.session.query(Vehicle).filter_by(name=vehicle_name).first() != None:
+            flash('There is already a vehicle registered under this name!', category='error')
+        else:
+            db.session.add(Vehicle(
+                name=vehicle_name,
+                owner_id=current_user.id
+            ))
+            db.session.commit()
+            flash('Created new vehicle!', category='success')
+
+    return render_template(
+        'vehicle/create.html',
+        user=current_user,
+    )
+
 @endpoints.route('/vehicle/<vehicle_name>.html', methods=['GET'])
 @login_required
 def vehicle_page(vehicle_name: str):
