@@ -13,6 +13,7 @@ from website.filters import datetimefilter
 def create_app():
     application = Flask(__name__)
     application.config['SECRET_KEY'] = 'secret'
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle' : 280} 
     application.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('VLS_DATABASE_URI')
     db.init_app(application)
 
