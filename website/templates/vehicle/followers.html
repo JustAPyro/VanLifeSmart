@@ -21,8 +21,8 @@
         </thead>
         <tbody>
 
-            <tr>
-          <form method="POST">
+          <tr>
+            <form method="POST">
               <td><input type="text" id="role_name" name="role_name"></input></td>
               <td><input type="checkbox" name='view_location'></input></td>
               <td><input type="checkbox" name='view_weather'></input></td>
@@ -31,8 +31,8 @@
               <td><input type="checkbox" name="view_gas"></input></td>
               <td><input type="checkbox" name="email_gas"></input></td>
               <td><button class="btn btn-primary btn-block" type="submit">Create Role</button></td>
-          </form>
-            </tr>
+            </form>
+          </tr>
           {% for role in vehicle.roles %}
           <tr>
             <td>{{ role.name }}</td>
@@ -110,8 +110,15 @@
             <td>{{ follow.user.email }}</td>
             <td>
               <div class="dropdown">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink">{{follow.role.name if follow.role.name else "None"}}</a>
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="roledropdown_{{follow.user.username}}" data-bs-toggle="dropdown">{{follow.role.name if follow.role.name else "None"}}</a>
+                <ul class="dropdown-menu">
+                  {% for role in vehicle.roles %}
+                  <li><a class="dropdown-item" href="#" id={{role.name}} onclick="thingie(this, '{{follow.user.username}}');">{{role.name}}</a></li>
+                  {% endfor %}
+                  <li><a class="dropdown-item" href="#" id="None" onclick="thingie(this, '{{follow.user.username}}');">None</a></li>
+                </ul>
               </div>
+
             </td>
           </tr>
           {% endfor %}
@@ -121,4 +128,14 @@
   </div>
 </div>
 
+{% endblock %}
+{% block js %}
+<script>
+function thingie(role, user) {
+  dropdown = document.getElementById("roledropdown_"+user);
+  dropdown.innerHTML = role.id;
+  dropdown.classList.remove("btn-secondary");
+  dropdown.classList.add("btn-outline-success");
+}
+</script>
 {% endblock %}
