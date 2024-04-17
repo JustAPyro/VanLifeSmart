@@ -31,7 +31,15 @@ def sign_in_page():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=('remember' in request.form))
-                return redirect(url_for('endpoints.user_following'))
+                
+                if len(user.vehicles) > 0:
+                    return redirect(url_for('endpoints.vehicle_page', vehicle_name=user.vehicles[0].name))
+                elif len(user.follows) == 1:
+                    return redirect(url_for('endpoints.vehicle_page', vehicle_name=user.follows[0].vehicle.name))
+                else:
+                    return redirect(url_for('endpoints.user_following'))
+
+
             else:
                 flash('Incorrect email or password.', category='error')
         else:
@@ -301,11 +309,11 @@ def vehicle_pitstop_page(vehicle_name: str):
             total_cost=request.form.get('total_cost'),
             mileage=request.form.get('mileage'),
             filled=bool('filled' in request.form)
-                        
         )
         db.session.add(ps)
         db.session.commit()
-        send_gas_email('Luke', ps)
+        # TODO: Figure out how to spawn in another thread so this doesn't stall forever
+        # send_gas_email('Luke', ps)
         return redirect(url_for('endpoints.vehicle_pitstop_page', vehicle_name=vehicle_name))
 
 
