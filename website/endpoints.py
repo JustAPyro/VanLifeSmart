@@ -306,7 +306,7 @@ def vehicle_pitstop_page(vehicle_name: str):
         db.session.add(ps)
         db.session.commit()
         send_gas_email('Luke', ps)
-        return redirect(url_for('endpoints.vehicle_pitstop_page'))
+        return redirect(url_for('endpoints.vehicle_pitstop_page', vehicle_name=vehicle_name))
 
 
 
