@@ -92,7 +92,14 @@
   </div>
   <div class="card">
     <div class="card-header">
-      Follower<span class="badge text-bg-secondary rounded-4 py-1 px-2 ms-2">{{vehicle.follows|length}}</span>
+      <div class="row justify-content-between">
+        <div class="col">
+          Follower<span class="badge text-bg-secondary rounded-4 py-1 px-2 ms-2 me-1">{{vehicle.follows|length}}</span>
+        </div>
+        <div class="col ms-auto">
+          <button class="btn btn-success invisible" id="save_btn" onclick="save_changes();">Save Changes</button>
+        </div>
+      </div>
     </div>
     <div class="card-body">
       <table class="table">
@@ -111,11 +118,13 @@
             <td>
               <div class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="roledropdown_{{follow.user.username}}" data-bs-toggle="dropdown">{{follow.role.name if follow.role.name else "None"}}</a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu role_dropdown" id="dropdown_{{follow.user.username}}">
                   {% for role in vehicle.roles %}
                   <li><a class="dropdown-item" href="#" id={{role.name}} onclick="thingie(this, '{{follow.user.username}}');">{{role.name}}</a></li>
                   {% endfor %}
                   <li><a class="dropdown-item" href="#" id="None" onclick="thingie(this, '{{follow.user.username}}');">None</a></li>
+
+
                 </ul>
               </div>
 
@@ -131,11 +140,51 @@
 {% endblock %}
 {% block js %}
 <script>
-function thingie(role, user) {
-  dropdown = document.getElementById("roledropdown_"+user);
-  dropdown.innerHTML = role.id;
-  dropdown.classList.remove("btn-secondary");
-  dropdown.classList.add("btn-outline-success");
-}
+  // Create a map of {user: original_role} so we can tell what has changed
+  var original_role_map = Object.create(null);
+  var original_roles = document.querySelectorAll(".role_dropdown")
+  for (let i = 0; i < original_roles.length; i++) {
+    var name = original_roles[i].id.slice(9, original_roles[i].id.length)
+    original_role_map[name] = document.getElementById("roledropdown_"+name).innerHTML;
+  }
+
+  var changed = Object.create(null);
+
+  function thingie(role, user) {
+
+    dropdown = document.getElementById("roledropdown_"+user);
+    if (original_role_map[user] != role.id) {
+      changed[user] = role.id
+      dropdown.classList.remove("btn-secondary");
+      dropdown.classList.add("btn-outline-success");
+    }
+    else {
+      delete changed[user];
+      dropdown.classList.remove("btn-outline-success");
+      dropdown.classList.add("btn-secondary")
+    }
+    console.log(changed);
+    dropdown.innerHTML = role.id;
+
+
+    if (!!Object.keys(changed).length) {
+      console.log('hi')
+      document.getElementById("save_btn").classList.remove('invisible')
+    }
+    else{
+      document.getElementById("save_btn").classList.add('invisible');
+    }
+  }
+  
+  function save_changes() {
+    console.log(changed)
+    fetch("http://127.0.0.1:5000/api/vehicle/{{vehicle.name}}/role.json", {
+      method: "PATCH",
+      body: JSON.stringify(changed),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+  }
 </script>
 {% endblock %}

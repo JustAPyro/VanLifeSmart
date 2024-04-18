@@ -87,6 +87,21 @@ def log_out_page():
     logout_user()
     return redirect(url_for('endpoints.sign_in_page'))
 
+@endpoints.route('/api/vehicle/<vehicle_name>/role.json', methods=['PATCH'])
+def patch_user_role_json(vehicle_name: str):
+    vehicle = db.session.query(Vehicle).filter(Vehicle.name==vehicle_name).first()
+    for user in request.json:
+        user = db.session.query(User).filter_by(username=user).first()
+        follow = db.session.query(Follow).filter(Follow.user_id==user.id, Role.vehicle_id==vehicle.id).first()
+        id = db.session.query(Role).filter(Role.name==request.json[user.username]).first()
+        follow.role_id = id.id if id is not None else None
+        
+
+        db.session.commit()
+
+    return "HELLO"
+
+
 @endpoints.route('/api/heartbeat.json', methods=['GET', 'POST'])
 def receive_heartbeat():
     if request.method == 'GET':
