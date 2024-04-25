@@ -27,6 +27,8 @@ class Base(DeclarativeBase):
     def as_list(self):
         return [str(getattr(self, c.name)) for c in self.__table__.columns]
 
+class LocalTable:
+    pass
 
 
 class Role(Base):
@@ -70,6 +72,7 @@ class Vehicle(Base):
     permissions: Mapped[List['VehiclePermission']] = relationship(back_populates='vehicle')
     heartbeats: Mapped[List['Heartbeat']] = relationship(back_populates='vehicle')
     pitstops: Mapped[List['Pitstop']] = relationship(back_populates='vehicle')
+
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
@@ -156,7 +159,7 @@ class DHTData(Base):
 """
 
 
-class GPSData(Base):
+class GPSData(Base, LocalTable):
     __tablename__ = 'gps'
 
     # Key for this GPS data point

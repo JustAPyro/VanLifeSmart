@@ -151,9 +151,14 @@ async def lifespan(app: FastAPI):
     # Start by loading any environment variables we can find
     load_dotenv()
 
+
     # Fail to launch if any environment variable listed in required are missing
-    if not all([(os.getenv(env) is not None) for env in required_environment]):
-        raise NotImplementedError("You are missing a required environment variable.")
+    missing = []
+    for env in required_environment:
+        if os.getenv(env) is None:
+            missing.append(env)
+    if len(missing) != 0:
+        raise NotImplementedError(f'You are missing the following required environment variables: {missing}')
 
     # Check to make sure the data path exists for logs (Database will go in the data path root)
     Path(f'{os.getenv("VLS_DATA_PATH")}/logs').mkdir(parents=True, exist_ok=True)
