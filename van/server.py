@@ -130,13 +130,6 @@ def heartbeat():
         if response.status_code != 200:
             print(response.status_code)
             print(response.content)
-        print(response)
-        # Delete from local tables based
-        # the json we received back
-        json_back = response.json()
-        for data_name, table in upload:
-            for received_id in json_back['received'][data_name]:
-                session.query(table).filter_by(id=received_id).delete()
 
         # Commit all the changes that we made
         # TODO: Consider another handshake before commiting this delete
